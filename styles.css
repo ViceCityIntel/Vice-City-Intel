@@ -864,3 +864,119 @@ h1 strong{
     font-size: 14px;
   }
 }
+
+/* =====================================
+   LEONIDA WHISPERS - INTEL CARD UPGRADE
+   ===================================== */
+
+.article-grid {
+  gap: 22px;
+}
+
+.article-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid rgba(255, 65, 190, .22);
+  border-radius: 12px;
+  background: linear-gradient(
+    155deg,
+    #171027,
+    #0b0718 85%
+  );
+  box-shadow: 0 8px 28px rgba(0, 0, 0, .3);
+  transition: transform .3s ease,
+              border-color .3s ease,
+              box-shadow .3s ease;
+}
+
+.article-card:hover {
+  transform: translateY(-7px);
+  border-color: #ff35bd;
+  box-shadow:
+    0 12px 35px rgba(255, 35, 185, .2),
+    0 0 18px rgba(255, 35, 185, .12);
+}
+
+.article-art {
+  min-height: 190px;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(255, 50, 190, .3);
+}
+
+.article-info {
+  padding: 21px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.article-info .category {
+  display: inline-block;
+  width: fit-content;
+  padding: 5px 10px;
+  margin-bottom: 12px;
+  border: 1px solid rgba(255, 55, 190, .4);
+  border-radius: 4px;
+  background: rgba(255, 40, 180, .1);
+  color: #ff54cb;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.article-info .category.cyan {
+  color: #35eaff;
+  border-color: rgba(53, 234, 255, .4);
+  background: rgba(53, 234, 255, .08);
+}
+
+.article-info h3 {
+  color: #fff;
+  font-size: 19px;
+  line-height: 1.35;
+  margin: 0 0 12px;
+}
+
+.article-info p {
+  color: #aaa5bd;
+  font-size: 13px;
+  line-height: 1.75;
+  margin-bottom: 18px;
+}
+
+.article-info a {
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255,255,255,.1);
+  color: #39eaff;
+  font-weight: 800;
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-decoration: none;
+  transition: color .2s ease;
+}
+
+.article-info a:hover {
+  color: #ff4dc4;
+}
+
+@media (max-width: 620px) {
+  .article-grid {
+    gap: 15px;
+  }
+
+  .article-art {
+    min-height: 155px;
+  }
+
+  .article-info {
+    padding: 16px;
+  }
+
+  .article-info h3 {
+    font-size: 17px;
+  }
+}
