@@ -798,3 +798,40 @@ h1 strong{
     font-size: 12px;
   }
 }
+/* LEONIDA WHISPERS - MOBILE POLISH */
+
+@media (max-width: 620px) {
+
+  .hero {
+    height: 150vw;
+    min-height: 0;
+    max-height: 680px;
+    background-size: 100% 100%;
+    background-position: center center;
+  }
+
+  .hero-content {
+    left: 14px;
+    right: 14px;
+    bottom: 14px;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .hero-actions .button {
+    flex: 1 1 0;
+    min-width: 0;
+    min-height: 52px;
+    padding: 10px 6px;
+    font-size: 11px;
+    letter-spacing: 0;
+    white-space: normal;
+    text-align: center;
+  }
+
+}
