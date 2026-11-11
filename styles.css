@@ -980,3 +980,137 @@ h1 strong{
     font-size: 17px;
   }
 }
+
+/* =====================================
+   LEONIDA INTELLIGENCE DATABASE
+   PREMIUM TERMINAL DESIGN
+   ===================================== */
+
+.database-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 28px;
+}
+
+.database-tile {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  min-height: 112px;
+  padding: 22px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 65, 195, .25);
+  border-radius: 10px;
+  background:
+    linear-gradient(135deg,
+      rgba(255, 50, 190, .09),
+      rgba(20, 12, 42, .96) 65%);
+  box-shadow: 0 8px 25px rgba(0,0,0,.2);
+  text-decoration: none;
+  transition: all .3s ease;
+}
+
+.database-tile::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    115deg,
+    transparent 35%,
+    rgba(255,255,255,.045),
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity .3s ease;
+  pointer-events: none;
+}
+
+.database-tile:hover {
+  transform: translateY(-5px);
+  border-color: var(--cyan);
+  background: #17132c;
+  box-shadow:
+    0 12px 30px rgba(0,0,0,.3),
+    0 0 20px rgba(77,234,255,.12);
+}
+
+.database-tile:hover::before {
+  opacity: 1;
+}
+
+.tile-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 52px;
+  height: 52px;
+  border: 1px solid rgba(255,79,200,.35);
+  border-radius: 10px;
+  background: rgba(255,79,200,.09);
+  color: var(--pink);
+  font-size: 27px;
+  text-align: center;
+}
+
+.database-tile > span:nth-of-type(2) {
+  position: relative;
+  flex: 1;
+}
+
+.database-tile b {
+  display: block;
+  color: #fff;
+  font: 700 12px Orbitron, sans-serif;
+  letter-spacing: 1.3px;
+}
+
+.database-tile small {
+  display: block;
+  margin-top: 8px;
+  color: #aaa5bd;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.database-tile i {
+  color: var(--cyan);
+  font-size: 17px;
+  transition: transform .3s ease;
+}
+
+.database-tile:hover i {
+  transform: translateX(5px);
+  color: var(--pink);
+}
+
+.small-note {
+  line-height: 1.8;
+  color: #aaa5bd;
+}
+
+@media (max-width: 900px) {
+  .database-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 520px) {
+  .database-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .database-tile {
+    min-height: 95px;
+    padding: 17px;
+  }
+
+  .tile-icon {
+    width: 46px;
+    height: 46px;
+    font-size: 23px;
+  }
+}
