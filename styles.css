@@ -714,3 +714,56 @@ h1 strong{
 @media(max-width:620px){
   .brand-name{font-size:11px}
 }
+/* LEONIDA WHISPERS - CINEMATIC HERO */
+
+.hero {
+  min-height: 620px;
+  position: relative;
+  display: block;
+  padding: 0;
+  overflow: hidden;
+  background:
+    linear-gradient(90deg, rgba(9,0,25,.15), transparent 75%),
+    url("assets/hero-banner.png") center center / cover no-repeat;
+}
+
+.hero-grid,
+.hero-sun,
+.hero-palms,
+.hero-stamp,
+.hero-bottom {
+  display: none;
+}
+
+.hero-content {
+  position: absolute;
+  left: 5%;
+  bottom: 30px;
+  z-index: 5;
+}
+
+.hero-content .eyebrow,
+.hero-content h1,
+.hero-content .hero-copy {
+  display: none;
+}
+
+.hero-actions {
+  margin: 0;
+}
+
+@media(max-width:620px) {
+  .hero {
+    min-height: 480px;
+    background-position: 58% center;
+  }
+
+  .hero-content {
+    left: 16px;
+    bottom: 20px;
+  }
+
+  .hero-actions {
+    gap: 8px;
+  }
+}
