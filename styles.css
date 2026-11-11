@@ -840,3 +840,27 @@ h1 strong{
 .scanlines {
   display: none !important;
 }
+/* DESKTOP HERO - FULL ARTWORK */
+
+@media (min-width: 621px) {
+  .hero {
+    aspect-ratio: 2 / 1;
+    height: auto;
+    min-height: 0;
+    max-height: none;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .hero-content {
+    left: 5%;
+    right: 5%;
+    bottom: 4%;
+  }
+
+  .hero-actions .button {
+    min-height: 52px;
+    padding: 16px 25px;
+    font-size: 14px;
+  }
+}
