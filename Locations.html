@@ -1,0 +1,531 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#090612">
+<title>Location Intelligence | Leonida Whispers</title>
+<meta name="description" content="Explore the Leonida Whispers GTA VI location intelligence database.">
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+--bg:#090612;
+--panel:#151024;
+--pink:#ff36bd;
+--cyan:#35eaff;
+--muted:#aaa2ba;
+--line:rgba(255,79,200,.2);
+}
+
+* {box-sizing:border-box}
+
+body {
+margin:0;
+background:var(--bg);
+color:#fff;
+font-family:Inter,sans-serif;
+}
+
+a {color:inherit;text-decoration:none}
+
+header {
+height:76px;
+padding:12px 6%;
+display:flex;
+align-items:center;
+justify-content:space-between;
+border-bottom:1px solid var(--line);
+background:#0b0715;
+}
+
+.brand {
+display:flex;
+align-items:center;
+gap:12px;
+font-family:Orbitron,sans-serif;
+font-weight:800;
+letter-spacing:1px;
+font-size:15px;
+}
+
+.brand img {
+width:48px;
+height:48px;
+object-fit:contain;
+}
+
+.brand span {color:var(--pink)}
+
+nav {
+display:flex;
+gap:24px;
+font-family:Orbitron,sans-serif;
+font-size:10px;
+}
+
+nav a:hover {color:var(--pink)}
+
+.hero {
+min-height:330px;
+padding:75px 8%;
+position:relative;
+overflow:hidden;
+background:
+radial-gradient(ellipse at 80% 50%,rgba(255,54,189,.3),transparent 45%),
+linear-gradient(120deg,#100b24,#17102d 55%,#290b38);
+border-bottom:1px solid var(--line);
+}
+
+.hero:before {
+content:"";
+position:absolute;
+inset:0;
+opacity:.22;
+background-image:
+linear-gradient(rgba(53,234,255,.3) 1px,transparent 1px),
+linear-gradient(90deg,rgba(53,234,255,.3) 1px,transparent 1px);
+background-size:45px 45px;
+transform:perspective(400px) rotateX(35deg) scale(1.5);
+}
+
+.hero-content {
+position:relative;
+z-index:1;
+max-width:750px;
+}
+
+.eyebrow {
+color:var(--cyan);
+font:600 10px Orbitron,sans-serif;
+letter-spacing:3px;
+}
+
+h1 {
+font:800 clamp(32px,6vw,64px) Orbitron,sans-serif;
+line-height:1.12;
+margin:18px 0;
+}
+
+h1 span {color:var(--pink)}
+
+.hero p {
+max-width:570px;
+color:#c0b8ce;
+line-height:1.8;
+font-size:14px;
+}
+
+.hero-stamp {
+position:absolute;
+right:10%;
+top:35%;
+font:800 clamp(55px,10vw,110px) Orbitron,sans-serif;
+color:rgba(255,79,200,.12);
+}
+
+main {
+max-width:1200px;
+margin:auto;
+padding:65px 6%;
+}
+
+.section-heading {
+display:flex;
+justify-content:space-between;
+align-items:end;
+gap:15px;
+margin-bottom:30px;
+}
+
+h2 {
+font:700 clamp(23px,4vw,35px) Orbitron,sans-serif;
+margin:10px 0;
+}
+
+h2 span {color:var(--pink)}
+
+.file-count {
+font:10px Orbitron,sans-serif;
+color:var(--muted);
+white-space:nowrap;
+}
+
+.toolbar {
+display:flex;
+gap:12px;
+flex-wrap:wrap;
+margin-bottom:25px;
+}
+
+.search {
+flex:1;
+min-width:220px;
+background:#120d20;
+border:1px solid var(--line);
+padding:15px;
+color:#fff;
+outline:none;
+}
+
+.search:focus {border-color:var(--cyan)}
+
+.filters {
+display:flex;
+gap:8px;
+flex-wrap:wrap;
+}
+
+.filter {
+background:#151024;
+color:#bbb2c9;
+border:1px solid var(--line);
+padding:12px 15px;
+font:600 10px Orbitron,sans-serif;
+cursor:pointer;
+}
+
+.filter.active,.filter:hover {
+background:var(--pink);
+color:#100719;
+border-color:var(--pink);
+}
+
+.location-grid {
+display:grid;
+grid-template-columns:repeat(3,minmax(0,1fr));
+gap:18px;
+}
+
+.location-card {
+background:var(--panel);
+border:1px solid var(--line);
+overflow:hidden;
+transition:.25s;
+}
+
+.location-card:hover {
+transform:translateY(-5px);
+border-color:var(--cyan);
+box-shadow:0 10px 35px rgba(53,234,255,.1);
+}
+
+.card-art {
+height:165px;
+position:relative;
+display:flex;
+align-items:center;
+justify-content:center;
+overflow:hidden;
+background:
+radial-gradient(circle at 50% 65%,rgba(255,54,189,.5),transparent 45%),
+linear-gradient(135deg,#171047,#35104e,#091c38);
+}
+
+.card-art:before {
+content:"";
+position:absolute;
+inset:0;
+background:repeating-linear-gradient(
+0deg,transparent 0 24px,
+rgba(255,255,255,.04) 25px
+);
+}
+
+.card-symbol {
+position:relative;
+font:800 55px Orbitron,sans-serif;
+color:var(--cyan);
+text-shadow:0 0 25px var(--cyan);
+}
+
+.card-index {
+position:absolute;
+top:14px;
+left:15px;
+font:10px Orbitron,sans-serif;
+color:#fff;
+}
+
+.card-info {padding:22px}
+
+.tag {
+font:600 9px Orbitron,sans-serif;
+letter-spacing:1px;
+color:var(--pink);
+}
+
+.card-info h3 {
+font:700 17px Orbitron,sans-serif;
+margin:12px 0;
+}
+
+.card-info p {
+font-size:12px;
+color:var(--muted);
+line-height:1.8;
+min-height:43px;
+}
+
+.card-footer {
+display:flex;
+justify-content:space-between;
+align-items:center;
+border-top:1px solid var(--line);
+padding-top:15px;
+margin-top:17px;
+font:10px Orbitron,sans-serif;
+color:var(--cyan);
+}
+
+.status {color:#aaa2ba}
+
+.empty {
+display:none;
+padding:35px;
+text-align:center;
+color:var(--muted);
+}
+
+footer {
+padding:30px 6%;
+text-align:center;
+border-top:1px solid var(--line);
+color:var(--muted);
+font-size:11px;
+line-height:2;
+}
+
+footer span {color:var(--pink)}
+
+@media(max-width:800px) {
+.location-grid {grid-template-columns:repeat(2,minmax(0,1fr))}
+nav {gap:12px;font-size:8px}
+}
+
+@media(max-width:560px) {
+header {height:70px;padding:10px 4%}
+.brand {font-size:11px;gap:7px}
+.brand img {width:42px;height:42px}
+nav {gap:10px}
+nav a:nth-child(2),nav a:nth-child(3) {display:none}
+.hero {padding:65px 6%;min-height:310px}
+.hero-stamp {right:3%;top:55%;font-size:65px}
+main {padding:45px 4%}
+.location-grid {grid-template-columns:1fr}
+.card-art {height:180px}
+.section-heading {align-items:start}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<a class="brand" href="index.html">
+<img src="assets/Leonida-logo.png" alt="Leonida Whispers">
+<div>LEONIDA <span>WHISPERS</span></div>
+</a>
+
+<nav>
+<a href="index.html">HOME</a>
+<a href="index.html#latest">LATEST</a>
+<a href="index.html#guides">GUIDES</a>
+</nav>
+</header>
+
+<section class="hero">
+<div class="hero-content">
+<div class="eyebrow">LEONIDA INTELLIGENCE NETWORK / 001</div>
+<h1>LOCATION <span>INTELLIGENCE.</span></h1>
+<p>
+Explore the world of Leonida. Discover cities,
+coastal regions, landmarks and places of interest
+through our growing independent GTA VI research archive.
+</p>
+</div>
+<div class="hero-stamp">LW+</div>
+</section>
+
+<main>
+
+<div class="section-heading">
+<div>
+<div class="eyebrow">THE GEOGRAPHIC ARCHIVE</div>
+<h2>THE <span>LOCATIONS.</span></h2>
+</div>
+<div class="file-count" id="fileCount">06 FIELD FILES</div>
+</div>
+
+<div class="toolbar">
+<input
+class="search"
+id="search"
+type="search"
+placeholder="⌕ Search locations..."
+aria-label="Search locations"
+>
+
+<div class="filters">
+<button class="filter active" data-filter="all">ALL</button>
+<button class="filter" data-filter="city">CITIES</button>
+<button class="filter" data-filter="coast">COAST</button>
+<button class="filter" data-filter="nature">NATURE</button>
+</div>
+</div>
+
+<div class="location-grid" id="locationGrid">
+
+<article class="location-card" data-category="city">
+<div class="card-art">
+<span class="card-index">FILE 001</span>
+<div class="card-symbol">VC</div>
+</div>
+<div class="card-info">
+<div class="tag">URBAN / METROPOLIS</div>
+<h3>Vice City</h3>
+<p>The iconic urban centre of Leonida. Explore the city and its districts.</p>
+<div class="card-footer">
+<span>OPEN FILE →</span>
+<span class="status">RESEARCH</span>
+</div>
+</div>
+</article>
+
+<article class="location-card" data-category="coast">
+<div class="card-art">
+<span class="card-index">FILE 002</span>
+<div class="card-symbol">LK</div>
+</div>
+<div class="card-info">
+<div class="tag">COASTAL / ISLANDS</div>
+<h3>Leonida Keys</h3>
+<p>A tropical island region. A location file awaiting detailed research.</p>
+<div class="card-footer">
+<span>OPEN FILE →</span>
+<span class="status">RESEARCH</span>
+</div>
+</div>
+</article>
+
+<article class="location-card" data-category="city">
+<div class="card-art">
+<span class="card-index">FILE 003</span>
+<div class="card-symbol">PG</div>
+</div>
+<div class="card-info">
+<div class="tag">URBAN / INDUSTRIAL</div>
+<h3>Port Gellhorn</h3>
+<p>A Leonida location with plenty more to investigate and document.</p>
+<div class="card-footer">
+<span>OPEN FILE →</span>
+<span class="status">RESEARCH</span>
+</div>
+</div>
+</article>
+
+<article class="location-card" data-category="nature">
+<div class="card-art">
+<span class="card-index">FILE 004</span>
+<div class="card-symbol">GR</div>
+</div>
+<div class="card-info">
+<div class="tag">WETLANDS / WILDLIFE</div>
+<h3>Grassrivers</h3>
+<p>A natural region of Leonida. Field notes and points of interest to follow.</p>
+<div class="card-footer">
+<span>OPEN FILE →</span>
+<span class="status">RESEARCH</span>
+</div>
+</div>
+</article>
+
+<article class="location-card" data-category="city">
+<div class="card-art">
+<span class="card-index">FILE 005</span>
+<div class="card-symbol">AM</div>
+</div>
+<div class="card-info">
+<div class="tag">REGION / COMMUNITY</div>
+<h3>Ambrosia</h3>
+<p>A regional intelligence file for discoveries, landmarks and local details.</p>
+<div class="card-footer">
+<span>OPEN FILE →</span>
+<span class="status">RESEARCH</span>
+</div>
+</div>
+</article>
+
+<article class="location-card" data-category="nature">
+<div class="card-art">
+<span class="card-index">FILE 006</span>
+<div class="card-symbol">MK</div>
+</div>
+<div class="card-info">
+<div class="tag">WILDERNESS / PARK</div>
+<h3>Mount Kalaga National Park</h3>
+<p>A wilderness location to investigate for landmarks and discoveries.</p>
+<div class="card-footer">
+<span>OPEN FILE →</span>
+<span class="status">RESEARCH</span>
+</div>
+</div>
+</article>
+
+</div>
+
+<div class="empty" id="empty">
+NO MATCHING LOCATION FILES FOUND.
+</div>
+
+</main>
+
+<footer>
+LEONIDA <span>WHISPERS</span><br>
+THE GTA INTELLIGENCE NETWORK<br>
+Independent fan publication. Not affiliated with Rockstar Games.
+</footer>
+
+<script>
+const search = document.getElementById("search");
+const cards = [...document.querySelectorAll(".location-card")];
+const filters = document.querySelectorAll(".filter");
+const count = document.getElementById("fileCount");
+const empty = document.getElementById("empty");
+
+let category = "all";
+
+function updateCards() {
+const term = search.value.toLowerCase();
+let visible = 0;
+
+cards.forEach(card => {
+const matchesText = card.innerText.toLowerCase().includes(term);
+const matchesCategory = category === "all" ||
+card.dataset.category === category;
+
+const show = matchesText && matchesCategory;
+card.style.display = show ? "" : "none";
+if(show) visible++;
+});
+
+count.textContent = String(visible).padStart(2,"0") + " FIELD FILES";
+empty.style.display = visible ? "none" : "block";
+}
+
+filters.forEach(button => {
+button.addEventListener("click", () => {
+filters.forEach(item => item.classList.remove("active"));
+button.classList.add("active");
+category = button.dataset.filter;
+updateCards();
+});
+});
+
+search.addEventListener("input", updateCards);
+</script>
+
+</body>
+</html>
