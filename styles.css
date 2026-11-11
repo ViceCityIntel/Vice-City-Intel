@@ -767,3 +767,34 @@ h1 strong{
     gap: 8px;
   }
 }
+/* MOBILE VICE CITY HERO */
+
+@media (max-width: 620px) {
+  .hero {
+    background-image:
+      linear-gradient(rgba(9,0,25,.08), rgba(9,0,25,.25)),
+      url("assets/Hero-banner-clean.png");
+    background-size: cover;
+    background-position: center center;
+    min-height: 540px;
+  }
+
+  .hero-content {
+    left: 16px;
+    right: 16px;
+    bottom: 18px;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .hero-actions .button {
+    flex: 1;
+    min-width: 140px;
+    padding: 14px 10px;
+    font-size: 12px;
+  }
+}
