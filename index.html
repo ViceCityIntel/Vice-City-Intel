@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Vice City Intel — an independent Grand Theft Auto fan publication covering news, guides, secrets and discoveries.">
+  <title>VICE CITY INTEL — The World of Grand Theft Auto</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="scanlines" aria-hidden="true"></div>
+  <header class="site-header">
+    <a class="brand" href="#home" aria-label="Vice City Intel home">
+      <span class="brand-mark">VC<span>I</span></span>
+      <span class="brand-name">VICE CITY <b>INTEL</b><small>THE GTA INFORMATION NETWORK</small></span>
+    </a>
+    <button class="menu-toggle" aria-label="Open navigation" aria-expanded="false">☰</button>
+    <nav class="main-nav" aria-label="Main navigation">
+      <a class="active" href="#home">HOME</a>
+      <a href="#latest">LATEST</a>
+      <a href="#guides">GUIDES</a>
+      <a href="#database">DATABASE</a>
+      <a href="#briefing">THE BRIEFING</a>
+    </nav>
+  </header>
+
+  <main id="home">
+    <section class="hero">
+      <div class="hero-grid"></div>
+      <div class="hero-sun"></div>
+      <div class="hero-palms" aria-hidden="true">♣</div>
+      <div class="hero-content">
+        <p class="eyebrow"><span class="live-dot"></span> INDEPENDENT GRAND THEFT AUTO PUBLICATION</p>
+        <h1>THE WORLD<br>OF <em>GTA</em><br><span>UNDER THE</span> <strong>MICROSCOPE.</strong></h1>
+        <p class="hero-copy">News, discoveries, guides and intelligence from across the Grand Theft Auto universe.</p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#latest">EXPLORE THE INTEL <span>↗</span></a>
+          <a class="button button-ghost" href="#briefing">JOIN THE BRIEFING</a>
+        </div>
+      </div>
+      <div class="hero-stamp"><span>EST.</span><b>V C I</b><span>THE INTEL NETWORK</span></div>
+      <div class="hero-bottom"><span>LOS SANTOS · VICE CITY · LIBERTY CITY</span><span>INDEPENDENT FAN PUBLICATION</span></div>
+    </section>
+
+    <section class="ticker" aria-label="Publication topics">
+      <div>NEWS <i>✦</i> SECRETS <i>✦</i> GUIDES <i>✦</i> VEHICLES <i>✦</i> DISCOVERIES <i>✦</i> NEWS <i>✦</i> SECRETS <i>✦</i> GUIDES <i>✦</i></div>
+    </section>
+
+    <section class="section-wrap" id="latest">
+      <div class="section-heading">
+        <div><p class="eyebrow pink">THE INFORMATION FEED</p><h2>LATEST <span>INTEL</span></h2></div>
+        <span class="section-index">01 / DISPATCHES</span>
+      </div>
+      <div class="toolbar">
+        <label class="search-box"><span>⌕</span><input id="searchInput" type="search" placeholder="Search the intel..." aria-label="Search articles"></label>
+        <div class="filters" role="group" aria-label="Filter articles">
+          <button class="filter active" data-filter="all">ALL</button>
+          <button class="filter" data-filter="news">NEWS</button>
+          <button class="filter" data-filter="guides">GUIDES</button>
+          <button class="filter" data-filter="secrets">SECRETS</button>
+        </div>
+      </div>
+      <div class="article-grid" id="articleGrid">
+        <article class="article-card feature-card" data-category="news" data-search="gta 6 newsroom launch updates editorial">
+          <div class="article-art art-sunset"><span class="art-label">EDITOR'S DESK</span><div class="sunset-disc"></div><div class="art-city">VICE<br>CITY</div></div>
+          <div class="article-info"><span class="category">NEWSROOM</span><h3>Welcome to Vice City Intel</h3><p>Your independent briefing point for the Grand Theft Auto universe. This is a sample introduction post—replace it with your first researched article.</p><a href="#briefing" class="read-link">GET THE BRIEFING <span>→</span></a></div>
+        </article>
+        <article class="article-card" data-category="guides" data-search="beginner guide checklist planning">
+          <div class="article-art art-grid"><span class="art-label">FIELD GUIDE 001</span><div class="big-symbol">01</div><div class="art-caption">THE STARTER FILE</div></div>
+          <div class="article-info"><span class="category cyan">GUIDES</span><h3>Build your own GTA checklist</h3><p>A simple framework for tracking missions, collectibles and personal goals. Sample content—add verified details before publishing.</p><a href="#guides" class="read-link">OPEN FILE <span>→</span></a></div>
+        </article>
+        <article class="article-card" data-category="secrets" data-search="mysteries easter eggs community discoveries">
+          <div class="article-art art-mystery"><span class="art-label">UNSOLVED FILE</span><div class="mystery-ring">?</div><div class="art-caption">THE UNKNOWN</div></div>
+          <div class="article-info"><span class="category pink">SECRETS</span><h3>How we investigate GTA mysteries</h3><p>Separate confirmed discoveries from theories, document sources and let the evidence lead. Sample editorial guide.</p><a href="#database" class="read-link">VIEW METHOD <span>→</span></a></div>
+        </article>
+      </div>
+      <p class="empty-state" id="emptyState" hidden>No matching articles. Try another search.</p>
+    </section>
+
+    <section class="feature-band" id="guides">
+      <div class="feature-copy">
+        <p class="eyebrow cyan">YOUR FIELD MANUAL</p>
+        <h2>KNOW THE<br><span>STREETS.</span></h2>
+        <p>Build a growing library of original walkthroughs, checklists, explainers and practical reference guides for the GTA community.</p>
+        <a href="#briefing" class="button button-primary">GET NEW GUIDES <span>↗</span></a>
+      </div>
+      <div class="feature-visual"><div class="map-lines"></div><div class="map-pin">VC<span>+</span></div><div class="coordinates">25°46' N<br>80°11' W</div><div class="map-note">FIELD NOTES<br>VOL. 001</div></div>
+    </section>
+
+    <section class="section-wrap database-section" id="database">
+      <div class="section-heading">
+        <div><p class="eyebrow pink">THE REFERENCE LIBRARY</p><h2>THE <span>DATABASE</span></h2></div>
+        <span class="section-index">02 / ARCHIVE</span>
+      </div>
+      <div class="database-grid">
+        <a class="database-tile" href="#latest"><span class="tile-icon">⌖</span><span><b>LOCATIONS</b><small>Places & points of interest</small></span><i>↗</i></a>
+        <a class="database-tile" href="#latest"><span class="tile-icon">▱</span><span><b>VEHICLES</b><small>Cars, bikes & aircraft</small></span><i>↗</i></a>
+        <a class="database-tile" href="#latest"><span class="tile-icon">✧</span><span><b>COLLECTIBLES</b><small>Checklists & collections</small></span><i>↗</i></a>
+        <a class="database-tile" href="#latest"><span class="tile-icon">◎</span><span><b>MISSIONS</b><small>Mission reference files</small></span><i>↗</i></a>
+      </div>
+      <p class="small-note">Database categories are launch placeholders. Add researched, accurate entries as the site grows.</p>
+    </section>
+
+    <section class="newsletter" id="briefing">
+      <div class="newsletter-orb"></div>
+      <div class="newsletter-content">
+        <p class="eyebrow">DIRECT FROM THE INTEL DESK</p>
+        <h2>GET THE <span>BRIEFING.</span></h2>
+        <p>Get the latest articles, guides and community discoveries in your inbox.</p>
+        <!-- Replace this demo form with your real Beehiiv embed or signup URL before launch. -->
+        <form class="signup-form" id="signupForm">
+          <label class="sr-only" for="emailInput">Your email address</label>
+          <input id="emailInput" type="email" placeholder="YOUR EMAIL ADDRESS" required>
+          <button class="button button-primary" type="submit">SIGN ME UP ↗</button>
+        </form>
+        <p class="form-note" id="formNote">This is a design preview. Connect a real newsletter signup before collecting subscribers.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <a class="footer-brand" href="#home">VICE CITY <b>INTEL</b></a>
+    <p>An independent fan publication. Not affiliated with, endorsed by, or sponsored by Rockstar Games or Take-Two Interactive.</p>
+    <div class="footer-bottom"><span>© <span id="year"></span> VICE CITY INTEL</span><a href="#home">BACK TO TOP ↑</a></div>
+  </footer>
+  <script src="script.js"></script>
+</body>
+</html>
