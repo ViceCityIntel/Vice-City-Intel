@@ -835,3 +835,8 @@ h1 strong{
   }
 
 }
+/* REMOVE CRT SCANLINE OVERLAY */
+
+.scanlines {
+  display: none !important;
+}
