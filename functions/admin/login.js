@@ -45,57 +45,16 @@ async function hmac(value, secret) {
   );
 }
 
-async function verifyPassword(password, storedHash) {
-  try {
-    const parts = storedHash.trim().split("$");
-
-    if (
-      parts.length !== 5 ||
-      parts[0] !== "pbkdf2" ||
-      parts[1] !== "sha256" ||
-      parts[2] !== "310000"
-    ) return false;
-
-    const salt = decodeBase64url(parts[3]);
-    const expected = decodeBase64url(parts[4]);
-
-    if (salt.length !== 16 || expected.length !== 32) {
-      return false;
-    }
-
-    const key = await crypto.subtle.importKey(
-      "raw",
-      encoder.encode(password),
-      "PBKDF2",
-      false,
-      ["deriveBits"]
-    );
-
-    const result = new Uint8Array(
-      await crypto.subtle.deriveBits(
-        {
-          name: "PBKDF2",
-          hash: "SHA-256",
-          salt,
-          iterations: 310000
-        },
-        key,
-        256
-      )
-    );
-
-    let difference = 0;
-    for (let i = 0; i < expected.length; i++) {
-      difference |= result[i] ^ expected[i];
-    }
-
-    return difference === 0;
-  } catch {
+function verifyPassword(password, storedPassword) {
+  if (
+    typeof password !== "string" ||
+    typeof storedPassword !== "string"
+  ) {
     return false;
   }
-}
 
-async function createSession(email, secret) {
+  return password === storedPassword;
+}async function createSession(email, secret) {
   const now = Math.floor(Date.now() / 1000);
 
   const payload = base64url(
@@ -183,14 +142,9 @@ export async function onRequest({ request, env }) {
     const emailMatches = email === expectedEmail;
 
     const passwordMatches = emailMatches
-      ? await verifyPassword(password, env.ADMIN_PASSWORD_HASH)
+      ? await verifyPassword(password, env.ADMIN_PASSWORD)
       : false;
-console.log("LW LOGIN CHECK", {
-  emailMatches,
-  passwordMatches,
-  hashConfigured: Boolean(env.ADMIN_PASSWORD_HASH),
-  hashFormatValid: /^pbkdf2\$sha256\$310000\$[A-Za-z0-9_-]+\$[A-Za-z0-9_-]+$/.test(env.ADMIN_PASSWORD_HASH.trim())
-});
+    
     if (!emailMatches || !passwordMatches) {
       await env.DB.prepare(`
         INSERT INTO admin_login_attempts
