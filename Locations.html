@@ -318,6 +318,53 @@ main {padding:45px 4%}
 .card-art {height:180px}
 .section-heading {align-items:start}
 }
+  
+/* =====================================
+   LEONIDA WHISPERS - CINEMATIC CARD UPGRADE
+===================================== */
+
+.location-card {
+  border: 1px solid rgba(255,79,200,.35);
+  border-radius: 16px;
+  box-shadow:
+    0 0 12px rgba(255,79,200,.08),
+    inset 0 0 15px rgba(77,234,255,.04);
+  transition:
+    transform .35s ease,
+    border-color .35s ease,
+    box-shadow .35s ease;
+}
+
+.location-card:hover {
+  transform: translateY(-7px);
+  border-color: var(--pink);
+  box-shadow:
+    0 0 12px rgba(255,79,200,.45),
+    0 0 28px rgba(77,234,255,.2),
+    inset 0 0 18px rgba(255,79,200,.08);
+}
+
+.card-art {
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.card-art img {
+  transition: transform .6s ease, filter .6s ease;
+}
+
+.location-card:hover .card-art img {
+  transform: scale(1.06);
+  filter: brightness(.85) saturate(1.2);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .location-card,
+  .card-art img {
+    transition: none;
+  }
+}
+
 </style>
 </head>
 
