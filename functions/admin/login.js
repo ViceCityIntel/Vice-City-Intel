@@ -54,7 +54,9 @@ function verifyPassword(password, storedPassword) {
   }
 
   return password === storedPassword;
-}async function createSession(email, secret) {
+  
+}
+async function createSession(email, secret) {
   const now = Math.floor(Date.now() / 1000);
 
   const payload = base64url(
