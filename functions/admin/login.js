@@ -47,7 +47,7 @@ async function hmac(value, secret) {
 
 async function verifyPassword(password, storedHash) {
   try {
-    const parts = storedHash.split("$");
+    const parts = storedHash.trim().split("$");
 
     if (
       parts.length !== 5 ||
