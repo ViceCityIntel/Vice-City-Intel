@@ -416,9 +416,8 @@ async function loadReport() {
     const data = await response.json();
 
     const article = (data.articles || []).find(
-      item => item.slug === slug &&
-              item.status === "published"
-    );
+  item => item.slug === slug
+);
 
     if (!article) {
       statusBox.textContent = "REPORT NOT FOUND OR NOT YET PUBLISHED.";
