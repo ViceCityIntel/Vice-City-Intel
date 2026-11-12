@@ -185,7 +185,12 @@ export async function onRequest({ request, env }) {
     const passwordMatches = emailMatches
       ? await verifyPassword(password, env.ADMIN_PASSWORD_HASH)
       : false;
-
+console.log("LW LOGIN CHECK", {
+  emailMatches,
+  passwordMatches,
+  hashConfigured: Boolean(env.ADMIN_PASSWORD_HASH),
+  hashFormatValid: /^pbkdf2\$sha256\$310000\$[A-Za-z0-9_-]+\$[A-Za-z0-9_-]+$/.test(env.ADMIN_PASSWORD_HASH.trim())
+});
     if (!emailMatches || !passwordMatches) {
       await env.DB.prepare(`
         INSERT INTO admin_login_attempts
