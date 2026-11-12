@@ -1,118 +1,592 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Leonida Whispers | Command Centre</title>
-  <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      min-height: 100vh;
-      background: #090817;
-      color: #f5f1ff;
-      font-family: Arial, sans-serif;
-      padding: 28px 18px;
-    }
-    .wrap { max-width: 900px; margin: auto; }
-    .brand {
-      color: #ff55bd;
-      letter-spacing: 5px;
-      font-size: 25px;
-      font-weight: bold;
-    }
-    .sub { color: #65e7f5; letter-spacing: 5px; margin-top: 7px; }
-    header { margin: 35px 0; }
-    h1 { font-size: 27px; letter-spacing: 2px; }
-    .status {
-      border: 1px solid #39304f;
-      background: #131126;
-      border-radius: 12px;
-      padding: 20px;
-      margin-bottom: 20px;
-    }
-    .status p { color: #bdb7d2; }
-    .green { color: #65edbb; }
-    .red { color: #ff719b; }
-    button {
-      border: 0;
-      border-radius: 8px;
-      padding: 13px 20px;
-      background: linear-gradient(100deg,#a52c86,#5941ae);
-      color: white;
-      font-weight: bold;
-      font-size: 15px;
-      cursor: pointer;
-    }
-    .muted { color: #aaa3bd; font-size: 13px; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Leonida Whispers | Newsroom</title>
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 24px 16px;
+  background: #090817;
+  color: #f5f1ff;
+  font-family: Arial, sans-serif;
+}
+
+.wrap { max-width: 950px; margin: auto; }
+
+.brand {
+  color: #ff55bd;
+  font-size: 25px;
+  font-weight: bold;
+  letter-spacing: 5px;
+}
+
+.sub {
+  color: #65e7f5;
+  letter-spacing: 5px;
+  margin-top: 7px;
+}
+
+header { margin: 35px 0; }
+
+h1 { font-size: 27px; letter-spacing: 2px; }
+
+.panel {
+  background: #131126;
+  border: 1px solid #39304f;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.stat-number {
+  font-size: 30px;
+  color: #65e7f5;
+  font-weight: bold;
+}
+
+.stat-label {
+  color: #aaa3bd;
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
+label {
+  display: block;
+  margin: 17px 0 7px;
+  color: #c9c2dd;
+  font-size: 13px;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 13px;
+  border-radius: 7px;
+  border: 1px solid #49405f;
+  background: #090817;
+  color: white;
+  font: inherit;
+}
+
+textarea {
+  min-height: 300px;
+  resize: vertical;
+  line-height: 1.6;
+}
+
+button {
+  border: 0;
+  border-radius: 7px;
+  padding: 12px 16px;
+  background: linear-gradient(100deg,#a52c86,#5941ae);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  margin: 5px 3px 5px 0;
+}
+
+button.secondary {
+  background: #29243e;
+  border: 1px solid #51466b;
+}
+
+button.danger {
+  background: #812c4a;
+}
+
+button:disabled {
+  opacity: .5;
+  cursor: wait;
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin: 10px 0;
+}
+
+.toolbar button {
+  padding: 9px 11px;
+  margin: 0;
+  background: #29243e;
+}
+
+.article {
+  padding: 15px 0;
+  border-bottom: 1px solid #39304f;
+}
+
+.article h3 { margin: 0 0 8px; }
+
+.article p {
+  color: #aaa3bd;
+  font-size: 13px;
+}
+
+.status {
+  color: #65edbb;
+  font-size: 13px;
+  margin: 12px 0;
+  min-height: 18px;
+}
+
+.muted {
+  color: #aaa3bd;
+  font-size: 13px;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.checkrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.checkrow input {
+  width: auto;
+}
+
+@media (max-width: 500px) {
+  body { padding: 20px 13px; }
+  .panel { padding: 15px; }
+  h1 { font-size: 23px; }
+}
+</style>
 </head>
+
 <body>
-  <main class="wrap">
-    <div class="brand">LEONIDA</div>
-    <div class="sub">W H I S P E R S</div>
+<main class="wrap">
 
-    <header>
-      <h1>INTELLIGENCE COMMAND CENTRE</h1>
-      <p class="muted">RESTRICTED ADMINISTRATOR ACCESS</p>
-    </header>
+<div class="brand">LEONIDA</div>
+<div class="sub">W H I S P E R S</div>
 
-    <section class="status">
-      <h2>Authentication status</h2>
-      <p id="auth">Verifying secure session...</p>
-    </section>
+<header>
+<h1>INTELLIGENCE COMMAND CENTRE</h1>
+<p class="muted">RESTRICTED NEWSROOM ACCESS</p>
+</header>
 
-    <section class="status">
-      <h2>Newsroom overview</h2>
-      <p>Article management — coming next.</p>
-      <p>Location dossiers — coming next.</p>
-      <p>Newsletter operations — coming next.</p>
-    </section>
+<section class="panel">
+<h2>Authentication status</h2>
+<p id="auth" class="status">Verifying secure session...</p>
+<button id="logout" class="secondary" hidden>LOG OUT</button>
+</section>
 
-    <button id="logout" hidden>LOG OUT</button>
-  </main>
+<section class="panel">
+<h2>NEWSROOM OVERVIEW</h2>
 
-  <script>
-    async function checkSession() {
-      const status = document.getElementById("auth");
-      try {
-        const response = await fetch("/admin/session", {
-          credentials: "same-origin",
-          cache: "no-store"
-        });
+<div class="stats">
+<div>
+<div class="stat-number" id="publishedCount">—</div>
+<div class="stat-label">PUBLISHED STORIES</div>
+</div>
+<div>
+<div class="stat-number" id="draftCount">—</div>
+<div class="stat-label">SAVED DRAFTS</div>
+</div>
+</div>
 
-        if (!response.ok) {
-          status.textContent = "Session not authenticated. Please log in again.";
-          status.className = "red";
-          return;
-        }
+<p id="libraryStatus" class="muted">Loading newsroom...</p>
+</section>
 
-        const data = await response.json();
+<section class="panel" id="editorPanel" hidden>
+<h2 id="editorHeading">CREATE NEW STORY</h2>
 
-        if (!data.authenticated) {
-          status.textContent = "Session not authenticated. Please log in again.";
-          status.className = "red";
-          return;
-        }
+<form id="articleForm">
 
-        status.textContent = "SECURE SESSION ACTIVE — " + data.email;
-        status.className = "green";
-        document.getElementById("logout").hidden = false;
-      } catch (error) {
-        status.textContent = "Unable to verify session.";
-        status.className = "red";
-      }
-    }
+<label for="title">ARTICLE HEADLINE</label>
+<input id="title" maxlength="200" required
+placeholder="Enter your headline">
 
-    document.getElementById("logout").addEventListener("click", async () => {
-      await fetch("/admin/logout", {
-        method: "POST",
-        credentials: "same-origin"
-      });
-      window.location.href = "/admin.html";
+<label for="slug">ARTICLE URL SLUG (OPTIONAL)</label>
+<input id="slug" placeholder="automatically-created-from-headline">
+
+<label for="excerpt">SHORT SUMMARY</label>
+<textarea id="excerpt" rows="3"
+placeholder="A short introduction to your story..."></textarea>
+
+<label for="category">CATEGORY</label>
+<select id="category">
+<option>GTA News</option>
+<option>Rumours</option>
+<option>Guides</option>
+<option>Secrets</option>
+<option>Updates</option>
+<option>General</option>
+</select>
+
+<label for="cover">COVER IMAGE URL</label>
+<input id="cover" type="url"
+placeholder="https://example.com/image.jpg">
+
+<label>STORY CONTENT</label>
+
+<div class="toolbar">
+<button type="button" data-before="**" data-after="**">BOLD</button>
+<button type="button" data-before="*" data-after="*">ITALIC</button>
+<button type="button" data-before="## " data-after="">HEADING</button>
+<button type="button" data-before="- " data-after="">LIST</button>
+<button type="button" data-before="[Link text](" data-after=")">LINK</button>
+<button type="button" data-before="![Image description](" data-after=")">IMAGE</button>
+<button type="button" data-before="> " data-after="">QUOTE</button>
+</div>
+
+<textarea id="content" required
+placeholder="Write your intelligence report here...
+
+Use the formatting buttons above to format your story.
+
+You can also write Markdown directly."></textarea>
+
+<p class="muted">
+Formatting is stored as Markdown. Image and link buttons insert their Markdown syntax; add the relevant URL.
+</p>
+
+<div class="checkrow">
+<input type="checkbox" id="featured">
+<label for="featured" style="margin:0">FEATURE THIS STORY</label>
+</div>
+
+<p id="saveStatus" class="status" aria-live="polite"></p>
+
+<div class="actions">
+<button type="button" id="saveDraft">SAVE DRAFT</button>
+<button type="button" id="publish">PUBLISH STORY</button>
+<button type="button" id="cancelEdit" class="secondary">CANCEL</button>
+</div>
+
+</form>
+</section>
+
+<section class="panel">
+<h2>ARTICLE LIBRARY</h2>
+<button id="newArticle">+ CREATE NEW STORY</button>
+<div id="articleList">
+<p class="muted">Loading articles...</p>
+</div>
+</section>
+
+</main>
+
+<script>
+const API = "/admin/api/articles";
+
+let articles = [];
+let editingId = null;
+let authenticated = false;
+
+const $ = id => document.getElementById(id);
+
+async function checkSession() {
+  try {
+    const response = await fetch("/admin/session", {
+      credentials: "same-origin",
+      cache: "no-store"
     });
 
-    checkSession();
-  </script>
+    const data = await response.json();
+
+    if (!response.ok || !data.authenticated) {
+      $("auth").textContent = "Session expired. Please log in again.";
+      $("auth").className = "status";
+      return false;
+    }
+
+    authenticated = true;
+    $("auth").textContent = "SECURE SESSION ACTIVE — " + data.email;
+    $("logout").hidden = false;
+    $("editorPanel").hidden = false;
+
+    return true;
+  } catch {
+    $("auth").textContent = "Unable to verify administrator session.";
+    return false;
+  }
+}
+
+async function apiRequest(method, body) {
+  const options = {
+    method,
+    credentials: "same-origin",
+    cache: "no-store",
+    headers: {}
+  };
+
+  if (body !== undefined) {
+    options.headers["Content-Type"] = "application/json";
+    options.body = JSON.stringify(body);
+  }
+
+  const response = await fetch(API, options);
+
+  let data;
+  try {
+    data = await response.json();
+  } catch {
+    throw new Error("The server returned an invalid response.");
+  }
+
+  if (response.status === 401) {
+    throw new Error("Your admin session has expired. Please log in again.");
+  }
+
+  if (!response.ok) {
+    throw new Error(data.error || "Request failed.");
+  }
+
+  return data;
+}
+
+async function loadArticles() {
+  $("libraryStatus").textContent = "Loading newsroom...";
+
+  try {
+    const data = await apiRequest("GET");
+
+    articles = data.articles || [];
+
+    const published = articles.filter(a => a.status === "published").length;
+    const drafts = articles.filter(a => a.status === "draft").length;
+
+    $("publishedCount").textContent = published;
+    $("draftCount").textContent = drafts;
+    $("libraryStatus").textContent = articles.length + " total stories";
+
+    renderArticles();
+  } catch (error) {
+    $("libraryStatus").textContent = error.message;
+    $("articleList").textContent = "Unable to load articles.";
+  }
+}
+
+function renderArticles() {
+  const list = $("articleList");
+  list.replaceChildren();
+
+  if (!articles.length) {
+    const empty = document.createElement("p");
+    empty.className = "muted";
+    empty.textContent = "No stories yet. Create your first intelligence report above.";
+    list.appendChild(empty);
+    return;
+  }
+
+  articles.forEach(article => {
+    const item = document.createElement("div");
+    item.className = "article";
+
+    const heading = document.createElement("h3");
+    heading.textContent = article.title;
+
+    const details = document.createElement("p");
+    details.textContent =
+      (article.category || "General") + " · " +
+      (article.status || "draft").toUpperCase() +
+      (article.featured ? " · FEATURED" : "");
+
+    const actions = document.createElement("div");
+    actions.className = "actions";
+
+    const edit = document.createElement("button");
+    edit.textContent = "EDIT";
+    edit.className = "secondary";
+    edit.addEventListener("click", () => editArticle(article.id));
+
+    const remove = document.createElement("button");
+    remove.textContent = "DELETE";
+    remove.className = "danger";
+    remove.addEventListener("click", () => deleteArticle(article.id));
+
+    actions.append(edit, remove);
+    item.append(heading, details, actions);
+    list.appendChild(item);
+  });
+}
+
+function clearEditor() {
+  editingId = null;
+  $("articleForm").reset();
+  $("editorHeading").textContent = "CREATE NEW STORY";
+  $("saveStatus").textContent = "";
+}
+
+function openEditor() {
+  clearEditor();
+  $("editorPanel").hidden = false;
+  $("editorPanel").scrollIntoView({ behavior: "smooth" });
+  $("title").focus();
+}
+
+function editArticle(id) {
+  const article = articles.find(a => Number(a.id) === Number(id));
+  if (!article) return;
+
+  editingId = article.id;
+
+  $("editorHeading").textContent = "EDIT STORY";
+  $("title").value = article.title || "";
+  $("slug").value = article.slug || "";
+  $("excerpt").value = article.excerpt || "";
+  $("category").value = article.category || "General";
+  $("cover").value = article.cover_image_url || "";
+  $("content").value = article.content_markdown || "";
+  $("featured").checked = Boolean(article.featured);
+
+  $("saveStatus").textContent = "Editing article #" + article.id;
+  $("editorPanel").hidden = false;
+  $("editorPanel").scrollIntoView({ behavior: "smooth" });
+}
+
+function insertFormatting(before, after) {
+  const field = $("content");
+  const start = field.selectionStart;
+  const end = field.selectionEnd;
+  const selected = field.value.substring(start, end);
+
+  field.setRangeText(
+    before + selected + after,
+    start,
+    end,
+    "end"
+  );
+
+  field.focus();
+  field.setSelectionRange(
+    start + before.length,
+    start + before.length + selected.length
+  );
+}
+
+document.querySelectorAll(".toolbar button").forEach(button => {
+  button.addEventListener("click", () => {
+    insertFormatting(
+      button.dataset.before,
+      button.dataset.after
+    );
+  });
+});
+
+async function saveArticle(status) {
+  if (!authenticated) {
+    $("saveStatus").textContent = "Please log in again.";
+    return;
+  }
+
+  const title = $("title").value.trim();
+  const content = $("content").value;
+
+  if (!title || !content.trim()) {
+    $("saveStatus").textContent = "Please enter a headline and story content.";
+    return;
+  }
+
+  const payload = {
+    title,
+    slug: $("slug").value.trim(),
+    excerpt: $("excerpt").value.trim(),
+    category: $("category").value,
+    cover_image_url: $("cover").value.trim(),
+    content_markdown: content,
+    featured: $("featured").checked,
+    status
+  };
+
+  const buttons = [$("saveDraft"), $("publish")];
+  buttons.forEach(button => button.disabled = true);
+
+  $("saveStatus").textContent = "Saving story...";
+
+  try {
+    const result = editingId
+      ? await apiRequest("PUT", { ...payload, id: editingId })
+      : await apiRequest("POST", payload);
+
+    $("saveStatus").textContent = result.message || "Story saved successfully.";
+
+    clearEditor();
+    $("saveStatus").textContent = result.message || "Story saved successfully.";
+
+    await loadArticles();
+
+    $("editorPanel").scrollIntoView({ behavior: "smooth" });
+  } catch (error) {
+    $("saveStatus").textContent = error.message;
+  } finally {
+    buttons.forEach(button => button.disabled = false);
+  }
+}
+
+async function deleteArticle(id) {
+  const article = articles.find(a => Number(a.id) === Number(id));
+  if (!article) return;
+
+  if (!confirm("Permanently delete this article?\n\n" + article.title)) {
+    return;
+  }
+
+  try {
+    await apiRequest("DELETE", { id });
+    await loadArticles();
+    alert("Article deleted.");
+  } catch (error) {
+    alert(error.message);
+  }
+}
+
+$("newArticle").addEventListener("click", openEditor);
+
+$("cancelEdit").addEventListener("click", () => {
+  clearEditor();
+  $("editorPanel").scrollIntoView({ behavior: "smooth" });
+});
+
+$("saveDraft").addEventListener("click", () => saveArticle("draft"));
+$("publish").addEventListener("click", () => {
+  if (confirm("Publish this story to the public website?")) {
+    saveArticle("published");
+  }
+});
+
+$("logout").addEventListener("click", async () => {
+  try {
+    await fetch("/admin/logout", {
+      method: "POST",
+      credentials: "same-origin"
+    });
+  } finally {
+    window.location.href = "/admin.html";
+  }
+});
+
+async function start() {
+  const valid = await checkSession();
+
+  if (valid) {
+    await loadArticles();
+  } else {
+    $("libraryStatus").textContent = "Log in to access the newsroom.";
+    $("articleList").textContent = "";
+  }
+}
+
+start();
+</script>
 </body>
 </html>
