@@ -1,0 +1,528 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Leonida Whispers | Intelligence Report</title>
+  <meta name="description" content="Read the latest intelligence from Leonida Whispers.">
+  <meta name="theme-color" content="#090713">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+
+  <style>
+    .report-wrap {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 55px 22px 90px;
+    }
+
+    .report-top {
+      color: #ff55bd;
+      font-size: 12px;
+      letter-spacing: 3px;
+      margin-bottom: 20px;
+    }
+
+    .report-category {
+      display: inline-block;
+      color: #65e7f5;
+      border: 1px solid #65e7f5;
+      padding: 7px 12px;
+      font-size: 11px;
+      letter-spacing: 2px;
+      margin-bottom: 22px;
+    }
+
+    .report-title {
+      font-family: Orbitron, sans-serif;
+      font-size: clamp(30px, 6vw, 55px);
+      line-height: 1.2;
+      margin: 0 0 20px;
+      color: #fff;
+    }
+
+    .report-excerpt {
+      color: #c2b9d3;
+      font-size: 19px;
+      line-height: 1.7;
+      margin-bottom: 25px;
+    }
+
+    .report-meta {
+      color: #65e7f5;
+      font-size: 12px;
+      letter-spacing: 2px;
+      margin-bottom: 30px;
+    }
+
+    .report-cover {
+      width: 100%;
+      max-height: 480px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 35px;
+      border: 1px solid #39304f;
+    }
+
+    .report-content {
+      color: #e6e0ef;
+      font-family: Inter, sans-serif;
+      font-size: 17px;
+      line-height: 1.9;
+      overflow-wrap: anywhere;
+    }
+
+    .report-content h1,
+    .report-content h2,
+    .report-content h3 {
+      color: #fff;
+      font-family: Orbitron, sans-serif;
+      line-height: 1.4;
+      margin: 35px 0 15px;
+    }
+
+    .report-content h2 {
+      font-size: 25px;
+      border-bottom: 1px solid #39304f;
+      padding-bottom: 10px;
+    }
+
+    .report-content h3 { font-size: 20px; }
+
+    .report-content a {
+      color: #65e7f5;
+      text-decoration: underline;
+    }
+
+    .report-content img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+      margin: 20px 0;
+    }
+
+    .report-content blockquote {
+      border-left: 3px solid #ff55bd;
+      margin: 25px 0;
+      padding: 10px 20px;
+      background: #131126;
+      color: #c2b9d3;
+    }
+
+    .report-content ul,
+    .report-content ol {
+      padding-left: 25px;
+    }
+
+    .report-content li { margin-bottom: 8px; }
+
+    .report-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 40px;
+    }
+
+    .report-actions button,
+    .report-actions a {
+      display: inline-block;
+      padding: 13px 19px;
+      background: linear-gradient(100deg,#a52c86,#5941ae);
+      color: white;
+      border: 0;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .report-status {
+      color: #65e7f5;
+      text-align: center;
+      padding: 70px 15px;
+      font-family: Orbitron, sans-serif;
+    }
+
+    @media (max-width: 600px) {
+      .report-wrap { padding: 35px 17px 65px; }
+      .report-content { font-size: 16px; }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="scanlines" aria-hidden="true"></div>
+
+<header class="site-header">
+  <a class="brand" href="index.html" aria-label="Leonida Whispers home">
+    <img src="assets/Leonida-logo.png" alt="Leonida Whispers" style="width:76px;height:76px;object-fit:contain;border-radius:50%;">
+    <span class="brand-name">
+      LEONIDA <b>WHISPERS</b>
+      <small>THE GTA INTELLIGENCE NETWORK</small>
+    </span>
+  </a>
+
+  <button class="menu-toggle" aria-label="Open navigation" aria-expanded="false">☰</button>
+
+  <nav class="main-nav" aria-label="Main navigation">
+    <a href="index.html">HOME</a>
+    <a href="index.html#latest">LATEST</a>
+    <a href="index.html#guides">GUIDES</a>
+    <a href="Locations.html">DATABASE</a>
+    <a href="index.html#briefing">NEWSLETTER</a>
+  </nav>
+</header>
+
+<main class="report-wrap">
+
+  <div class="report-top">LEONIDA WHISPERS / INTELLIGENCE ARCHIVE</div>
+
+  <div id="reportStatus" class="report-status">
+    RETRIEVING INTELLIGENCE...
+  </div>
+
+  <article id="report" hidden>
+
+    <span class="report-category" id="reportCategory"></span>
+
+    <h1 class="report-title" id="reportTitle"></h1>
+
+    <p class="report-excerpt" id="reportExcerpt"></p>
+
+    <div class="report-meta" id="reportMeta"></div>
+
+    <img id="reportCover" class="report-cover" hidden>
+
+    <div class="report-content" id="reportContent"></div>
+
+    <div class="report-actions">
+      <button id="shareButton">SHARE INTELLIGENCE ↗</button>
+      <a href="index.html#latest">BACK TO LATEST INTEL</a>
+    </div>
+
+  </article>
+
+</main>
+
+<footer class="site-footer">
+  <a class="footer-brand" href="index.html">
+    LEONIDA <b>WHISPERS</b>
+  </a>
+
+  <p>
+    An independent Grand Theft Auto fan publication.
+    Not affiliated with, endorsed by, or sponsored by
+    Rockstar Games or Take-Two Interactive.
+  </p>
+
+  <div class="footer-bottom">
+    <span>© <span id="year"></span> LEONIDA WHISPERS</span>
+    <a href="index.html">BACK TO HOME ↑</a>
+  </div>
+</footer>
+
+<script>
+const statusBox = document.getElementById("reportStatus");
+const report = document.getElementById("report");
+
+document.getElementById("year").textContent =
+  new Date().getFullYear();
+
+
+// Basic safe Markdown renderer.
+function escapeHTML(value) {
+  return String(value).replace(/[&<>"']/g, character => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  })[character]);
+}
+
+function safeURL(value) {
+  try {
+    const url = new URL(value, window.location.origin);
+
+    if (
+      url.protocol === "https:" ||
+      url.protocol === "http:"
+    ) {
+      return url.href;
+    }
+  } catch {}
+
+  return null;
+}
+
+function inlineMarkdown(value) {
+  let text = escapeHTML(value);
+
+  text = text.replace(
+    /`([^`]+)`/g,
+    "<code>$1</code>"
+  );
+
+  text = text.replace(
+    /\*\*([^*]+)\*\*/g,
+    "<strong>$1</strong>"
+  );
+
+  text = text.replace(
+    /\*([^*]+)\*/g,
+    "<em>$1</em>"
+  );
+
+  text = text.replace(
+    /\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g,
+    (match, label, url) => {
+      const safe = safeURL(url);
+      return safe
+        ? '<a href="' + safe + '" target="_blank" rel="noopener noreferrer">' + label + '</a>'
+        : label;
+    }
+  );
+
+  text = text.replace(
+    /!\[([^\]]*)\]\((https?:\/\/[^)\s]+)\)/g,
+    (match, alt, url) => {
+      const safe = safeURL(url);
+      return safe
+        ? '<img src="' + safe + '" alt="' + alt + '" loading="lazy">'
+        : "";
+    }
+  );
+
+  return text;
+}
+
+function renderMarkdown(markdown) {
+  const lines = String(markdown || "").split(/\r?\n/);
+  const output = [];
+
+  let paragraph = [];
+  let listType = null;
+
+  function flushParagraph() {
+    if (paragraph.length) {
+      output.push(
+        "<p>" + inlineMarkdown(paragraph.join(" ")) + "</p>"
+      );
+      paragraph = [];
+    }
+  }
+
+  function closeList() {
+    if (listType) {
+      output.push("</" + listType + ">");
+      listType = null;
+    }
+  }
+
+  for (const line of lines) {
+    const trimmed = line.trim();
+
+    if (!trimmed) {
+      flushParagraph();
+      closeList();
+      continue;
+    }
+
+    const heading = trimmed.match(/^(#{1,3})\s+(.+)$/);
+
+    if (heading) {
+      flushParagraph();
+      closeList();
+
+      const level = heading[1].length;
+      output.push(
+        "<h" + level + ">" +
+        inlineMarkdown(heading[2]) +
+        "</h" + level + ">"
+      );
+      continue;
+    }
+
+    if (trimmed.startsWith("> ")) {
+      flushParagraph();
+      closeList();
+      output.push(
+        "<blockquote>" +
+        inlineMarkdown(trimmed.slice(2)) +
+        "</blockquote>"
+      );
+      continue;
+    }
+
+    const unordered = trimmed.match(/^[-*]\s+(.+)$/);
+    const ordered = trimmed.match(/^\d+\.\s+(.+)$/);
+
+    if (unordered || ordered) {
+      flushParagraph();
+
+      const wantedType = unordered ? "ul" : "ol";
+
+      if (listType !== wantedType) {
+        closeList();
+        listType = wantedType;
+        output.push("<" + listType + ">");
+      }
+
+      output.push(
+        "<li>" +
+        inlineMarkdown((unordered || ordered)[1]) +
+        "</li>"
+      );
+      continue;
+    }
+
+    closeList();
+    paragraph.push(trimmed);
+  }
+
+  flushParagraph();
+  closeList();
+
+  return output.join("\n");
+}
+
+
+// Retrieve the requested published story.
+async function loadReport() {
+  const params = new URLSearchParams(window.location.search);
+  const slug = params.get("slug");
+
+  if (!slug) {
+    statusBox.textContent = "NO INTELLIGENCE FILE SELECTED.";
+    return;
+  }
+
+  try {
+    const response = await fetch("/api/articles", {
+      cache: "no-store"
+    });
+
+    if (!response.ok) {
+      throw new Error("Unable to contact the intelligence archive.");
+    }
+
+    const data = await response.json();
+
+    const article = (data.articles || []).find(
+      item => item.slug === slug &&
+              item.status === "published"
+    );
+
+    if (!article) {
+      statusBox.textContent = "REPORT NOT FOUND OR NOT YET PUBLISHED.";
+      return;
+    }
+
+    document.title = article.title + " | Leonida Whispers";
+
+    document.querySelector('meta[name="description"]')
+      .setAttribute(
+        "content",
+        article.excerpt || "Latest intelligence from Leonida Whispers."
+      );
+
+    document.getElementById("reportCategory").textContent =
+      article.category || "INTELLIGENCE";
+
+    document.getElementById("reportTitle").textContent =
+      article.title;
+
+    document.getElementById("reportExcerpt").textContent =
+      article.excerpt || "";
+
+    const date = article.published_at
+      ? new Date(article.published_at).toLocaleDateString("en-GB", {
+          day: "numeric",
+          month: "long",
+          year: "numeric"
+        })
+      : "";
+
+    document.getElementById("reportMeta").textContent =
+      "LEONIDA WHISPERS" + (date ? "  /  " + date : "");
+
+    const cover = document.getElementById("reportCover");
+    const coverURL = article.cover_image_url
+      ? safeURL(article.cover_image_url)
+      : null;
+
+    if (coverURL) {
+      cover.src = coverURL;
+      cover.alt = article.title;
+      cover.hidden = false;
+    }
+
+    document.getElementById("reportContent").innerHTML =
+      renderMarkdown(article.content_markdown);
+
+    statusBox.hidden = true;
+    report.hidden = false;
+
+  } catch (error) {
+    statusBox.textContent = error.message ||
+      "UNABLE TO RETRIEVE REPORT.";
+  }
+}
+
+
+// Share the current article.
+document.getElementById("shareButton").addEventListener("click", async () => {
+  const shareData = {
+    title: document.title,
+    url: window.location.href
+  };
+
+  try {
+    if (navigator.share) {
+      await navigator.share(shareData);
+    } else if (navigator.clipboard) {
+      await navigator.clipboard.writeText(shareData.url);
+      alert("Article link copied.");
+    } else {
+      prompt("Copy this article link:", shareData.url);
+    }
+  } catch (error) {
+    if (error.name !== "AbortError") {
+      alert("Unable to share this article.");
+    }
+  }
+});
+
+
+// Mobile navigation.
+const menuToggle = document.querySelector(".menu-toggle");
+const nav = document.querySelector(".main-nav");
+
+menuToggle?.addEventListener("click", () => {
+  const open = nav.classList.toggle("open");
+  menuToggle.setAttribute("aria-expanded", String(open));
+  menuToggle.setAttribute(
+    "aria-label",
+    open ? "Close navigation" : "Open navigation"
+  );
+});
+
+nav?.querySelectorAll("a").forEach(link => {
+  link.addEventListener("click", () => {
+    nav.classList.remove("open");
+    menuToggle?.setAttribute("aria-expanded", "false");
+  });
+});
+
+loadReport();
+</script>
+
+</body>
+</html>
