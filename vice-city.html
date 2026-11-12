@@ -231,5 +231,111 @@ footer{text-align:center;padding:30px 15px;border-top:1px solid #30203d;color:#9
 <p>Independent fan publication. Not affiliated with Rockstar Games.</p>
 </footer>
 
+<!-- VICE CITY FULL SCREEN IMAGE VIEWER -->
+<div id="imageViewer" class="image-viewer">
+  <button class="viewer-close" onclick="closeViewer()">×</button>
+  <button class="viewer-prev" onclick="changeImage(-1)">❮</button>
+  <img id="viewerImage" src="" alt="Vice City gallery image">
+  <button class="viewer-next" onclick="changeImage(1)">❯</button>
+  <div id="viewerCaption"></div>
+</div>
+
+<style>
+.image-viewer{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  background:rgba(5,3,12,.97);
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  padding:20px;
+}
+.image-viewer.active{
+  display:flex;
+}
+.image-viewer img{
+  max-width:90%;
+  max-height:75vh;
+  object-fit:contain;
+  border:1px solid #ff3fbd;
+  box-shadow:0 0 30px rgba(255,63,189,.25);
+}
+.viewer-close,.viewer-prev,.viewer-next{
+  position:absolute;
+  background:#170f24;
+  color:#40eaff;
+  border:1px solid #ff3fbd;
+  font-size:25px;
+  padding:10px 17px;
+  cursor:pointer;
+}
+.viewer-close{top:20px;right:20px}
+.viewer-prev{left:12px;top:50%}
+.viewer-next{right:12px;top:50%}
+#viewerCaption{
+  color:#ff55c5;
+  margin-top:18px;
+  letter-spacing:2px;
+  font-size:12px;
+}
+</style>
+
+<script>
+const galleryImages = [
+  {
+    src:"assets/vice-city-waterfront.jpg",
+    caption:"001 / THE WATERFRONT"
+  },
+  {
+    src:"assets/vice-city-night.jpg",
+    caption:"002 / AFTER DARK"
+  },
+  {
+    src:"assets/vice-city-pool.jpg",
+    caption:"003 / COASTAL LIFESTYLE"
+  }
+];
+
+let currentImage = 0;
+
+function openViewer(index){
+  currentImage = index;
+  showViewerImage();
+  document.getElementById("imageViewer").classList.add("active");
+}
+
+function closeViewer(){
+  document.getElementById("imageViewer").classList.remove("active");
+}
+
+function changeImage(direction){
+  currentImage = (currentImage + direction + galleryImages.length) % galleryImages.length;
+  showViewerImage();
+}
+
+function showViewerImage(){
+  document.getElementById("viewerImage").src = galleryImages[currentImage].src;
+  document.getElementById("viewerCaption").textContent = galleryImages[currentImage].caption;
+}
+
+document.querySelectorAll(".gallery-card img").forEach((img,index)=>{
+  img.style.cursor="pointer";
+  img.addEventListener("click",()=>openViewer(index));
+});
+
+document.getElementById("imageViewer").addEventListener("click",function(e){
+  if(e.target === this) closeViewer();
+});
+
+document.addEventListener("keydown",function(e){
+  if(!document.getElementById("imageViewer").classList.contains("active")) return;
+  if(e.key==="Escape") closeViewer();
+  if(e.key==="ArrowRight") changeImage(1);
+  if(e.key==="ArrowLeft") changeImage(-1);
+});
+</script>
+
 </body>
 </html>
