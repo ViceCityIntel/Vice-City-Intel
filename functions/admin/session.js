@@ -2,10 +2,9 @@
 const encoder = new TextEncoder();
 
 function json(data, status = 200) {
-  return new Response(JSON.stringify(data), {
+  return Response.json(data, {
     status,
     headers: {
-      "Content-Type": "application/json",
       "Cache-Control": "no-store"
     }
   });
@@ -65,7 +64,6 @@ export async function onRequest({ request, env }) {
     }
 
     const [payload, signatureText] = parts;
-
     const signature = decodeBase64url(signatureText);
 
     const valid = await verifySignature(
@@ -83,7 +81,6 @@ export async function onRequest({ request, env }) {
     );
 
     const session = JSON.parse(decoded);
-
     const now = Math.floor(Date.now() / 1000);
 
     if (
@@ -106,4 +103,3 @@ export async function onRequest({ request, env }) {
     return json({ authenticated: false }, 401);
   }
 }
-
