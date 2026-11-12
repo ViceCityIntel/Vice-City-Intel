@@ -17,7 +17,7 @@ export async function onRequest({ request }) {
       headers: {
         "Content-Type": "application/json",
         "Cache-Control": "no-store",
-        "Set-Cookie": "LW_ADMIN_SESSION=; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=0"
+        "Set-Cookie": "LW_ADMIN_SESSION=; Path=/admin; HttpOnly; Secure; SameSite=Strict; Max-Age=0"
       }
     }
   );
