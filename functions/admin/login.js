@@ -199,7 +199,7 @@ export async function onRequest({ request, env }) {
       200,
       {
         "Set-Cookie":
-          `LW_ADMIN_SESSION=${session}; HttpOnly; Secure; SameSite=Strict; Path=/admin; Max-Age=28800`
+          `LW_ADMIN_SESSION=${session}; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=28800`
       }
     );
 
