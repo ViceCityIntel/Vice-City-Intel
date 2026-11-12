@@ -1,0 +1,220 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#090817">
+<title>Admin Login | Leonida Whispers</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background:
+    radial-gradient(ellipse at 50% 0%, #38205d 0%, transparent 55%),
+    linear-gradient(160deg, #090817, #10152c 65%, #090817);
+  color: #fff;
+  font-family: Arial, sans-serif;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 410px;
+  padding: 38px 28px;
+  background: rgba(15, 16, 38, 0.94);
+  border: 1px solid rgba(255, 75, 190, 0.4);
+  border-radius: 18px;
+  box-shadow: 0 0 35px rgba(255, 50, 190, 0.13);
+}
+
+.logo {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.logo h1 {
+  margin: 0;
+  font-size: 29px;
+  letter-spacing: 3px;
+  color: #ff65c8;
+  text-shadow: 0 0 18px #ff35b5;
+}
+
+.logo p {
+  color: #65eaff;
+  letter-spacing: 4px;
+  font-size: 10px;
+  margin-top: 12px;
+}
+
+h2 {
+  text-align: center;
+  font-size: 19px;
+  margin-bottom: 28px;
+  letter-spacing: 2px;
+}
+
+label {
+  display: block;
+  margin: 18px 0 8px;
+  color: #c7c6dc;
+  font-size: 13px;
+}
+
+input {
+  width: 100%;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #444365;
+  background: #090b1b;
+  color: white;
+  font-size: 16px;
+  outline: none;
+}
+
+input:focus {
+  border-color: #ff65c8;
+  box-shadow: 0 0 12px #ff35b555;
+}
+
+button {
+  width: 100%;
+  padding: 16px;
+  margin-top: 26px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #ff42ae, #8c65ff);
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+  letter-spacing: 2px;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+#message {
+  min-height: 24px;
+  margin-top: 18px;
+  text-align: center;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.footer {
+  text-align: center;
+  margin-top: 30px;
+  color: #77758e;
+  font-size: 11px;
+  letter-spacing: 2px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="login-card">
+
+  <div class="logo">
+    <h1>LEONIDA</h1>
+    <p>W H I S P E R S</p>
+  </div>
+
+  <h2>INTELLIGENCE ACCESS</h2>
+
+  <form id="loginForm">
+
+    <label for="email">ADMIN EMAIL</label>
+    <input
+      id="email"
+      type="email"
+      autocomplete="username"
+      placeholder="Enter admin email"
+      required
+    >
+
+    <label for="password">PASSWORD</label>
+    <input
+      id="password"
+      type="password"
+      autocomplete="current-password"
+      placeholder="Enter password"
+      required
+    >
+
+    <button id="loginButton" type="submit">
+      ACCESS CONTROL ROOM
+    </button>
+
+  </form>
+
+  <div id="message" role="status" aria-live="polite"></div>
+
+  <div class="footer">
+    LEONIDA INTELLIGENCE NETWORK<br>
+    RESTRICTED ACCESS
+  </div>
+
+</div>
+
+<script>
+const form = document.getElementById("loginForm");
+const button = document.getElementById("loginButton");
+const message = document.getElementById("message");
+
+form.addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  button.disabled = true;
+  button.textContent = "AUTHENTICATING...";
+  message.textContent = "Verifying credentials...";
+  message.style.color = "#65eaff";
+
+  try {
+    const response = await fetch("/admin/login", {
+      method: "POST",
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        email: document.getElementById("email").value,
+        password: document.getElementById("password").value
+      })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || "Access denied.");
+    }
+
+    message.textContent = "ACCESS GRANTED. Authentication successful.";
+    message.style.color = "#65ffbd";
+
+    button.textContent = "ACCESS GRANTED";
+
+  } catch (error) {
+    message.textContent = error.message || "Connection error. Try again.";
+    message.style.color = "#ff6b91";
+
+    button.disabled = false;
+    button.textContent = "ACCESS CONTROL ROOM";
+  }
+});
+</script>
+
+</body>
+</html>
