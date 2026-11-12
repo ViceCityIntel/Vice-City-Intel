@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Leonida Whispers | Command Centre</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #090817;
+      color: #f5f1ff;
+      font-family: Arial, sans-serif;
+      padding: 28px 18px;
+    }
+    .wrap { max-width: 900px; margin: auto; }
+    .brand {
+      color: #ff55bd;
+      letter-spacing: 5px;
+      font-size: 25px;
+      font-weight: bold;
+    }
+    .sub { color: #65e7f5; letter-spacing: 5px; margin-top: 7px; }
+    header { margin: 35px 0; }
+    h1 { font-size: 27px; letter-spacing: 2px; }
+    .status {
+      border: 1px solid #39304f;
+      background: #131126;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .status p { color: #bdb7d2; }
+    .green { color: #65edbb; }
+    .red { color: #ff719b; }
+    button {
+      border: 0;
+      border-radius: 8px;
+      padding: 13px 20px;
+      background: linear-gradient(100deg,#a52c86,#5941ae);
+      color: white;
+      font-weight: bold;
+      font-size: 15px;
+      cursor: pointer;
+    }
+    .muted { color: #aaa3bd; font-size: 13px; }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <div class="brand">LEONIDA</div>
+    <div class="sub">W H I S P E R S</div>
+
+    <header>
+      <h1>INTELLIGENCE COMMAND CENTRE</h1>
+      <p class="muted">RESTRICTED ADMINISTRATOR ACCESS</p>
+    </header>
+
+    <section class="status">
+      <h2>Authentication status</h2>
+      <p id="auth">Verifying secure session...</p>
+    </section>
+
+    <section class="status">
+      <h2>Newsroom overview</h2>
+      <p>Article management — coming next.</p>
+      <p>Location dossiers — coming next.</p>
+      <p>Newsletter operations — coming next.</p>
+    </section>
+
+    <button id="logout" hidden>LOG OUT</button>
+  </main>
+
+  <script>
+    async function checkSession() {
+      const status = document.getElementById("auth");
+      try {
+        const response = await fetch("/admin/session", {
+          credentials: "same-origin",
+          cache: "no-store"
+        });
+
+        if (!response.ok) {
+          status.textContent = "Session not authenticated. Please log in again.";
+          status.className = "red";
+          return;
+        }
+
+        const data = await response.json();
+
+        if (!data.authenticated) {
+          status.textContent = "Session not authenticated. Please log in again.";
+          status.className = "red";
+          return;
+        }
+
+        status.textContent = "SECURE SESSION ACTIVE — " + data.email;
+        status.className = "green";
+        document.getElementById("logout").hidden = false;
+      } catch (error) {
+        status.textContent = "Unable to verify session.";
+        status.className = "red";
+      }
+    }
+
+    document.getElementById("logout").addEventListener("click", async () => {
+      await fetch("/admin/logout", {
+        method: "POST",
+        credentials: "same-origin"
+      });
+      window.location.href = "/admin.html";
+    });
+
+    checkSession();
+  </script>
+</body>
+</html>
