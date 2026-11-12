@@ -88,7 +88,7 @@ export async function onRequest({ request, env }) {
   }
 
   if (!env.DB || !env.ADMIN_EMAIL ||
-      !env.ADMIN_PASSWORD_HASH || !env.SESSION_SECRET) {
+      !env.ADMIN_PASSWORD || !env.SESSION_SECRET) {
     return json({ error: "Server configuration error" }, 500);
   }
 
