@@ -1228,3 +1228,126 @@ h1 strong{
 }
 
 /* END PHASE 1 */
+
+/* =====================================
+   LEONIDA WHISPERS
+   FEATURED INTELLIGENCE BANNER
+===================================== */
+
+#featuredIntel[hidden] {
+  display: none !important;
+}
+
+.featured-intel {
+  max-width: 1500px;
+  margin: 35px auto;
+  padding: 0 8vw;
+}
+
+.featured-image {
+  min-height: 430px;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  border: 1px solid rgba(255, 79, 200, .55);
+  border-radius: 16px;
+  background:
+    linear-gradient(90deg, #10091e, rgba(16,9,30,.15)),
+    linear-gradient(145deg, #542477, #11172d);
+  background-size: cover;
+  background-position: center;
+  box-shadow:
+    0 15px 45px rgba(0,0,0,.4),
+    0 0 25px rgba(255,79,200,.12);
+}
+
+.featured-overlay {
+  width: 100%;
+  padding: 55px 45px;
+  position: relative;
+  z-index: 2;
+  background: linear-gradient(
+    90deg,
+    rgba(9,7,19,.96),
+    rgba(9,7,19,.72) 55%,
+    transparent
+  );
+}
+
+.featured-label {
+  display: inline-block;
+  color: #ff55c8;
+  font: 800 11px Orbitron, sans-serif;
+  letter-spacing: 3px;
+  margin-bottom: 18px;
+  text-shadow: 0 0 15px rgba(255,79,200,.6);
+}
+
+.featured-overlay h2 {
+  max-width: 750px;
+  color: #fff;
+  font: 800 clamp(28px,5vw,52px)/1.2 Orbitron, sans-serif;
+  margin: 0 0 18px;
+  text-shadow: 0 4px 25px #000;
+}
+
+.featured-overlay p {
+  max-width: 600px;
+  color: #e0d8ed;
+  font: 14px/1.8 Inter, sans-serif;
+  margin-bottom: 28px;
+}
+
+.featured-overlay a {
+  display: inline-block;
+  padding: 16px 24px;
+  color: #16091c;
+  background: linear-gradient(100deg,#ff4fc8,#8e5bff);
+  border-radius: 5px;
+  font: 800 11px Orbitron, sans-serif;
+  letter-spacing: 1px;
+  box-shadow: 0 0 25px rgba(255,79,200,.3);
+}
+
+.featured-overlay a:hover {
+  background: #fff;
+  transform: translateY(-2px);
+}
+
+@media(max-width:620px) {
+  .featured-intel {
+    margin: 25px auto;
+    padding: 0 16px;
+  }
+
+  .featured-image {
+    min-height: 390px;
+    background-position: center;
+  }
+
+  .featured-overlay {
+    padding: 25px 20px;
+    background: linear-gradient(
+      0deg,
+      rgba(9,7,19,.98),
+      rgba(9,7,19,.72) 65%,
+      rgba(9,7,19,.05)
+    );
+  }
+
+  .featured-label {
+    font-size: 9px;
+    letter-spacing: 2px;
+  }
+
+  .featured-overlay h2 {
+    font-size: 25px;
+  }
+
+  .featured-overlay p {
+    font-size: 12px;
+  }
+}
+
+/* END FEATURED INTELLIGENCE BANNER */
