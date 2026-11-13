@@ -524,7 +524,38 @@ const article = articles.find(item =>
 
     document.getElementById("reportContent").innerHTML =
       renderMarkdown(article.content_markdown);
+// LOAD RELATED INTELLIGENCE
+const relatedSection = document.getElementById("relatedIntelligence");
+const relatedList = document.getElementById("relatedList");
 
+const relatedArticles = articles
+  .filter(item => item.slug !== article.slug)
+  .slice(0, 3);
+
+relatedList.innerHTML = "";
+
+relatedArticles.forEach(item => {
+  const card = document.createElement("div");
+  card.className = "related-card";
+
+  const category = document.createElement("span");
+  category.textContent = item.category || "INTELLIGENCE";
+
+  const title = document.createElement("h3");
+  title.textContent = item.title;
+
+  const excerpt = document.createElement("p");
+  excerpt.textContent = item.excerpt || "";
+
+  const link = document.createElement("a");
+  link.href = "article.html?slug=" + encodeURIComponent(item.slug);
+  link.textContent = "READ REPORT →";
+
+  card.append(category, title, excerpt, link);
+  relatedList.appendChild(card);
+});
+
+relatedSection.hidden = relatedArticles.length === 0;
     statusBox.hidden = true;
     report.hidden = false;
 
