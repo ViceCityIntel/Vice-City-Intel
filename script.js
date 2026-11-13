@@ -42,7 +42,16 @@ document.addEventListener("DOMContentLoaded", () => {
   let allCards = [];
 
   function categoryFilter(category) {
+  
+function categoryFilter(category) {
     const value = (category || "").toLowerCase();
+
+    if (
+      value.includes("tip") ||
+      value.includes("trick")
+    ) {
+      return "tips";
+    }
 
     if (value.includes("guide")) return "guides";
 
@@ -56,6 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     return "news";
   }
+
 
   function createArticleCard(article) {
     const card = document.createElement("article");
