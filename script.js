@@ -132,43 +132,80 @@ document.addEventListener("DOMContentLoaded", () => {
   // LOAD PUBLISHED ARTICLES FROM CLOUDFLARE
   // ==========================================
 
-  async function loadPublishedArticles() {
-    if (!articleGrid) return;
+  
+async function loadPublishedArticles() {
+  if (!articleGrid) return;
 
-    try {
-      const response = await fetch("/api/articles", {
-        method: "GET",
-        cache: "no-store",
-        credentials: "same-origin"
-      });
+  try {
+    const response = await fetch("/api/articles", {
+      method: "GET",
+      cache: "no-store",
+      credentials: "same-origin"
+    });
 
-      if (!response.ok) {
-        throw new Error("Unable to retrieve published articles");
+    if (!response.ok) {
+      throw new Error("Unable to retrieve published articles");
+    }
+
+    const data = await response.json();
+
+    if (!Array.isArray(data.articles)) return;
+
+    // FEATURED INTELLIGENCE BANNER
+    const featuredArticle = data.articles.find(article =>
+      article.featured === true || Number(article.featured) === 1
+    );
+
+    if (featuredArticle) {
+      const featuredSection = document.querySelector("#featuredIntel");
+
+if (featuredSection) {
+  featuredSection.hidden = false;
+}
+      const featuredImage = document.querySelector("#featuredImage");
+      const featuredTitle = document.querySelector("#featuredTitle");
+      const featuredExcerpt = document.querySelector("#featuredExcerpt");
+      const featuredLink = document.querySelector("#featuredLink");
+
+      if (featuredImage && featuredArticle.cover_image_url) {
+        featuredImage.style.backgroundImage =
+          `linear-gradient(0deg, rgba(9,7,19,.85), transparent 100%), url("${featuredArticle.cover_image_url}")`;
       }
 
-      const data = await response.json();
+      if (featuredTitle) {
+        featuredTitle.textContent = featuredArticle.title;
+      }
 
-      if (!Array.isArray(data.articles)) return;
+      if (featuredExcerpt) {
+        featuredExcerpt.textContent = featuredArticle.excerpt || "";
+      }
 
-      // Remove previously loaded database articles.
-      articleGrid.querySelectorAll(".dynamic-article").forEach(card => {
-        card.remove();
-      });
-
-      // Add published database articles.
-      data.articles.forEach(article => {
-        if (!article.slug || !article.title) return;
-
-        const card = createArticleCard(article);
-        articleGrid.appendChild(card);
-      });
-
-      updateArticles();
-
-    } catch (error) {
-      console.error("Leonida Whispers article feed:", error);
+      if (featuredLink) {
+        featuredLink.href =
+          "article.html?slug=" + encodeURIComponent(featuredArticle.slug);
+      }
     }
+
+    // REMOVE PREVIOUS DATABASE ARTICLES
+    articleGrid.querySelectorAll(".dynamic-article").forEach(card => {
+      card.remove();
+    });
+
+    // LOAD PUBLISHED ARTICLES
+    data.articles.forEach(article => {
+      if (!article.slug || !article.title) return;
+
+      const card = createArticleCard(article);
+      articleGrid.appendChild(card);
+    });
+
+    updateArticles();
+
+  } catch (error) {
+    console.error("Leonida Whispers article feed:", error);
   }
+}
+
 
 
   // ==========================================
