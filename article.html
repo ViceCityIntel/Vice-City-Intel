@@ -195,7 +195,25 @@
 
 /* END SPACING IMPROVEMENTS */
 /* RELATED INTELLIGENCE CARDS */
+.related-file-label {
+  color: #ff55bd;
+  font-size: 10px;
+  font-weight: bold;
+  letter-spacing: 3px;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
 
+.related-category {
+  display: inline-block;
+  color: #65e7f5;
+  border: 1px solid #65e7f5;
+  padding: 6px 10px;
+  font-size: 11px;
+  letter-spacing: 2px;
+  margin-bottom: 14px;
+  text-transform: uppercase;
+}
 .related-card {
   background: #11131f;
   border: 1px solid #39304f;
@@ -581,8 +599,11 @@ relatedList.innerHTML = "";
 relatedArticles.forEach(item => {
   const card = document.createElement("div");
   card.className = "related-card";
-
+const fileLabel = document.createElement("div");
+fileLabel.className = "related-file-label";
+fileLabel.textContent = "INTELLIGENCE FILE";
   const category = document.createElement("span");
+  category.className = "related-category";
   category.textContent = item.category || "INTELLIGENCE";
 
   const title = document.createElement("h3");
@@ -612,7 +633,7 @@ card.addEventListener("keydown", (event) => {
 });
 
 
-  card.append(category, title, excerpt, link);
+  card.append(fileLabel, category, title, excerpt, link);
   relatedList.appendChild(card);
 });
 
