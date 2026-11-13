@@ -40,8 +40,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let activeFilter = "all";
   let allCards = [];
-
-  function categoryFilter(category) {
   
 function categoryFilter(category) {
     const value = (category || "").toLowerCase();
