@@ -205,7 +205,7 @@ form.addEventListener("submit", async (event) => {
     message.style.color = "#65ffbd";
 
     button.textContent = "ACCESS GRANTED";
-
+window.location.href = "/admin/";
   } catch (error) {
     message.textContent = error.message || "Connection error. Try again.";
     message.style.color = "#ff6b91";
