@@ -746,6 +746,103 @@ function previewArticle() {
       "'": "&#39;"
     })[char]);
 
+function renderMarkdown(markdown) {
+  const escapeHTML = value =>
+    String(value).replace(/[&<>"']/g, char => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;"
+    })[char]);
+
+  function inline(text) {
+    let html = escapeHTML(text);
+
+    html = html.replace(
+      /!\[([^\]]*)\]\((https?:\/\/[^\s)]+)\)/g,
+      '<img alt="$1" src="$2" loading="lazy">'
+    );
+
+    html = html.replace(
+      /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,
+      '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>'
+    );
+
+    html = html.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+    html = html.replace(/\*(.+?)\*/g, "<em>$1</em>");
+    html = html.replace(/`(.+?)`/g, "<code>$1</code>");
+
+    return html;
+  }
+
+  const lines = String(markdown).split(/\r?\n/);
+  const output = [];
+  let paragraph = [];
+  let listOpen = false;
+
+  function closeParagraph() {
+    if (paragraph.length) {
+      output.push("<p>" + inline(paragraph.join(" ")) + "</p>");
+      paragraph = [];
+    }
+  }
+
+  function closeList() {
+    if (listOpen) {
+      output.push("</ul>");
+      listOpen = false;
+    }
+  }
+
+  for (const line of lines) {
+    const trimmed = line.trim();
+
+    if (!trimmed) {
+      closeParagraph();
+      closeList();
+      continue;
+    }
+
+    const heading = trimmed.match(/^(#{1,3})\s+(.+)$/);
+
+    if (heading) {
+      closeParagraph();
+      closeList();
+      const level = heading[1].length;
+      output.push(`<h${level}>${inline(heading[2])}</h${level}>`);
+      continue;
+    }
+
+    if (trimmed.startsWith("- ") || trimmed.startsWith("* ")) {
+      closeParagraph();
+
+      if (!listOpen) {
+        output.push("<ul>");
+        listOpen = true;
+      }
+
+      output.push("<li>" + inline(trimmed.slice(2)) + "</li>");
+      continue;
+    }
+
+    if (trimmed.startsWith("> ")) {
+      closeParagraph();
+      closeList();
+      output.push("<blockquote>" + inline(trimmed.slice(2)) + "</blockquote>");
+      continue;
+    }
+
+    closeList();
+    paragraph.push(trimmed);
+  }
+
+  closeParagraph();
+  closeList();
+
+  return output.join("\n");
+}
+
   let safeImage = "";
 
   try {
@@ -815,7 +912,7 @@ function previewArticle() {
         <h1>${escapeHTML(title)}</h1>
         <p class="excerpt">${escapeHTML(excerpt)}</p>
         ${safeImage ? `<img src="${escapeHTML(safeImage)}" alt="">` : ""}
-        <div class="content">${escapeHTML(content)}</div>
+        <div class="content">${renderMarkdown(content)}</div>
         <button onclick="window.close()">CLOSE PREVIEW</button>
       </main>
     </body>
