@@ -1052,7 +1052,8 @@ async function start() {
   }
 }
 
-// LEONIDA WHISPERS MEDIA UPLOADER
+
+ // LEONIDA WHISPERS MEDIA UPLOADER
 
 $("uploadMedia").addEventListener("click", async () => {
   const fileInput = $("mediaFile");
@@ -1067,23 +1068,168 @@ $("uploadMedia").addEventListener("click", async () => {
     return;
   }
 
-  const formData = new FormData();
-  formData.append("file", file);
+  const isVideo = file.type.startsWith("video/");
+
+  const maxSize = isVideo
+    ? 250 * 1024 * 1024
+    : 15 * 1024 * 1024;
+
+  if (file.size > maxSize) {
+    status.textContent = isVideo
+      ? "Video exceeds the 250MB limit."
+      : "Image exceeds the 15MB limit.";
+    return;
+  }
 
   button.disabled = true;
-  status.textContent = "Uploading media to Leonida storage...";
+  status.textContent = "Preparing upload...";
 
-  try {
-    const response = await fetch("/admin/api/upload", {
-      method: "POST",
-      credentials: "same-origin",
-      body: formData
-    });
+  let uploadKey = null;
+  let uploadId = null;
+  let completed = false;
 
-    const data = await response.json();
+  let progress = $("mediaUploadProgress");
+
+  if (!progress) {
+    progress = document.createElement("progress");
+    progress.id = "mediaUploadProgress";
+    progress.max = 100;
+    progress.value = 0;
+    progress.style.width = "100%";
+    progress.style.margin = "12px 0";
+    status.after(progress);
+  }
+
+  progress.hidden = false;
+  progress.value = 0;
+
+  async function readResponse(response) {
+    let data;
+
+    try {
+      data = await response.json();
+    } catch {
+      throw new Error("Invalid server response.");
+    }
 
     if (!response.ok) {
       throw new Error(data.error || "Upload failed.");
+    }
+
+    return data;
+  }
+
+  try {
+    let data;
+
+    if (isVideo) {
+      const CHUNK_SIZE = 10 * 1024 * 1024;
+      const totalParts = Math.ceil(file.size / CHUNK_SIZE);
+
+      status.textContent = "Starting secure video upload...";
+
+      const startResponse = await fetch(
+        "/admin/api/upload/multipart?action=initiate",
+        {
+          method: "POST",
+          credentials: "same-origin",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            type: file.type,
+            size: file.size
+          })
+        }
+      );
+
+      const startData = await readResponse(startResponse);
+
+      uploadKey = startData.key;
+      uploadId = startData.uploadId;
+
+      if (!uploadKey || !uploadId) {
+        throw new Error("Unable to start video upload.");
+      }
+
+      const parts = [];
+
+      for (let i = 0; i < totalParts; i++) {
+        const partNumber = i + 1;
+
+        const start = i * CHUNK_SIZE;
+        const end = Math.min(start + CHUNK_SIZE, file.size);
+
+        const chunk = file.slice(start, end);
+
+        status.textContent =
+          `Uploading video: part ${partNumber} of ${totalParts}`;
+
+        const partURL =
+          "/admin/api/upload/multipart?action=part" +
+          "&key=" + encodeURIComponent(uploadKey) +
+          "&uploadId=" + encodeURIComponent(uploadId) +
+          "&partNumber=" + partNumber;
+
+        const partResponse = await fetch(partURL, {
+          method: "PUT",
+          credentials: "same-origin",
+          body: chunk
+        });
+
+        const partData = await readResponse(partResponse);
+
+        if (!partData.etag) {
+          throw new Error("Video upload part was not confirmed.");
+        }
+
+        parts.push({
+          partNumber,
+          etag: partData.etag
+        });
+
+        progress.value = Math.round(
+          (partNumber / totalParts) * 95
+        );
+      }
+
+      status.textContent = "Finalising video in media storage...";
+
+      const completeResponse = await fetch(
+        "/admin/api/upload/multipart?action=complete",
+        {
+          method: "POST",
+          credentials: "same-origin",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            key: uploadKey,
+            uploadId,
+            parts
+          })
+        }
+      );
+
+      data = await readResponse(completeResponse);
+
+      completed = true;
+      progress.value = 100;
+
+    } else {
+      status.textContent = "Uploading image...";
+
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const response = await fetch("/admin/api/upload", {
+        method: "POST",
+        credentials: "same-origin",
+        body: formData
+      });
+
+      data = await readResponse(response);
+      progress.value = 100;
     }
 
     const mediaURL = new URL(data.url);
@@ -1094,8 +1240,6 @@ $("uploadMedia").addEventListener("click", async () => {
     ) {
       throw new Error("Unexpected media address.");
     }
-
-    const isVideo = file.type.startsWith("video/");
 
     const markdown = isVideo
       ? `[Watch gameplay: ${file.name}](${data.url})`
@@ -1113,12 +1257,14 @@ $("uploadMedia").addEventListener("click", async () => {
     }
 
     const item = document.createElement("div");
+
     item.style.margin = "12px 0";
     item.style.padding = "12px";
     item.style.border = "1px solid #38304d";
     item.style.borderRadius = "10px";
 
     const link = document.createElement("a");
+
     link.href = data.url;
     link.target = "_blank";
     link.rel = "noopener noreferrer";
@@ -1128,29 +1274,59 @@ $("uploadMedia").addEventListener("click", async () => {
 
     if (isVideo) {
       const preview = document.createElement("video");
+
       preview.src = data.url;
       preview.controls = true;
+      preview.playsInline = true;
+      preview.preload = "metadata";
       preview.style.width = "100%";
       preview.style.marginTop = "10px";
+
       item.appendChild(preview);
+
     } else {
       const preview = document.createElement("img");
+
       preview.src = data.url;
       preview.alt = file.name;
       preview.style.width = "100%";
       preview.style.marginTop = "10px";
       preview.style.borderRadius = "8px";
+
       item.appendChild(preview);
     }
 
     library.appendChild(item);
 
-    status.textContent = "SUCCESS! Media uploaded and added to your story.";
+    status.textContent =
+      "SUCCESS! Media uploaded and added to your story.";
 
     fileInput.value = "";
 
   } catch (error) {
+
+    if (uploadKey && uploadId && !completed) {
+      try {
+        await fetch(
+          "/admin/api/upload/multipart?action=abort",
+          {
+            method: "POST",
+            credentials: "same-origin",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              key: uploadKey,
+              uploadId
+            })
+          }
+        );
+      } catch {}
+    }
+
+    progress.value = 0;
     status.textContent = error.message;
+
   } finally {
     button.disabled = false;
   }
