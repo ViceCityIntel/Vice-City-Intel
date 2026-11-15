@@ -410,6 +410,7 @@ function safeURL(value) {
   return null;
 }
 
+
 function inlineMarkdown(value) {
   let text = escapeHTML(value);
 
@@ -428,16 +429,7 @@ function inlineMarkdown(value) {
     "<em>$1</em>"
   );
 
-  text = text.replace(
-    /\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g,
-    (match, label, url) => {
-      const safe = safeURL(url);
-      return safe
-        ? '<a href="' + safe + '" target="_blank" rel="noopener noreferrer">' + label + '</a>'
-        : label;
-    }
-  );
-
+  // PROCESS IMAGES BEFORE ORDINARY LINKS
   text = text.replace(
     /!\[([^\]]*)\]\((https?:\/\/[^)\s]+)\)/g,
     (match, alt, url) => {
@@ -448,8 +440,20 @@ function inlineMarkdown(value) {
     }
   );
 
+  // PROCESS ORDINARY LINKS
+  text = text.replace(
+    /\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g,
+    (match, label, url) => {
+      const safe = safeURL(url);
+      return safe
+        ? '<a href="' + safe + '" target="_blank" rel="noopener noreferrer">' + label + '</a>'
+        : label;
+    }
+  );
+
   return text;
 }
+
 
 function renderMarkdown(markdown) {
   const lines = String(markdown || "").split(/\r?\n/);
