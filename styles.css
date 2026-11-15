@@ -1518,3 +1518,28 @@ h1 strong {
 }
 
 /* END PREMIUM CARD FINISH */
+
+/* DISCOVERY HUB — MOBILE ACCENT COLOURS */
+
+@media (max-width: 620px) {
+
+  .discovery-hub-grid .discovery-link:nth-child(1) {
+    border-color: #ff4fc8 !important;
+    box-shadow: 0 0 18px rgba(255,79,200,.13);
+  }
+
+  .discovery-hub-grid .discovery-link:nth-child(2) {
+    border-color: #4deaff !important;
+    box-shadow: 0 0 18px rgba(77,234,255,.13);
+  }
+
+  .discovery-hub-grid .discovery-link:nth-child(3) {
+    border-color: #8e5bff !important;
+    box-shadow: 0 0 18px rgba(142,91,255,.16);
+  }
+
+  .discovery-hub-grid .discovery-link:nth-child(4) {
+    border-color: #ff4fc8 !important;
+    box-shadow: 0 0 18px rgba(255,79,200,.13);
+  }
+}
