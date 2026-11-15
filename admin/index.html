@@ -1041,16 +1041,109 @@ $("logout").addEventListener("click", async () => {
   }
 });
 
+
 async function start() {
   const valid = await checkSession();
 
   if (valid) {
     await loadArticles();
+    await loadMediaLibrary();
   } else {
     $("libraryStatus").textContent = "Log in to access the newsroom.";
     $("articleList").textContent = "";
   }
 }
+
+async function loadMediaLibrary() {
+  const library = $("uploadedMedia");
+  const status = $("mediaUploadStatus");
+
+  library.replaceChildren();
+  status.textContent = "Loading saved media...";
+
+  try {
+    const response = await fetch("/admin/api/media", {
+      method: "GET",
+      credentials: "same-origin",
+      cache: "no-store"
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || "Unable to load media.");
+    }
+
+    const media = Array.isArray(data.media) ? data.media : [];
+
+    if (!media.length) {
+      status.textContent = "Your media library is currently empty.";
+      return;
+    }
+
+    media.forEach(file => {
+      const item = document.createElement("div");
+      item.style.cssText =
+        "margin:12px 0;padding:12px;border:1px solid #38304d;border-radius:10px;";
+
+      const link = document.createElement("a");
+      link.href = file.url;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      link.textContent = file.filename;
+
+      item.appendChild(link);
+
+      if (file.type && file.type.startsWith("video/")) {
+        const video = document.createElement("video");
+        video.src = file.url;
+        video.controls = true;
+        video.playsInline = true;
+        video.preload = "metadata";
+        video.style.width = "100%";
+        video.style.marginTop = "10px";
+        item.appendChild(video);
+      } else if (file.type && file.type.startsWith("image/")) {
+        const image = document.createElement("img");
+        image.src = file.url;
+        image.alt = file.filename;
+        image.style.width = "100%";
+        image.style.marginTop = "10px";
+        image.style.borderRadius = "8px";
+        item.appendChild(image);
+      }
+
+      const insert = document.createElement("button");
+      insert.textContent = "INSERT INTO STORY";
+
+      insert.addEventListener("click", () => {
+        const isVideo = file.type && file.type.startsWith("video/");
+
+        const markdown = isVideo
+          ? `[Watch gameplay: ${file.filename}](${file.url})`
+          : `![${file.filename}](${file.url})`;
+
+        const content = $("content");
+        const separator = content.value &&
+          !content.value.endsWith("\n") ? "\n\n" : "";
+
+        content.value += separator + markdown + "\n";
+
+        status.textContent = "Media inserted into your story.";
+      });
+
+      item.appendChild(insert);
+      library.appendChild(item);
+    });
+
+    status.textContent =
+      media.length + " saved media files loaded successfully.";
+
+  } catch (error) {
+    status.textContent = error.message;
+  }
+}
+
 
 
  // LEONIDA WHISPERS MEDIA UPLOADER
@@ -1333,6 +1426,7 @@ $("uploadMedia").addEventListener("click", async () => {
 });
 
 start();
+loadMediaLibrary();
 </script>
 </body>
 </html>
