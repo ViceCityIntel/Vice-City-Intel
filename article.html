@@ -196,6 +196,89 @@
 }
 /* END ARTICLE IMAGE GALLERIES */
 
+/* ARTICLE IMAGE LIGHTBOX */
+.report-image-wrap .report-image,
+.report-gallery-item .report-image {
+  cursor: zoom-in;
+}
+.report-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 58px 18px 30px;
+  background: rgba(5, 4, 13, .96);
+  backdrop-filter: blur(12px);
+}
+.report-lightbox.is-open { display: flex; }
+.report-lightbox-panel {
+  position: relative;
+  width: min(1100px, 100%);
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+.report-lightbox-image {
+  display: block;
+  max-width: 100%;
+  max-height: calc(100vh - 170px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border: 1px solid rgba(101, 231, 245, .35);
+  border-radius: 12px;
+  box-shadow: 0 0 35px rgba(101, 231, 245, .12);
+}
+.report-lightbox-caption {
+  color: #65e7f5;
+  text-align: center;
+  font-size: 14px;
+  line-height: 1.5;
+  letter-spacing: 1px;
+  max-width: 850px;
+}
+.report-lightbox-count {
+  color: #aaa4bd;
+  font-size: 11px;
+  letter-spacing: 2px;
+}
+.report-lightbox-close,
+.report-lightbox-nav {
+  position: fixed;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(101, 231, 245, .45);
+  color: #fff;
+  background: rgba(25, 19, 42, .92);
+  border-radius: 50%;
+  width: 46px;
+  height: 46px;
+  font-size: 25px;
+  cursor: pointer;
+}
+.report-lightbox-close { top: 16px; right: 16px; }
+.report-lightbox-prev { left: 14px; top: 50%; transform: translateY(-50%); }
+.report-lightbox-next { right: 14px; top: 50%; transform: translateY(-50%); }
+.report-lightbox-close:focus-visible,
+.report-lightbox-nav:focus-visible {
+  outline: 2px solid #ff55bd;
+  outline-offset: 3px;
+}
+@media (max-width: 600px) {
+  .report-lightbox { padding: 64px 10px 24px; }
+  .report-lightbox-image { max-height: calc(100vh - 185px); }
+  .report-lightbox-prev { left: 8px; }
+  .report-lightbox-next { right: 8px; }
+  .report-lightbox-close, .report-lightbox-nav { width: 40px; height: 40px; }
+}
+/* END ARTICLE IMAGE LIGHTBOX */
+
+
 
     .report-content blockquote {
       border-left: 3px solid #ff55bd;
@@ -655,6 +738,112 @@ function renderMarkdown(markdown) {
 }
 
 
+
+// IMAGE LIGHTBOX: tap any article image to enlarge it and browse the article images.
+function setupReportLightbox() {
+  const content = document.getElementById("reportContent");
+  if (!content) return;
+
+  let overlay = document.getElementById("reportLightbox");
+  if (!overlay) {
+    overlay = document.createElement("div");
+    overlay.id = "reportLightbox";
+    overlay.className = "report-lightbox";
+    overlay.setAttribute("role", "dialog");
+    overlay.setAttribute("aria-modal", "true");
+    overlay.setAttribute("aria-label", "Image viewer");
+    overlay.innerHTML = `
+      <button type="button" class="report-lightbox-close" aria-label="Close image viewer">×</button>
+      <button type="button" class="report-lightbox-nav report-lightbox-prev" aria-label="Previous image">‹</button>
+      <div class="report-lightbox-panel">
+        <img class="report-lightbox-image" alt="">
+        <div class="report-lightbox-caption"></div>
+        <div class="report-lightbox-count"></div>
+      </div>
+      <button type="button" class="report-lightbox-nav report-lightbox-next" aria-label="Next image">›</button>
+    `;
+    document.body.appendChild(overlay);
+  }
+
+  const imageView = overlay.querySelector(".report-lightbox-image");
+  const captionView = overlay.querySelector(".report-lightbox-caption");
+  const countView = overlay.querySelector(".report-lightbox-count");
+  const closeButton = overlay.querySelector(".report-lightbox-close");
+  const prevButton = overlay.querySelector(".report-lightbox-prev");
+  const nextButton = overlay.querySelector(".report-lightbox-next");
+  let images = [];
+  let activeIndex = 0;
+  let previousFocus = null;
+
+  function refreshImages() {
+    images = Array.from(content.querySelectorAll(".report-image-wrap img.report-image"));
+  }
+
+  function showImage(index) {
+    if (!images.length) return;
+    activeIndex = (index + images.length) % images.length;
+    const image = images[activeIndex];
+    imageView.src = image.currentSrc || image.src;
+    imageView.alt = image.alt || "";
+    const caption = image.closest("figure")?.querySelector("figcaption")?.textContent?.trim()
+      || image.alt || "";
+    captionView.textContent = caption;
+    countView.textContent = (activeIndex + 1) + " / " + images.length;
+    const multiple = images.length > 1;
+    prevButton.hidden = !multiple;
+    nextButton.hidden = !multiple;
+  }
+
+  function openImage(index) {
+    refreshImages();
+    if (!images.length) return;
+    previousFocus = document.activeElement;
+    showImage(index);
+    overlay.classList.add("is-open");
+    document.body.style.overflow = "hidden";
+    closeButton.focus();
+  }
+
+  function closeImage() {
+    overlay.classList.remove("is-open");
+    document.body.style.overflow = "";
+    imageView.removeAttribute("src");
+    if (previousFocus && typeof previousFocus.focus === "function") previousFocus.focus();
+  }
+
+  content.querySelectorAll(".report-image-wrap img.report-image").forEach((image, index) => {
+    image.setAttribute("tabindex", "0");
+    image.setAttribute("role", "button");
+    image.setAttribute("aria-label", "Enlarge image: " + (image.alt || "Article image"));
+    image.addEventListener("click", () => openImage(index));
+    image.addEventListener("keydown", event => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        openImage(index);
+      }
+    });
+  });
+
+  closeButton.onclick = closeImage;
+  prevButton.onclick = () => showImage(activeIndex - 1);
+  nextButton.onclick = () => showImage(activeIndex + 1);
+  overlay.onclick = event => {
+    if (event.target === overlay) closeImage();
+  };
+
+  if (!overlay.dataset.keyboardBound) {
+    document.addEventListener("keydown", event => {
+      if (!overlay.classList.contains("is-open")) return;
+      if (event.key === "Escape") closeButton.click();
+      if (event.key === "ArrowLeft" && images.length > 1) prevButton.click();
+      if (event.key === "ArrowRight" && images.length > 1) nextButton.click();
+    });
+    overlay.dataset.keyboardBound = "true";
+  }
+}
+// END IMAGE LIGHTBOX
+
+
 // Retrieve the requested published story.
 async function loadReport() {
   const params = new URLSearchParams(window.location.search);
@@ -732,6 +921,7 @@ const article = articles.find(item =>
 
     document.getElementById("reportContent").innerHTML =
       renderMarkdown(article.content_markdown);
+    setupReportLightbox();
 // LOAD RELATED INTELLIGENCE
 const relatedSection = document.getElementById("relatedIntelligence");
 const relatedList = document.getElementById("relatedList");
