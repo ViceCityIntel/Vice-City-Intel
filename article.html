@@ -140,6 +140,37 @@
 
 /* END VIDEO PLAYER */
 
+/* ARTICLE IMAGE CAPTIONS */
+.report-image-wrap {
+  width: 100%;
+  margin: 28px 0;
+  padding: 12px;
+  background: #111020;
+  border: 1px solid #39304f;
+  border-radius: 12px;
+}
+
+.report-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 0;
+}
+
+.report-image-wrap figcaption {
+  color: #65e7f5;
+  font-size: 12px;
+  line-height: 1.6;
+  letter-spacing: 1px;
+  margin-top: 12px;
+}
+
+.report-image-wrap figcaption:empty {
+  display: none;
+}
+/* END ARTICLE IMAGE CAPTIONS */
+
     .report-content blockquote {
       border-left: 3px solid #ff55bd;
       margin: 25px 0;
@@ -429,14 +460,26 @@ function inlineMarkdown(value) {
     "<em>$1</em>"
   );
 
-  // PROCESS IMAGES BEFORE ORDINARY LINKS
+  // PROCESS IMAGES BEFORE ORDINARY LINKS.
+  // The Markdown alt text is also used as the visible image caption.
   text = text.replace(
     /!\[([^\]]*)\]\((https?:\/\/[^)\s]+)\)/g,
     (match, alt, url) => {
       const safe = safeURL(url);
-      return safe
-        ? '<img src="' + safe + '" alt="' + alt + '" loading="lazy">'
-        : "";
+
+      if (!safe) return "";
+
+      const caption = alt.trim();
+
+      return (
+        '<figure class="report-image-wrap">' +
+          '<img class="report-image" src="' + safe +
+          '" alt="' + caption + '" loading="lazy">' +
+          (caption
+            ? '<figcaption>' + caption + '</figcaption>'
+            : '') +
+        '</figure>'
+      );
     }
   );
 
