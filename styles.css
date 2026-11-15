@@ -1179,6 +1179,129 @@ h1 strong {
   }
 }
 
+/* 15 — LEONIDA DISCOVERY HUB */
+
+.discovery-hub {
+  padding: 55px 6vw 65px;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(142,91,255,.12), transparent 65%),
+    var(--ink);
+}
+
+.discovery-hub-heading {
+  max-width: 1500px;
+  margin: 0 auto 32px;
+}
+
+.discovery-hub-heading h2 {
+  font: 800 clamp(30px,4vw,48px)/1.1 Orbitron,sans-serif;
+  color: var(--white);
+  margin: 12px 0 18px;
+}
+
+.discovery-hub-heading h2 span {
+  color: var(--pink);
+}
+
+.discovery-hub-heading > p:not(.eyebrow) {
+  max-width: 650px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.discovery-hub-grid {
+  max-width: 1500px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 20px;
+}
+
+.discovery-link {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 165px;
+  padding: 25px;
+  overflow: hidden;
+  border: 1px solid rgba(77,234,255,.2);
+  border-radius: 15px;
+  background: linear-gradient(145deg,#171027,#0c0918);
+  box-shadow: 0 8px 25px rgba(0,0,0,.25);
+  transition: .3s ease;
+}
+
+.discovery-link:hover {
+  transform: translateY(-5px);
+  border-color: var(--pink);
+  box-shadow: 0 0 22px rgba(255,79,200,.15);
+}
+
+.discovery-number {
+  color: var(--pink);
+  font: 800 11px Orbitron,sans-serif;
+  letter-spacing: 2px;
+  margin-bottom: 18px;
+}
+
+.discovery-link strong {
+  color: var(--white);
+  font: 700 17px Orbitron,sans-serif;
+  margin-bottom: 12px;
+}
+
+.discovery-link small {
+  color: var(--muted);
+  font: 13px/1.7 Inter,sans-serif;
+  max-width: 85%;
+}
+
+.discovery-link i {
+  position: absolute;
+  right: 22px;
+  bottom: 22px;
+  color: var(--cyan);
+  font-size: 19px;
+  font-style: normal;
+  transition: .3s;
+}
+
+.discovery-link:hover i {
+  color: var(--pink);
+  transform: translate(4px,-4px);
+}
+
+/* DISCOVERY HUB — MOBILE */
+
+@media (max-width: 620px) {
+  .discovery-hub {
+    padding: 42px 6vw 55px;
+  }
+
+  .discovery-hub-heading {
+    margin-bottom: 28px;
+  }
+
+  .discovery-hub-heading h2 {
+    font-size: 29px;
+  }
+
+  .discovery-hub-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .discovery-link {
+    min-height: 165px;
+    padding: 24px;
+  }
+
+  .discovery-link strong {
+    font-size: 16px;
+  }
+}
+
 /* =====================================================
    END OF LEONIDA WHISPERS MASTER STYLESHEET
    ===================================================== */
