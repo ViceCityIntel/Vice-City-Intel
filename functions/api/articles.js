@@ -40,11 +40,12 @@ export async function onRequest({ request, env }) {
       }
     );
 
-  } catch (error) {
+    } catch (error) {
     return Response.json(
       {
         status: "error",
-        message: "Unable to retrieve articles"
+        message: "Unable to retrieve articles",
+        details: error.message
       },
       { status: 500 }
     );
