@@ -9,7 +9,7 @@ function json(data, status = 200) {
 }
 
 const MAX_SIZE = 750 * 1024 * 1024;
-const MAX_PARTS = 50;
+const MAX_PARTS = 75;
 
 const ALLOWED_TYPES = [
   "video/mp4",
