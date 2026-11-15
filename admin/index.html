@@ -1161,6 +1161,44 @@ if (isVideo) {
       });
 
       item.appendChild(insert);
+      const remove = document.createElement("button");
+remove.textContent = "DELETE MEDIA";
+remove.className = "danger";
+
+remove.addEventListener("click", async () => {
+  if (!confirm("Permanently delete this media file?")) return;
+
+  remove.disabled = true;
+  status.textContent = "Deleting media...";
+
+  try {
+    const response = await fetch("/admin/api/media", {
+      method: "DELETE",
+      credentials: "same-origin",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        key: file.key
+      })
+    });
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      throw new Error(result.error || "Deletion failed.");
+    }
+
+    status.textContent = "Media deleted successfully.";
+    await loadMediaLibrary();
+
+  } catch (error) {
+    status.textContent = error.message;
+    remove.disabled = false;
+  }
+});
+
+item.appendChild(remove);
       library.appendChild(item);
     });
 
