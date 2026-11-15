@@ -111,6 +111,35 @@
       margin: 20px 0;
     }
 
+/* EMBEDDED GAMEPLAY VIDEO PLAYER */
+
+.report-video-wrap {
+  width: 100%;
+  margin: 28px 0;
+  padding: 12px;
+  background: #111020;
+  border: 1px solid #39304f;
+  border-radius: 12px;
+}
+
+.report-video {
+  display: block;
+  width: 100%;
+  max-height: 75vh;
+  background: #000;
+  border-radius: 8px;
+  object-fit: contain;
+}
+
+.report-video-wrap figcaption {
+  color: #65e7f5;
+  font-size: 12px;
+  letter-spacing: 1px;
+  margin-top: 12px;
+}
+
+/* END VIDEO PLAYER */
+
     .report-content blockquote {
       border-left: 3px solid #ff55bd;
       margin: 25px 0;
@@ -447,6 +476,53 @@ function renderMarkdown(markdown) {
 
   for (const line of lines) {
     const trimmed = line.trim();
+
+    // EMBED GAMEPLAY VIDEOS
+
+    const video = trimmed.match(
+      /^\[Watch gameplay: ([^\]]*)\]\((https?:\/\/[^)\s]+)\)$/i
+    );
+
+    if (video) {
+      flushParagraph();
+      closeList();
+
+      const videoURL = safeURL(video[2]);
+
+      if (
+        videoURL &&
+        new URL(videoURL).hostname === "media.leonidawhispers.com"
+      ) {
+        const videoPath = new URL(videoURL).pathname.toLowerCase();
+
+        const videoType = videoPath.endsWith(".webm")
+          ? "video/webm"
+          : videoPath.endsWith(".mov")
+          ? "video/quicktime"
+          : "video/mp4";
+
+        output.push(`
+          <figure class="report-video-wrap">
+            <video
+              class="report-video"
+              controls
+              playsinline
+              preload="metadata"
+            >
+              <source src="${escapeHTML(videoURL)}" type="${videoType}">
+              Your browser does not support embedded video.
+            </video>
+            <figcaption>${escapeHTML(video[1])}</figcaption>
+          </figure>
+        `);
+      } else {
+        output.push("<p>" + inlineMarkdown(trimmed) + "</p>");
+      }
+
+      continue;
+    }
+
+    // END EMBED GAMEPLAY VIDEOS
 
     if (!trimmed) {
       flushParagraph();
