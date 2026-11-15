@@ -491,7 +491,23 @@ placeholder="https://example.com/image.jpg">
 
   <p id="mediaUploadStatus" class="status" aria-live="polite"></p>
 
-  <div id="uploadedMedia"></div>
+  <div style="display:grid;grid-template-columns:1fr;gap:12px;margin:20px 0;">
+
+  <input
+    type="search"
+    id="mediaSearch"
+    placeholder="Search your media library..."
+  >
+
+  <select id="mediaFilter">
+    <option value="all">ALL MEDIA</option>
+    <option value="image">PHOTOS ONLY</option>
+    <option value="video">VIDEOS ONLY</option>
+  </select>
+
+</div>
+
+<div id="uploadedMedia"></div>
 
 </div>
 
@@ -1105,7 +1121,13 @@ const isVideo =
 const isImage =
   mediaType.startsWith("image/") ||
   /\.(jpg|jpeg|png|webp|gif|avif)$/i.test(filename);
+item.dataset.filename = filename.toLowerCase();
 
+item.dataset.mediaType = isVideo
+  ? "video"
+  : isImage
+  ? "image"
+  : "other";
 if (isVideo) {
   const video = document.createElement("video");
 
@@ -1211,7 +1233,24 @@ item.appendChild(remove);
 }
 
 
+function filterMediaLibrary() {
+  const search = $("mediaSearch").value.trim().toLowerCase();
+  const filter = $("mediaFilter").value;
 
+  document.querySelectorAll("#uploadedMedia > div").forEach(item => {
+    const matchesSearch =
+      item.dataset.filename.includes(search);
+
+    const matchesFilter =
+      filter === "all" ||
+      item.dataset.mediaType === filter;
+
+    item.hidden = !(matchesSearch && matchesFilter);
+  });
+}
+
+$("mediaSearch").addEventListener("input", filterMediaLibrary);
+$("mediaFilter").addEventListener("change", filterMediaLibrary);
  // LEONIDA WHISPERS MEDIA UPLOADER
 
 $("uploadMedia").addEventListener("click", async () => {
