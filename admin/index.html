@@ -468,6 +468,33 @@ placeholder="A short introduction to your story..."></textarea>
 <input id="cover" type="url"
 placeholder="https://example.com/image.jpg">
 
+<div class="media-upload-panel" style="margin:20px 0;padding:18px;border:1px solid #38304d;border-radius:12px;background:#151023;">
+
+  <h3 style="color:#58dff5;margin-top:0;">MEDIA STUDIO</h3>
+
+  <p class="muted">
+    Upload photographs and gameplay footage directly from your device.
+  </p>
+
+  <label for="mediaFile">SELECT PHOTOS OR VIDEOS</label>
+
+  <input
+    type="file"
+    id="mediaFile"
+    accept="image/jpeg,image/png,image/webp,image/gif,image/avif,video/mp4,video/webm,video/quicktime"
+    style="margin:12px 0;"
+  >
+
+  <button type="button" id="uploadMedia">
+    UPLOAD TO MEDIA LIBRARY
+  </button>
+
+  <p id="mediaUploadStatus" class="status" aria-live="polite"></p>
+
+  <div id="uploadedMedia"></div>
+
+</div>
+
 <label>STORY CONTENT</label>
 
 <div class="toolbar">
