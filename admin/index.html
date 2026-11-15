@@ -1071,12 +1071,12 @@ $("uploadMedia").addEventListener("click", async () => {
   const isVideo = file.type.startsWith("video/");
 
   const maxSize = isVideo
-    ? 250 * 1024 * 1024
+    ? 750 * 1024 * 1024
     : 15 * 1024 * 1024;
 
   if (file.size > maxSize) {
     status.textContent = isVideo
-      ? "Video exceeds the 250MB limit."
+      ? "Video exceeds the 750MB limit."
       : "Image exceeds the 15MB limit.";
     return;
   }
