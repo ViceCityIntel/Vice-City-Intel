@@ -7,6 +7,18 @@
 
   <title>Leonida Whispers | Intelligence Report</title>
   <meta name="description" content="Read the latest intelligence from Leonida Whispers.">
+  <link id="canonicalUrl" rel="canonical" href="https://leonidawhispers.com/article.html">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Leonida Whispers">
+  <meta id="ogTitle" property="og:title" content="Leonida Whispers | Intelligence Report">
+  <meta id="ogDescription" property="og:description" content="Read the latest intelligence from Leonida Whispers.">
+  <meta id="ogUrl" property="og:url" content="https://leonidawhispers.com/article.html">
+  <meta id="ogImage" property="og:image" content="https://leonidawhispers.com/assets/Leonida-logo.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta id="twitterTitle" name="twitter:title" content="Leonida Whispers | Intelligence Report">
+  <meta id="twitterDescription" name="twitter:description" content="Read the latest intelligence from Leonida Whispers.">
+  <meta id="twitterImage" name="twitter:image" content="https://leonidawhispers.com/assets/Leonida-logo.png">
+  <script id="articleStructuredData" type="application/ld+json">{}</script>
   <meta name="theme-color" content="#090713">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -880,13 +892,21 @@ const article = articles.find(item =>
       return;
     }
 
-    document.title = article.title + " | Leonida Whispers";
+    const pageTitle = (article.title || "Intelligence Report") + " | Leonida Whispers";
+    const pageDescription = article.excerpt || "Latest intelligence from Leonida Whispers.";
+    const pageURL = "https://leonidawhispers.com/article.html?slug=" + encodeURIComponent(article.slug || slug);
 
+    document.title = pageTitle;
     document.querySelector('meta[name="description"]')
-      .setAttribute(
-        "content",
-        article.excerpt || "Latest intelligence from Leonida Whispers."
-      );
+      .setAttribute("content", pageDescription);
+
+    // Keep search engines and social previews aligned with the article being viewed.
+    document.getElementById("canonicalUrl").href = pageURL;
+    document.getElementById("ogTitle").content = pageTitle;
+    document.getElementById("ogDescription").content = pageDescription;
+    document.getElementById("ogUrl").content = pageURL;
+    document.getElementById("twitterTitle").content = pageTitle;
+    document.getElementById("twitterDescription").content = pageDescription;
 
     document.getElementById("reportCategory").textContent =
       article.category || "INTELLIGENCE";
@@ -918,6 +938,38 @@ const article = articles.find(item =>
       cover.alt = article.title;
       cover.hidden = false;
     }
+
+    const socialImage = coverURL || "https://leonidawhispers.com/assets/Leonida-logo.png";
+    document.getElementById("ogImage").content = socialImage;
+    document.getElementById("twitterImage").content = socialImage;
+
+    const structuredArticle = {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": article.title || "Leonida Whispers Intelligence Report",
+      "description": pageDescription,
+      "mainEntityOfPage": pageURL,
+      "url": pageURL,
+      "image": socialImage,
+      "datePublished": article.published_at || undefined,
+      "author": {
+        "@type": "Organization",
+        "name": "Leonida Whispers"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Leonida Whispers",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://leonidawhispers.com/assets/Leonida-logo.png"
+        }
+      }
+    };
+    Object.keys(structuredArticle).forEach(key => {
+      if (structuredArticle[key] === undefined) delete structuredArticle[key];
+    });
+    document.getElementById("articleStructuredData").textContent =
+      JSON.stringify(structuredArticle);
 
     document.getElementById("reportContent").innerHTML =
       renderMarkdown(article.content_markdown);
