@@ -15,7 +15,10 @@ export async function onRequest({ request, env }) {
 
   if (authError) return authError;
 
-  if (request.method !== "GET") {
+  if (
+  request.method !== "GET" &&
+  request.method !== "DELETE"
+) {
     return json({ error: "Method not allowed." }, 405);
   }
 
@@ -26,6 +29,34 @@ export async function onRequest({ request, env }) {
   }
 
   try {
+    
+if (request.method === "DELETE") {
+  const body = await request.json();
+  const key = body.key;
+
+  if (
+    typeof key !== "string" ||
+    !key.startsWith("uploads/") ||
+    key.split("/").includes("..") ||
+    key.includes("\\")
+  ) {
+    return json({ error: "Invalid media file." }, 400);
+  }
+
+  const object = await env.MEDIA.head(key);
+
+  if (!object) {
+    return json({ error: "Media file not found." }, 404);
+  }
+
+  await env.MEDIA.delete(key);
+
+  return json({
+    status: "success",
+    message: "Media deleted successfully."
+  });
+}
+
     const url = new URL(request.url);
 
     const cursor = url.searchParams.get("cursor");
