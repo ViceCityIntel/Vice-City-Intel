@@ -1094,30 +1094,58 @@ async function loadMediaLibrary() {
 
       item.appendChild(link);
 
-      if (file.type && file.type.startsWith("video/")) {
-        const video = document.createElement("video");
-        video.src = file.url;
-        video.controls = true;
-        video.playsInline = true;
-        video.preload = "metadata";
-        video.style.width = "100%";
-        video.style.marginTop = "10px";
-        item.appendChild(video);
-      } else if (file.type && file.type.startsWith("image/")) {
-        const image = document.createElement("img");
-        image.src = file.url;
-        image.alt = file.filename;
-        image.style.width = "100%";
-        image.style.marginTop = "10px";
-        image.style.borderRadius = "8px";
-        item.appendChild(image);
-      }
+      
+const mediaType = String(file.type || "").toLowerCase();
+const filename = String(file.filename || "").toLowerCase();
+
+const isVideo =
+  mediaType.startsWith("video/") ||
+  /\.(mp4|webm|mov)$/i.test(filename);
+
+const isImage =
+  mediaType.startsWith("image/") ||
+  /\.(jpg|jpeg|png|webp|gif|avif)$/i.test(filename);
+
+if (isVideo) {
+  const video = document.createElement("video");
+
+  video.src = file.url;
+  video.controls = true;
+  video.playsInline = true;
+  video.preload = "metadata";
+
+  video.style.width = "100%";
+  video.style.maxHeight = "240px";
+  video.style.marginTop = "12px";
+  video.style.borderRadius = "9px";
+  video.style.background = "#000";
+
+  item.appendChild(video);
+
+} else if (isImage) {
+  const image = document.createElement("img");
+
+  image.src = file.url;
+  image.alt = file.filename;
+
+  image.style.width = "100%";
+  image.style.height = "220px";
+  image.style.objectFit = "cover";
+  image.style.marginTop = "12px";
+  image.style.borderRadius = "9px";
+  image.style.display = "block";
+
+  item.appendChild(image);
+}
+
 
       const insert = document.createElement("button");
       insert.textContent = "INSERT INTO STORY";
 
       insert.addEventListener("click", () => {
-        const isVideo = file.type && file.type.startsWith("video/");
+        const isVideo =
+  mediaType.startsWith("video/") ||
+  /\.(mp4|webm|mov)$/i.test(filename);
 
         const markdown = isVideo
           ? `[Watch gameplay: ${file.filename}](${file.url})`
