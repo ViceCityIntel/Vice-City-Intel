@@ -1052,6 +1052,110 @@ async function start() {
   }
 }
 
+// LEONIDA WHISPERS MEDIA UPLOADER
+
+$("uploadMedia").addEventListener("click", async () => {
+  const fileInput = $("mediaFile");
+  const status = $("mediaUploadStatus");
+  const library = $("uploadedMedia");
+  const button = $("uploadMedia");
+
+  const file = fileInput.files[0];
+
+  if (!file) {
+    status.textContent = "Please select a photo or video first.";
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append("file", file);
+
+  button.disabled = true;
+  status.textContent = "Uploading media to Leonida storage...";
+
+  try {
+    const response = await fetch("/admin/api/upload", {
+      method: "POST",
+      credentials: "same-origin",
+      body: formData
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || "Upload failed.");
+    }
+
+    const mediaURL = new URL(data.url);
+
+    if (
+      mediaURL.protocol !== "https:" ||
+      mediaURL.hostname !== "media.leonidawhispers.com"
+    ) {
+      throw new Error("Unexpected media address.");
+    }
+
+    const isVideo = file.type.startsWith("video/");
+
+    const markdown = isVideo
+      ? `[Watch gameplay: ${file.name}](${data.url})`
+      : `![${file.name}](${data.url})`;
+
+    const content = $("content");
+
+    const separator = content.value &&
+      !content.value.endsWith("\n") ? "\n\n" : "";
+
+    content.value += separator + markdown + "\n";
+
+    if (!isVideo) {
+      $("cover").value = data.url;
+    }
+
+    const item = document.createElement("div");
+    item.style.margin = "12px 0";
+    item.style.padding = "12px";
+    item.style.border = "1px solid #38304d";
+    item.style.borderRadius = "10px";
+
+    const link = document.createElement("a");
+    link.href = data.url;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    link.textContent = file.name;
+
+    item.appendChild(link);
+
+    if (isVideo) {
+      const preview = document.createElement("video");
+      preview.src = data.url;
+      preview.controls = true;
+      preview.style.width = "100%";
+      preview.style.marginTop = "10px";
+      item.appendChild(preview);
+    } else {
+      const preview = document.createElement("img");
+      preview.src = data.url;
+      preview.alt = file.name;
+      preview.style.width = "100%";
+      preview.style.marginTop = "10px";
+      preview.style.borderRadius = "8px";
+      item.appendChild(preview);
+    }
+
+    library.appendChild(item);
+
+    status.textContent = "SUCCESS! Media uploaded and added to your story.";
+
+    fileInput.value = "";
+
+  } catch (error) {
+    status.textContent = error.message;
+  } finally {
+    button.disabled = false;
+  }
+});
+
 start();
 </script>
 </body>
