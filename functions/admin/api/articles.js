@@ -19,6 +19,47 @@ function makeSlug(value) {
     .slice(0, 180);
 }
 
+// Notify IndexNow when a published article is created or updated.
+// Notification failures must never undo a successful database save.
+async function notifyIndexNow(env, slug) {
+  const key = typeof env.INDEXNOW_KEY === "string"
+    ? env.INDEXNOW_KEY.trim()
+    : "";
+
+  if (!key) {
+    console.warn("IndexNow notification skipped: INDEXNOW_KEY is not configured.");
+    return false;
+  }
+
+  const articleURL =
+    "https://leonidawhispers.com/article.html?slug=" + encodeURIComponent(slug);
+
+  try {
+    const response = await fetch("https://api.indexnow.org/indexnow", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8"
+      },
+      body: JSON.stringify({
+        host: "leonidawhispers.com",
+        key,
+        keyLocation: "https://leonidawhispers.com/" + key + ".txt",
+        urlList: [articleURL]
+      })
+    });
+
+    if (!response.ok) {
+      console.warn("IndexNow notification returned HTTP " + response.status + ".");
+      return false;
+    }
+
+    return true;
+  } catch (error) {
+    console.warn("IndexNow notification failed:", error);
+    return false;
+  }
+}
+
 async function readBody(request) {
   const contentType = request.headers.get("Content-Type") || "";
 
@@ -147,6 +188,10 @@ export async function onRequest({ request, env }) {
         now
       ).run();
 
+      if (status === "published") {
+        await notifyIndexNow(env, slug);
+      }
+
       return json({
         status: "ok",
         message: status === "published"
@@ -233,6 +278,10 @@ export async function onRequest({ request, env }) {
         now,
         id
       ).run();
+
+      if (status === "published") {
+        await notifyIndexNow(env, slug);
+      }
 
       return json({
         status: "ok",
