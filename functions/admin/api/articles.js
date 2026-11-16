@@ -19,18 +19,45 @@ function makeSlug(value) {
     .slice(0, 180);
 }
 
+// Convert the Retry-After header into seconds.
+function getRetryAfterSeconds(response) {
+  const header = response.headers.get("Retry-After");
+
+  if (!header) return null;
+
+  const seconds = Number(header);
+
+  if (Number.isFinite(seconds) && seconds >= 0) {
+    return Math.ceil(seconds);
+  }
+
+  const retryDate = Date.parse(header);
+
+  if (Number.isFinite(retryDate)) {
+    return Math.max(0, Math.ceil((retryDate - Date.now()) / 1000));
+  }
+
+  return null;
+}
+
+// Notify IndexNow when a published article is created or updated.
+// Never allow notification failures to undo a successful database save.
+// Never automatically retry a rate-limited request.
 async function notifyIndexNow(env, slug) {
   const key = typeof env.INDEXNOW_KEY === "string"
     ? env.INDEXNOW_KEY.trim()
     : "";
 
   if (!key) {
-    console.warn("IndexNow key is missing.");
+    console.warn(
+      "IndexNow notification skipped: INDEXNOW_KEY is not configured."
+    );
 
     return {
       accepted: false,
       pending: false,
       httpStatus: null,
+      retryAfterSeconds: null,
       message: "INDEXNOW_KEY is not configured."
     };
   }
@@ -40,36 +67,51 @@ async function notifyIndexNow(env, slug) {
     encodeURIComponent(slug);
 
   try {
-    const response = await fetch(
-      "https://api.indexnow.org/indexnow",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json; charset=utf-8"
-        },
-        body: JSON.stringify({
-          host: "leonidawhispers.com",
-          key,
-          keyLocation:
-            "https://leonidawhispers.com/" + key + ".txt",
-          urlList: [articleURL]
-        })
-      }
-    );
+    const response = await fetch("https://api.indexnow.org/indexnow", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8"
+      },
+      body: JSON.stringify({
+        host: "leonidawhispers.com",
+        key,
+        keyLocation: "https://leonidawhispers.com/" + key + ".txt",
+        urlList: [articleURL]
+      })
+    });
 
-    const accepted =
-      response.status === 200 ||
-      response.status === 202;
+    const status = response.status;
+    const accepted = status === 200 || status === 202;
+    const retryAfterSeconds = status === 429
+      ? getRetryAfterSeconds(response)
+      : null;
+
+    let message;
+
+    if (status === 200) {
+      message = "URL notification accepted.";
+    } else if (status === 202) {
+      message = "Request accepted; key validation is pending.";
+    } else if (status === 429) {
+      message = retryAfterSeconds !== null
+        ? "IndexNow rate-limited this request (HTTP 429). Wait at least " +
+          retryAfterSeconds +
+          " seconds before trying again. No automatic retry was sent."
+        : "IndexNow rate-limited this request (HTTP 429). Wait before trying again. No automatic retry was sent.";
+    } else {
+      message = "IndexNow returned HTTP " + status + ".";
+    }
+
+    if (!response.ok) {
+      console.warn("IndexNow notification:", message);
+    }
 
     return {
       accepted,
-      pending: response.status === 202,
-      httpStatus: response.status,
-      message: response.status === 200
-        ? "URL notification accepted."
-        : response.status === 202
-        ? "Request accepted; key validation is pending."
-        : "IndexNow returned HTTP " + response.status + "."
+      pending: status === 202,
+      httpStatus: status,
+      retryAfterSeconds,
+      message
     };
 
   } catch (error) {
@@ -79,15 +121,16 @@ async function notifyIndexNow(env, slug) {
       accepted: false,
       pending: false,
       httpStatus: null,
-      message: "IndexNow request failed: " +
+      retryAfterSeconds: null,
+      message:
+        "IndexNow request failed: " +
         (error?.message || "network error")
     };
   }
 }
 
 async function readBody(request) {
-  const contentType =
-    request.headers.get("Content-Type") || "";
+  const contentType = request.headers.get("Content-Type") || "";
 
   if (!contentType.includes("application/json")) {
     return null;
@@ -142,7 +185,6 @@ export async function onRequest({ request, env }) {
   if (authError) return authError;
 
   try {
-
     // GET: Retrieve all articles
     if (request.method === "GET") {
       const result = await env.DB.prepare(`
@@ -179,9 +221,7 @@ export async function onRequest({ request, env }) {
       const slug = makeSlug(body.slug || title);
 
       if (!slug) {
-        return json({
-          error: "A valid article slug is required"
-        }, 400);
+        return json({ error: "A valid article slug is required" }, 400);
       }
 
       const duplicate = await env.DB.prepare(
@@ -189,15 +229,12 @@ export async function onRequest({ request, env }) {
       ).bind(slug).first();
 
       if (duplicate) {
-        return json({
-          error: "That article slug already exists"
-        }, 409);
+        return json({ error: "That article slug already exists" }, 409);
       }
 
       const now = new Date().toISOString();
       const status = body.status || "draft";
-      const publishedAt =
-        status === "published" ? now : null;
+      const publishedAt = status === "published" ? now : null;
 
       const result = await env.DB.prepare(`
         INSERT INTO articles (
@@ -209,18 +246,12 @@ export async function onRequest({ request, env }) {
       `).bind(
         title,
         slug,
-        typeof body.excerpt === "string"
-          ? body.excerpt.trim()
-          : "",
+        typeof body.excerpt === "string" ? body.excerpt.trim() : "",
         body.content_markdown,
-        typeof body.category === "string"
-          ? body.category.trim()
-          : "General",
+        typeof body.category === "string" ? body.category.trim() : "General",
         status,
         body.featured ? 1 : 0,
-        typeof body.cover_image_url === "string"
-          ? body.cover_image_url.trim()
-          : "",
+        typeof body.cover_image_url === "string" ? body.cover_image_url.trim() : "",
         publishedAt,
         now,
         now
@@ -252,9 +283,7 @@ export async function onRequest({ request, env }) {
       const id = Number(body.id);
 
       if (!Number.isInteger(id) || id < 1) {
-        return json({
-          error: "A valid article ID is required"
-        }, 400);
+        return json({ error: "A valid article ID is required" }, 400);
       }
 
       const validationError = validateArticle(body);
@@ -275,9 +304,7 @@ export async function onRequest({ request, env }) {
       const slug = makeSlug(body.slug || title);
 
       if (!slug) {
-        return json({
-          error: "A valid article slug is required"
-        }, 400);
+        return json({ error: "A valid article slug is required" }, 400);
       }
 
       const duplicate = await env.DB.prepare(
@@ -285,9 +312,7 @@ export async function onRequest({ request, env }) {
       ).bind(slug, id).first();
 
       if (duplicate) {
-        return json({
-          error: "That article slug already exists"
-        }, 409);
+        return json({ error: "That article slug already exists" }, 409);
       }
 
       const status = body.status || "draft";
@@ -313,18 +338,12 @@ export async function onRequest({ request, env }) {
       `).bind(
         title,
         slug,
-        typeof body.excerpt === "string"
-          ? body.excerpt.trim()
-          : "",
+        typeof body.excerpt === "string" ? body.excerpt.trim() : "",
         body.content_markdown,
-        typeof body.category === "string"
-          ? body.category.trim()
-          : "General",
+        typeof body.category === "string" ? body.category.trim() : "General",
         status,
         body.featured ? 1 : 0,
-        typeof body.cover_image_url === "string"
-          ? body.cover_image_url.trim()
-          : "",
+        typeof body.cover_image_url === "string" ? body.cover_image_url.trim() : "",
         publishedAt,
         now,
         id
@@ -351,9 +370,7 @@ export async function onRequest({ request, env }) {
       const id = Number(body?.id);
 
       if (!Number.isInteger(id) || id < 1) {
-        return json({
-          error: "A valid article ID is required"
-        }, 400);
+        return json({ error: "A valid article ID is required" }, 400);
       }
 
       const result = await env.DB.prepare(
@@ -361,9 +378,7 @@ export async function onRequest({ request, env }) {
       ).bind(id).run();
 
       if (!result.meta.changes) {
-        return json({
-          error: "Article not found"
-        }, 404);
+        return json({ error: "Article not found" }, 404);
       }
 
       return json({
