@@ -19,44 +19,77 @@ function makeSlug(value) {
     .slice(0, 180);
 }
 
-// Notify IndexNow when a published article is created or updated.
-// Notification failures must never undo a successful database save.
+// Submit published articles to IndexNow.
+// Notification failures never undo a successful database save.
 async function notifyIndexNow(env, slug) {
   const key = typeof env.INDEXNOW_KEY === "string"
     ? env.INDEXNOW_KEY.trim()
     : "";
 
   if (!key) {
-    console.warn("IndexNow notification skipped: INDEXNOW_KEY is not configured.");
-    return false;
+    return {
+      accepted: false,
+      pending: false,
+      httpStatus: null,
+      message: "INDEXNOW_KEY is not configured."
+    };
   }
 
   const articleURL =
-    "https://leonidawhispers.com/article.html?slug=" + encodeURIComponent(slug);
+    "https://leonidawhispers.com/article.html?slug=" +
+    encodeURIComponent(slug);
 
   try {
-    const response = await fetch("https://api.indexnow.org/indexnow", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json; charset=utf-8"
-      },
-      body: JSON.stringify({
-        host: "leonidawhispers.com",
-        key,
-        keyLocation: "https://leonidawhispers.com/" + key + ".txt",
-        urlList: [articleURL]
-      })
-    });
+    const response = await fetch(
+      "https://api.indexnow.org/indexnow",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json; charset=utf-8"
+        },
+        body: JSON.stringify({
+          host: "leonidawhispers.com",
+          key,
+          keyLocation:
+            "https://leonidawhispers.com/" + key + ".txt",
+          urlList: [articleURL]
+        })
+      }
+    );
 
-    if (!response.ok) {
-      console.warn("IndexNow notification returned HTTP " + response.status + ".");
-      return false;
+    const accepted = response.status === 200;
+    const pending = response.status === 202;
+
+    let message;
+
+    if (accepted) {
+      message = "IndexNow successfully submitted the article URL.";
+    } else if (pending) {
+      message = "IndexNow accepted the request. Key validation is pending.";
+    } else {
+      message = "IndexNow returned HTTP " + response.status + ".";
     }
 
-    return true;
+    if (!accepted && !pending) {
+      console.warn("IndexNow notification failed:", message);
+    }
+
+    return {
+      accepted,
+      pending,
+      httpStatus: response.status,
+      message
+    };
+
   } catch (error) {
     console.warn("IndexNow notification failed:", error);
-    return false;
+
+    return {
+      accepted: false,
+      pending: false,
+      httpStatus: null,
+      message: "Network error contacting IndexNow."
+    };
   }
 }
 
@@ -116,6 +149,7 @@ export async function onRequest({ request, env }) {
   if (authError) return authError;
 
   try {
+
     // GET: Retrieve all articles
     if (request.method === "GET") {
       const result = await env.DB.prepare(`
@@ -160,7 +194,9 @@ export async function onRequest({ request, env }) {
       ).bind(slug).first();
 
       if (duplicate) {
-        return json({ error: "That article slug already exists" }, 409);
+        return json({
+          error: "That article slug already exists"
+        }, 409);
       }
 
       const now = new Date().toISOString();
@@ -177,20 +213,31 @@ export async function onRequest({ request, env }) {
       `).bind(
         title,
         slug,
-        typeof body.excerpt === "string" ? body.excerpt.trim() : "",
+        typeof body.excerpt === "string"
+          ? body.excerpt.trim()
+          : "",
         body.content_markdown,
-        typeof body.category === "string" ? body.category.trim() : "General",
+        typeof body.category === "string"
+          ? body.category.trim()
+          : "General",
         status,
         body.featured ? 1 : 0,
-        typeof body.cover_image_url === "string" ? body.cover_image_url.trim() : "",
+        typeof body.cover_image_url === "string"
+          ? body.cover_image_url.trim()
+          : "",
         publishedAt,
         now,
         now
       ).run();
 
-      if (status === "published") {
-        await notifyIndexNow(env, slug);
-      }
+      const indexNow = status === "published"
+        ? await notifyIndexNow(env, slug)
+        : {
+            accepted: false,
+            pending: false,
+            httpStatus: null,
+            message: "Not submitted: article is saved as a draft."
+          };
 
       return json({
         status: "ok",
@@ -198,7 +245,8 @@ export async function onRequest({ request, env }) {
           ? "Article published"
           : "Draft saved",
         id: result.meta.last_row_id,
-        slug
+        slug,
+        indexNow
       }, 201);
     }
 
@@ -213,7 +261,9 @@ export async function onRequest({ request, env }) {
       const id = Number(body.id);
 
       if (!Number.isInteger(id) || id < 1) {
-        return json({ error: "A valid article ID is required" }, 400);
+        return json({
+          error: "A valid article ID is required"
+        }, 400);
       }
 
       const validationError = validateArticle(body);
@@ -234,7 +284,9 @@ export async function onRequest({ request, env }) {
       const slug = makeSlug(body.slug || title);
 
       if (!slug) {
-        return json({ error: "A valid article slug is required" }, 400);
+        return json({
+          error: "A valid article slug is required"
+        }, 400);
       }
 
       const duplicate = await env.DB.prepare(
@@ -242,7 +294,9 @@ export async function onRequest({ request, env }) {
       ).bind(slug, id).first();
 
       if (duplicate) {
-        return json({ error: "That article slug already exists" }, 409);
+        return json({
+          error: "That article slug already exists"
+        }, 409);
       }
 
       const status = body.status || "draft";
@@ -268,20 +322,31 @@ export async function onRequest({ request, env }) {
       `).bind(
         title,
         slug,
-        typeof body.excerpt === "string" ? body.excerpt.trim() : "",
+        typeof body.excerpt === "string"
+          ? body.excerpt.trim()
+          : "",
         body.content_markdown,
-        typeof body.category === "string" ? body.category.trim() : "General",
+        typeof body.category === "string"
+          ? body.category.trim()
+          : "General",
         status,
         body.featured ? 1 : 0,
-        typeof body.cover_image_url === "string" ? body.cover_image_url.trim() : "",
+        typeof body.cover_image_url === "string"
+          ? body.cover_image_url.trim()
+          : "",
         publishedAt,
         now,
         id
       ).run();
 
-      if (status === "published") {
-        await notifyIndexNow(env, slug);
-      }
+      const indexNow = status === "published"
+        ? await notifyIndexNow(env, slug)
+        : {
+            accepted: false,
+            pending: false,
+            httpStatus: null,
+            message: "Not submitted: article is saved as a draft."
+          };
 
       return json({
         status: "ok",
@@ -289,7 +354,8 @@ export async function onRequest({ request, env }) {
           ? "Article updated and published"
           : "Draft updated",
         id,
-        slug
+        slug,
+        indexNow
       });
     }
 
@@ -299,7 +365,9 @@ export async function onRequest({ request, env }) {
       const id = Number(body?.id);
 
       if (!Number.isInteger(id) || id < 1) {
-        return json({ error: "A valid article ID is required" }, 400);
+        return json({
+          error: "A valid article ID is required"
+        }, 400);
       }
 
       const result = await env.DB.prepare(
@@ -322,6 +390,8 @@ export async function onRequest({ request, env }) {
     }, 405);
 
   } catch (error) {
+    console.error("Articles API error:", error);
+
     return json({
       error: "Unable to process article request"
     }, 500);
