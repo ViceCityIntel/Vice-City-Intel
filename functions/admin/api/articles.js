@@ -40,8 +40,8 @@ function getRetryAfterSeconds(response) {
   return null;
 }
 
-// Notify IndexNow when a published article is created or updated.
-// Never allow notification failures to undo a successful database save.
+// Notify IndexNow when a published article is created or genuinely updated.
+// Notification failures never undo a successful database save.
 // Never automatically retry a rate-limited request.
 async function notifyIndexNow(env, slug) {
   const key = typeof env.INDEXNOW_KEY === "string"
@@ -82,6 +82,7 @@ async function notifyIndexNow(env, slug) {
 
     const status = response.status;
     const accepted = status === 200 || status === 202;
+
     const retryAfterSeconds = status === 429
       ? getRetryAfterSeconds(response)
       : null;
@@ -293,7 +294,12 @@ export async function onRequest({ request, env }) {
       }
 
       const existing = await env.DB.prepare(
-        "SELECT id, published_at FROM articles WHERE id = ?"
+        `SELECT
+          id, title, slug, excerpt, content_markdown,
+          category, status, featured, cover_image_url,
+          published_at
+         FROM articles
+         WHERE id = ?`
       ).bind(id).first();
 
       if (!existing) {
@@ -318,6 +324,32 @@ export async function onRequest({ request, env }) {
       const status = body.status || "draft";
       const now = new Date().toISOString();
 
+      const excerpt =
+        typeof body.excerpt === "string" ? body.excerpt.trim() : "";
+
+      const category =
+        typeof body.category === "string" ? body.category.trim() : "General";
+
+      const coverImageUrl =
+        typeof body.cover_image_url === "string"
+          ? body.cover_image_url.trim()
+          : "";
+
+      // Detect genuine changes to the indexed article.
+      // Featured status alone does not change the article URL's content.
+      const articleChanged =
+        existing.title !== title ||
+        existing.slug !== slug ||
+        existing.excerpt !== excerpt ||
+        existing.content_markdown !== body.content_markdown ||
+        existing.category !== category ||
+        existing.cover_image_url !== coverImageUrl;
+
+      // Notify when publishing for the first time or changing published content.
+      const shouldNotifyIndexNow =
+        status === "published" &&
+        (!existing.published_at || articleChanged);
+
       const publishedAt = status === "published"
         ? (existing.published_at || now)
         : null;
@@ -338,18 +370,18 @@ export async function onRequest({ request, env }) {
       `).bind(
         title,
         slug,
-        typeof body.excerpt === "string" ? body.excerpt.trim() : "",
+        excerpt,
         body.content_markdown,
-        typeof body.category === "string" ? body.category.trim() : "General",
+        category,
         status,
         body.featured ? 1 : 0,
-        typeof body.cover_image_url === "string" ? body.cover_image_url.trim() : "",
+        coverImageUrl,
         publishedAt,
         now,
         id
       ).run();
 
-      const indexNow = status === "published"
+      const indexNow = shouldNotifyIndexNow
         ? await notifyIndexNow(env, slug)
         : null;
 
