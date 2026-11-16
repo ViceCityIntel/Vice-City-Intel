@@ -19,14 +19,14 @@ function makeSlug(value) {
     .slice(0, 180);
 }
 
-// Submit published articles to IndexNow.
-// Notification failures never undo a successful database save.
 async function notifyIndexNow(env, slug) {
   const key = typeof env.INDEXNOW_KEY === "string"
     ? env.INDEXNOW_KEY.trim()
     : "";
 
   if (!key) {
+    console.warn("IndexNow key is missing.");
+
     return {
       accepted: false,
       pending: false,
@@ -57,28 +57,19 @@ async function notifyIndexNow(env, slug) {
       }
     );
 
-    const accepted = response.status === 200;
-    const pending = response.status === 202;
-
-    let message;
-
-    if (accepted) {
-      message = "IndexNow successfully submitted the article URL.";
-    } else if (pending) {
-      message = "IndexNow accepted the request. Key validation is pending.";
-    } else {
-      message = "IndexNow returned HTTP " + response.status + ".";
-    }
-
-    if (!accepted && !pending) {
-      console.warn("IndexNow notification failed:", message);
-    }
+    const accepted =
+      response.status === 200 ||
+      response.status === 202;
 
     return {
       accepted,
-      pending,
+      pending: response.status === 202,
       httpStatus: response.status,
-      message
+      message: response.status === 200
+        ? "URL notification accepted."
+        : response.status === 202
+        ? "Request accepted; key validation is pending."
+        : "IndexNow returned HTTP " + response.status + "."
     };
 
   } catch (error) {
@@ -88,13 +79,15 @@ async function notifyIndexNow(env, slug) {
       accepted: false,
       pending: false,
       httpStatus: null,
-      message: "Network error contacting IndexNow."
+      message: "IndexNow request failed: " +
+        (error?.message || "network error")
     };
   }
 }
 
 async function readBody(request) {
-  const contentType = request.headers.get("Content-Type") || "";
+  const contentType =
+    request.headers.get("Content-Type") || "";
 
   if (!contentType.includes("application/json")) {
     return null;
@@ -186,7 +179,9 @@ export async function onRequest({ request, env }) {
       const slug = makeSlug(body.slug || title);
 
       if (!slug) {
-        return json({ error: "A valid article slug is required" }, 400);
+        return json({
+          error: "A valid article slug is required"
+        }, 400);
       }
 
       const duplicate = await env.DB.prepare(
@@ -201,7 +196,8 @@ export async function onRequest({ request, env }) {
 
       const now = new Date().toISOString();
       const status = body.status || "draft";
-      const publishedAt = status === "published" ? now : null;
+      const publishedAt =
+        status === "published" ? now : null;
 
       const result = await env.DB.prepare(`
         INSERT INTO articles (
@@ -232,12 +228,7 @@ export async function onRequest({ request, env }) {
 
       const indexNow = status === "published"
         ? await notifyIndexNow(env, slug)
-        : {
-            accepted: false,
-            pending: false,
-            httpStatus: null,
-            message: "Not submitted: article is saved as a draft."
-          };
+        : null;
 
       return json({
         status: "ok",
@@ -341,12 +332,7 @@ export async function onRequest({ request, env }) {
 
       const indexNow = status === "published"
         ? await notifyIndexNow(env, slug)
-        : {
-            accepted: false,
-            pending: false,
-            httpStatus: null,
-            message: "Not submitted: article is saved as a draft."
-          };
+        : null;
 
       return json({
         status: "ok",
@@ -375,7 +361,9 @@ export async function onRequest({ request, env }) {
       ).bind(id).run();
 
       if (!result.meta.changes) {
-        return json({ error: "Article not found" }, 404);
+        return json({
+          error: "Article not found"
+        }, 404);
       }
 
       return json({
