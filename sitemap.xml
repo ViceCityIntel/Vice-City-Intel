@@ -1,3 +1,4 @@
+
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
@@ -54,6 +55,16 @@
   <url>
     <loc>https://leonidawhispers.com/first-day-in-leonida.html</loc>
     <priority>0.7</priority>
+  </url>
+
+  <!-- DATABASE ARTICLES -->
+
+  <url>
+    <loc>https://leonidawhispers.com/article.html?slug=gta-6-everything-we-know-before-launch</loc>
+  </url>
+
+  <url>
+    <loc>https://leonidawhispers.com/article.html?slug=port-gellhorn-forgotten-coast</loc>
   </url>
 
 </urlset>
