@@ -100,7 +100,41 @@ function renderMarkdown(markdown){
 }
 function previewArticle(){const title=$("title").value.trim(),excerpt=$("excerpt").value.trim(),category=$("category").value,content=$("content").value,cover=$("cover").value.trim();if(!title||!content.trim()){$("saveStatus").textContent="Enter a headline and story content before previewing.";return;}const w=window.open("","_blank");if(!w){$("saveStatus").textContent="Please allow pop-ups to preview your story.";return;}let image="";try{const u=new URL(cover);if(u.protocol==="https:"||u.protocol==="http:")image=u.href;}catch{}w.document.write(`<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHTML(title)} | Preview</title><style>*{box-sizing:border-box}body{margin:0;padding:30px 18px;background:#090713;color:#fff;font-family:Arial,sans-serif}main{max-width:850px;margin:auto}.tag{color:#65e7f5;letter-spacing:3px;font-size:12px}h1{font-size:clamp(30px,6vw,52px);line-height:1.2}.excerpt{color:#c2b9d3;font-size:19px;line-height:1.7}img{max-width:100%;height:auto;border-radius:12px;margin:20px 0}.story-image-wrap{margin:22px 0;padding:12px;background:#111020;border:1px solid #39304f;border-radius:12px}.story-image-wrap .story-image{display:block;width:100%;margin:0;border-radius:8px}.story-image-wrap figcaption{color:#65e7f5;font-size:12px;line-height:1.6;letter-spacing:1px;margin-top:12px}.story-image-wrap figcaption:empty{display:none}.story-gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:26px 0}.story-gallery-item{min-width:0}.story-gallery-item .story-image-wrap{height:100%;margin:0}.story-gallery-item .story-image{width:100%;height:auto;max-height:360px;object-fit:cover}video.story-video{display:block;width:100%;max-height:520px;margin:22px 0;border-radius:12px;background:#000}.content{overflow-wrap:anywhere;line-height:1.9;color:#e6e0ef;font-size:17px}.content a{color:#65e7f5}.content blockquote{border-left:3px solid #ff55bd;padding-left:15px;color:#c2b9d3}button{padding:13px 20px;background:#a52c86;color:white;border:0;border-radius:7px;margin-top:25px}</style></head><body><main><p class="tag">LEONIDA WHISPERS / PREVIEW</p><p class="tag">${escapeHTML(category)}</p><h1>${escapeHTML(title)}</h1><p class="excerpt">${escapeHTML(excerpt)}</p>${image?`<img src="${escapeHTML(image)}" alt="">`:""}<div class="content">${renderMarkdown(content)}</div><button onclick="window.close()">CLOSE PREVIEW</button></main></body></html>`);w.document.close();}
 $("previewArticle").addEventListener("click",previewArticle);
-async function saveArticle(status){if(!authenticated){$("saveStatus").textContent="Please log in again.";return;}const title=$("title").value.trim(),content=$("content").value;if(!title||!content.trim()){$("saveStatus").textContent="Please enter a headline and story content.";return;}const payload={title,slug:$("slug").value.trim(),excerpt:$("excerpt").value.trim(),category:$("category").value,cover_image_url:$("cover").value.trim(),content_markdown:content,featured:$("featured").checked,status};const buttons=[$("saveDraft"),$("publish")];buttons.forEach(b=>b.disabled=true);$("saveStatus").textContent="Saving story...";try{const result=editingId?await apiRequest("PUT",{...payload,id:editingId}):await apiRequest("POST",payload);const msg=result.message||"Story saved successfully.";clearEditor();$("saveStatus").textContent=msg;await loadArticles();$("editorPanel").scrollIntoView({behavior:"smooth"});}catch(e){$("saveStatus").textContent=e.message;}finally{buttons.forEach(b=>b.disabled=false);}}
+async function saveArticle(status){
+  if(!authenticated){$("saveStatus").textContent="Please log in again.";return;}
+  const title=$("title").value.trim(),content=$("content").value;
+  if(!title||!content.trim()){$("saveStatus").textContent="Please enter a headline and story content.";return;}
+  const payload={title,slug:$("slug").value.trim(),excerpt:$("excerpt").value.trim(),category:$("category").value,cover_image_url:$("cover").value.trim(),content_markdown:content,featured:$("featured").checked,status};
+  const buttons=[$("saveDraft"),$("publish")];
+  buttons.forEach(b=>b.disabled=true);
+  $("saveStatus").textContent="Saving story...";
+  try{
+    const result=editingId
+      ? await apiRequest("PUT",{...payload,id:editingId})
+      : await apiRequest("POST",payload);
+    let message=result.message||"Story saved successfully.";
+    if(status==="published"){
+      const info=result.indexNow;
+      if(!info){
+        message+=" IndexNow result was not returned by the server.";
+      }else if(info.accepted&&info.pending){
+        message+=" IndexNow accepted the request (HTTP "+info.httpStatus+"); validation is pending.";
+      }else if(info.accepted){
+        message+=" IndexNow accepted the URL (HTTP "+info.httpStatus+").";
+      }else{
+        message+=" IndexNow not confirmed: "+(info.message||"unknown response");
+      }
+    }
+    clearEditor();
+    $("saveStatus").textContent=message;
+    await loadArticles();
+    $("editorPanel").scrollIntoView({behavior:"smooth"});
+  }catch(e){
+    $("saveStatus").textContent=e.message;
+  }finally{
+    buttons.forEach(b=>b.disabled=false);
+  }
+}
 async function deleteArticle(id){const a=articles.find(x=>Number(x.id)===Number(id));if(!a)return;if(!confirm("Permanently delete this article?\n\n"+a.title))return;try{await apiRequest("DELETE",{id});await loadArticles();alert("Article deleted.");}catch(e){alert(e.message);}}
 $("newArticle").addEventListener("click",openEditor);$("cancelEdit").addEventListener("click",()=>{clearEditor();$("editorPanel").scrollIntoView({behavior:"smooth"});});$("saveDraft").addEventListener("click",()=>saveArticle("draft"));$("publish").addEventListener("click",()=>{if(confirm("Publish this story to the public website?"))saveArticle("published");});
 $("logout").addEventListener("click",async()=>{try{await fetch("/admin/logout",{method:"POST",credentials:"same-origin"});}finally{window.location.href="/admin.html";}});
