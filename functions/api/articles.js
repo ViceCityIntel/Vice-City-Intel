@@ -1,4 +1,3 @@
-
 export async function onRequest({ request, env }) {
   if (request.method !== "GET") {
     return Response.json(
@@ -19,7 +18,8 @@ export async function onRequest({ request, env }) {
         featured,
         cover_image_url,
         published_at,
-        created_at
+        created_at,
+        updated_at
       FROM articles
       WHERE status = 'published'
       ORDER BY
