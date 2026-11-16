@@ -8,8 +8,25 @@
   <title>Leonida Whispers | Intelligence Report</title>
   <meta name="description" content="Read the latest intelligence from Leonida Whispers.">
   <link id="canonicalUrl" rel="canonical" href="https://leonidawhispers.com/article.html">
+  <script>
+    // Set the article-specific canonical URL as early as possible.
+    (() => {
+      const slug = new URLSearchParams(window.location.search).get("slug");
+      const canonical = document.getElementById("canonicalUrl");
+      if (!slug || !canonical) return;
+
+      const canonicalURL = new URL(
+        "/article.html",
+        "https://leonidawhispers.com"
+      );
+      canonicalURL.searchParams.set("slug", slug);
+      canonical.href = canonicalURL.href;
+    })();
+  </script>
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="Leonida Whispers">
+  <meta id="ogPublishedTime" property="article:published_time">
+  <meta id="ogModifiedTime" property="article:modified_time">
   <meta id="ogTitle" property="og:title" content="Leonida Whispers | Intelligence Report">
   <meta id="ogDescription" property="og:description" content="Read the latest intelligence from Leonida Whispers.">
   <meta id="ogUrl" property="og:url" content="https://leonidawhispers.com/article.html">
@@ -943,15 +960,30 @@ const article = articles.find(item =>
     document.getElementById("ogImage").content = socialImage;
     document.getElementById("twitterImage").content = socialImage;
 
+    // Publish article dates to social metadata as well as structured data.
+    const publishedDate = article.published_at || article.created_at || "";
+    const modifiedDate = article.updated_at || article.published_at || article.created_at || "";
+
+    const publishedMeta = document.getElementById("ogPublishedTime");
+    const modifiedMeta = document.getElementById("ogModifiedTime");
+    if (publishedMeta && publishedDate) publishedMeta.content = publishedDate;
+    if (modifiedMeta && modifiedDate) modifiedMeta.content = modifiedDate;
+
     const structuredArticle = {
       "@context": "https://schema.org",
       "@type": "Article",
       "headline": article.title || "Leonida Whispers Intelligence Report",
       "description": pageDescription,
-      "mainEntityOfPage": pageURL,
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": pageURL
+      },
       "url": pageURL,
-      "image": socialImage,
-      "datePublished": article.published_at || undefined,
+      "image": [socialImage],
+      "datePublished": publishedDate || undefined,
+      "dateModified": modifiedDate || undefined,
+      "articleSection": article.category || undefined,
+      "inLanguage": "en-GB",
       "author": {
         "@type": "Organization",
         "name": "Leonida Whispers"
