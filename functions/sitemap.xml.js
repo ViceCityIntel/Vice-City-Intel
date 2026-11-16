@@ -34,7 +34,11 @@ function validDate(value) {
 export async function onRequest({ env }) {
   try {
     const result = await env.DB.prepare(`
-      SELECT slug, published_at, created_at
+      SELECT
+        slug,
+        published_at,
+        created_at,
+        updated_at
       FROM articles
       WHERE status = 'published'
       ORDER BY COALESCE(published_at, created_at) DESC
@@ -50,8 +54,11 @@ export async function onRequest({ env }) {
       if (!article.slug) continue;
 
       const slug = encodeURIComponent(article.slug);
+
       const lastmod = validDate(
-        article.published_at || article.created_at
+        article.updated_at ||
+        article.published_at ||
+        article.created_at
       );
 
       urls.push(`
