@@ -1302,14 +1302,21 @@ h1 strong {
 
   .hero {
     aspect-ratio: auto;
-    height: 150vw;
-    min-height: 0;
-    max-height: 680px;
+    height: 82vw;
+    min-height: 340px;
+    max-height: 470px;
+    background-color: #090713;
     background-image:
-      linear-gradient(rgba(9,0,25,.08),rgba(9,0,25,.25)),
+      linear-gradient(
+        180deg,
+        rgba(9,0,25,0) 48%,
+        rgba(9,0,25,.18) 68%,
+        #090713 100%
+      ),
       url("assets/leonida-hero.png");
-    background-size: cover;
-    background-position: center center;
+    background-size: 100% auto;
+    background-position: center top;
+    background-repeat: no-repeat;
   }
 
   .hero-content {
