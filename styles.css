@@ -1473,3 +1473,49 @@ h1 strong {
 /* =====================================================
    END OF LEONIDA WHISPERS MASTER STYLESHEET
    ===================================================== */
+
+/* DISCOVERY HUB — IMAGE VISIBILITY FIX */
+
+.discovery-hub-grid .discovery-link {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+}
+
+.discovery-hub-grid .discovery-link::before {
+  display: none !important;
+}
+
+.discovery-hub-grid .discovery-link::after {
+  z-index: 0 !important;
+  background: linear-gradient(
+    90deg,
+    rgba(9,7,19,.90),
+    rgba(9,7,19,.62) 55%,
+    rgba(9,7,19,.25)
+  ) !important;
+}
+
+.discovery-hub-grid .discovery-link:nth-child(1) {
+  background-image: url("assets/discovery-leonida.jpg") !important;
+}
+
+.discovery-hub-grid .discovery-link:nth-child(2) {
+  background-image: url("assets/discovery-database.jpg") !important;
+}
+
+.discovery-hub-grid .discovery-link:nth-child(3) {
+  background-image: url("assets/discovery-news.jpg") !important;
+}
+
+.discovery-hub-grid .discovery-link:nth-child(4) {
+  background-image: url("assets/discovery-guides.jpg") !important;
+}
+
+.discovery-hub-grid .discovery-link > * {
+  position: relative;
+  z-index: 2;
+}
