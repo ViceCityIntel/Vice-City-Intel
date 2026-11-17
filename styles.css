@@ -1519,3 +1519,34 @@ h1 strong {
   position: relative;
   z-index: 2;
 }
+
+/* FIELD MANUAL — CINEMATIC LEONIDA ARTWORK */
+
+.feature-visual {
+  position: relative;
+  overflow: hidden;
+  min-height: 440px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(9,7,19,.05),
+      rgba(9,7,19,.15)
+    ),
+    url("assets/field-manual-art.png")
+    center center / cover no-repeat !important;
+}
+
+.feature-visual .map-lines,
+.feature-visual .map-pin,
+.feature-visual .coordinates,
+.feature-visual .map-note {
+  display: none !important;
+}
+
+@media (max-width: 620px) {
+  .feature-visual {
+    min-height: 320px;
+    background-position: center center !important;
+  }
+}
