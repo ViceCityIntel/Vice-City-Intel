@@ -1,13 +1,14 @@
 
 /* ==========================================
    LEONIDA WHISPERS
-   MAIN WEBSITE FUNCTIONS
+   CINEMATIC WEBSITE FUNCTIONS
+   MASTER REPLACEMENT — 17 NOV 2026
 ========================================== */
 
 document.addEventListener("DOMContentLoaded", () => {
 
   // ==========================================
-  // MOBILE NAVIGATION
+  // 01 — MOBILE NAVIGATION
   // ==========================================
 
   const menuToggle = document.querySelector(".menu-toggle");
@@ -35,7 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   // ==========================================
-  // ARTICLE ELEMENTS
+  // 02 — ARTICLE ELEMENTS
   // ==========================================
 
   const articleGrid = document.querySelector("#articleGrid");
@@ -47,10 +48,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   // ==========================================
-  // CATEGORY DETECTION
+  // 03 — CATEGORY DETECTION
   // ==========================================
 
   function categoryFilter(category) {
+
     const value = (category || "").toLowerCase();
 
     if (
@@ -71,15 +73,95 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   // ==========================================
-  // CREATE ARTICLE CARDS
+  // 04 — CINEMATIC FALLBACK ARTWORK
+  // ==========================================
+
+  function createFallbackArtwork(category) {
+
+    const fallback = document.createElement("div");
+
+    fallback.className = "article-fallback";
+
+    fallback.style.cssText = `
+      position:absolute;
+      inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
+      background:
+        radial-gradient(
+          circle at 50% 45%,
+          rgba(255,79,200,.35),
+          transparent 55%
+        ),
+        linear-gradient(
+          145deg,
+          #301348,
+          #101027 65%,
+          #061d32
+        );
+    `;
+
+    const symbols = {
+      news: "VI",
+      guides: "FIELD",
+      tips: "TIPS",
+      secrets: "?"
+    };
+
+    const symbol = document.createElement("div");
+
+    symbol.textContent =
+      symbols[category] || "LEONIDA";
+
+    symbol.style.cssText = `
+      font-family:Orbitron,sans-serif;
+      font-size:${category === "secrets" ? "110px" : "65px"};
+      font-weight:800;
+      letter-spacing:5px;
+      color:${category === "guides" ? "#4deaff" : "#ff4fc8"};
+      text-shadow:
+        0 0 12px currentColor,
+        0 0 35px currentColor;
+      opacity:.9;
+    `;
+
+    fallback.appendChild(symbol);
+
+    const caption = document.createElement("span");
+
+    caption.textContent = "LEONIDA WHISPERS";
+
+    caption.style.cssText = `
+      position:absolute;
+      bottom:18px;
+      right:16px;
+      color:white;
+      font:8px Orbitron,sans-serif;
+      letter-spacing:3px;
+      opacity:.8;
+    `;
+
+    fallback.appendChild(caption);
+
+    return fallback;
+  }
+
+
+  // ==========================================
+  // 05 — CREATE CINEMATIC ARTICLE CARDS
   // ==========================================
 
   function createArticleCard(article) {
 
+    const categoryType = categoryFilter(article.category);
+
     const card = document.createElement("article");
 
     card.className = "article-card dynamic-article";
-    card.dataset.category = categoryFilter(article.category);
+
+    card.dataset.category = categoryType;
 
     card.dataset.search = [
       article.title,
@@ -88,64 +170,131 @@ document.addEventListener("DOMContentLoaded", () => {
       article.slug
     ].join(" ").toLowerCase();
 
-    // ARTICLE ARTWORK
+
+    // ARTWORK CONTAINER
 
     const artwork = document.createElement("div");
-    artwork.className = "article-art art-sunset";
 
-    if (article.cover_image_url) {
+    artwork.className =
+      `article-art article-art-${categoryType}`;
+
+    artwork.style.position = "relative";
+    artwork.style.overflow = "hidden";
+    artwork.style.backgroundColor = "#100b20";
+
+
+    // FALLBACK ARTWORK
+
+    const fallback = createFallbackArtwork(categoryType);
+
+    artwork.appendChild(fallback);
+
+
+    // REAL ARTICLE COVER IMAGE
+
+    if (
+      article.cover_image_url &&
+      typeof article.cover_image_url === "string"
+    ) {
 
       const image = document.createElement("img");
 
       image.src = article.cover_image_url;
-      image.alt = article.title || "Article cover";
+
+      image.alt = article.title || "Leonida Whispers article artwork";
+
       image.loading = "lazy";
+      image.decoding = "async";
 
-      image.style.width = "100%";
-      image.style.height = "100%";
-      image.style.objectFit = "cover";
+      image.style.cssText = `
+        position:absolute;
+        inset:0;
+        width:100%;
+        height:100%;
+        object-fit:cover;
+        object-position:center;
+        z-index:1;
+        transition:transform .6s ease,filter .4s ease;
+      `;
 
-      image.addEventListener("error", () => image.remove());
+      image.addEventListener("error", () => {
+        image.remove();
+      });
+
+      image.addEventListener("load", () => {
+        fallback.remove();
+      });
 
       artwork.appendChild(image);
-
-    } else {
-
-      const titleArt = document.createElement("div");
-
-      titleArt.className = "art-city";
-      titleArt.textContent = "LEONIDA";
-
-      artwork.appendChild(titleArt);
     }
+
 
     // ARTWORK LABEL
 
     const label = document.createElement("span");
 
     label.className = "art-label";
+
     label.textContent =
-      article.featured ? "FEATURED INTEL" : "LATEST DISPATCH";
+      article.featured === true ||
+      Number(article.featured) === 1
+        ? "FEATURED INTEL"
+        : "LATEST DISPATCH";
+
+    label.style.zIndex = "3";
 
     artwork.appendChild(label);
+
+
+    // IMAGE GRADIENT OVERLAY
+
+    const overlay = document.createElement("div");
+
+    overlay.style.cssText = `
+      position:absolute;
+      inset:0;
+      z-index:2;
+      pointer-events:none;
+      background:linear-gradient(
+        180deg,
+        rgba(9,7,19,.05) 35%,
+        rgba(9,7,19,.65) 100%
+      );
+    `;
+
+    artwork.appendChild(overlay);
+
 
     // ARTICLE INFORMATION
 
     const info = document.createElement("div");
+
     info.className = "article-info";
 
+
+    // CATEGORY
+
     const category = document.createElement("span");
+
     category.className = "category";
 
-    if (categoryFilter(article.category) === "guides") {
+    if (categoryType === "guides" || categoryType === "tips") {
       category.classList.add("cyan");
     }
 
     category.textContent =
       (article.category || "NEWS").toUpperCase();
 
+
+    // TITLE
+
     const heading = document.createElement("h3");
-    heading.textContent = article.title || "Untitled report";
+
+    heading.textContent =
+      article.title || "Untitled report";
+
+
+    // EXCERPT
 
     const excerpt = document.createElement("p");
 
@@ -153,23 +302,41 @@ document.addEventListener("DOMContentLoaded", () => {
       article.excerpt ||
       "Read the latest intelligence from Leonida Whispers.";
 
+
+    // ARTICLE LINK
+
     const link = document.createElement("a");
 
     link.className = "read-link";
+
     link.href =
-      "article.html?slug=" + encodeURIComponent(article.slug);
+      "article.html?slug=" +
+      encodeURIComponent(article.slug);
 
-    link.textContent = "READ THE INTEL →";
+    link.innerHTML = `
+      <span>READ THE INTEL</span>
+      <span>→</span>
+    `;
 
-    info.append(category, heading, excerpt, link);
-    card.append(artwork, info);
+
+    info.append(
+      category,
+      heading,
+      excerpt,
+      link
+    );
+
+    card.append(
+      artwork,
+      info
+    );
 
     return card;
   }
 
 
   // ==========================================
-  // FEATURED INTELLIGENCE BANNER
+  // 06 — FEATURED INTELLIGENCE BANNER
   // ==========================================
 
   function updateFeaturedArticle(articles) {
@@ -179,10 +346,15 @@ document.addEventListener("DOMContentLoaded", () => {
       Number(article.featured) === 1
     );
 
-    if (!featuredArticle) return;
-
     const featuredSection =
       document.querySelector("#featuredIntel");
+
+    if (!featuredSection) return;
+
+    if (!featuredArticle) {
+      featuredSection.hidden = true;
+      return;
+    }
 
     const featuredImage =
       document.querySelector("#featuredImage");
@@ -196,25 +368,54 @@ document.addEventListener("DOMContentLoaded", () => {
     const featuredLink =
       document.querySelector("#featuredLink");
 
-    if (featuredSection) {
-      featuredSection.hidden = false;
+
+    featuredSection.hidden = false;
+
+
+    // FEATURED BACKGROUND IMAGE
+
+    if (featuredImage) {
+
+      if (featuredArticle.cover_image_url) {
+
+        featuredImage.style.backgroundImage = `
+          linear-gradient(
+            90deg,
+            rgba(9,7,19,.92),
+            rgba(9,7,19,.45) 70%,
+            rgba(9,7,19,.15)
+          ),
+          url("${featuredArticle.cover_image_url}")
+        `;
+
+      } else {
+
+        featuredImage.style.backgroundImage =
+          "linear-gradient(135deg,#35134b,#101027,#06283b)";
+      }
     }
 
-    if (featuredImage && featuredArticle.cover_image_url) {
 
-      featuredImage.style.backgroundImage =
-        `linear-gradient(0deg, rgba(9,7,19,.85), transparent 100%), url("${featuredArticle.cover_image_url}")`;
-    }
+    // FEATURED TITLE
 
     if (featuredTitle) {
-      featuredTitle.textContent = featuredArticle.title;
+      featuredTitle.textContent =
+        featuredArticle.title || "";
     }
+
+
+    // FEATURED EXCERPT
 
     if (featuredExcerpt) {
-      featuredExcerpt.textContent = featuredArticle.excerpt || "";
+      featuredExcerpt.textContent =
+        featuredArticle.excerpt || "";
     }
 
+
+    // FEATURED LINK
+
     if (featuredLink) {
+
       featuredLink.href =
         "article.html?slug=" +
         encodeURIComponent(featuredArticle.slug);
@@ -223,7 +424,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   // ==========================================
-  // LOAD PUBLISHED ARTICLES FROM CLOUDFLARE
+  // 07 — LOAD PUBLISHED ARTICLES
+  // CLOUDFLARE API
   // ==========================================
 
   async function loadPublishedArticles() {
@@ -239,7 +441,9 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       if (!response.ok) {
-        throw new Error("Unable to retrieve published articles");
+        throw new Error(
+          "Unable to retrieve published articles"
+        );
       }
 
       const data = await response.json();
@@ -248,15 +452,18 @@ document.addEventListener("DOMContentLoaded", () => {
         throw new Error("Invalid article feed");
       }
 
+
       // UPDATE FEATURED BANNER
 
       updateFeaturedArticle(data.articles);
 
-      // REMOVE OLD DATABASE CARDS
+
+      // REMOVE PREVIOUS DYNAMIC ARTICLES
 
       articleGrid
         .querySelectorAll(".dynamic-article")
         .forEach(card => card.remove());
+
 
       // ADD PUBLISHED ARTICLES
 
@@ -269,9 +476,16 @@ document.addEventListener("DOMContentLoaded", () => {
         articleGrid.appendChild(card);
       });
 
-      // REFRESH FILTERS
+
+      // REFRESH SEARCH AND FILTERS
 
       updateArticles();
+
+
+      console.log(
+        "Leonida Whispers: Published articles loaded.",
+        data.articles.length
+      );
 
     } catch (error) {
 
@@ -284,7 +498,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   // ==========================================
-  // SEARCH AND CATEGORY FILTERS
+  // 08 — SEARCH AND CATEGORY FILTERS
   // ==========================================
 
   function updateArticles() {
@@ -318,13 +532,18 @@ document.addEventListener("DOMContentLoaded", () => {
       if (show) visible++;
     });
 
+
+    // EMPTY SEARCH MESSAGE
+
     if (emptyState) {
       emptyState.hidden = visible !== 0;
     }
   }
 
 
-  // FILTER BUTTONS
+  // ==========================================
+  // 09 — FILTER BUTTONS
+  // ==========================================
 
   filters.forEach(button => {
 
@@ -336,14 +555,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
       button.classList.add("active");
 
-      activeFilter = button.dataset.filter || "all";
+      activeFilter =
+        button.dataset.filter || "all";
 
       updateArticles();
     });
   });
 
 
-  // SEARCH INPUT
+  // ==========================================
+  // 10 — SEARCH INPUT
+  // ==========================================
 
   searchInput?.addEventListener(
     "input",
@@ -352,7 +574,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   // ==========================================
-  // COPYRIGHT YEAR
+  // 11 — COPYRIGHT YEAR
   // ==========================================
 
   const year = document.querySelector("#year");
@@ -363,11 +585,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   // ==========================================
-  // INITIALISE WEBSITE
+  // 12 — INITIALISE WEBSITE
   // ==========================================
 
   updateArticles();
 
   loadPublishedArticles();
+
+
+  // ==========================================
+  // END LEONIDA WHISPERS FUNCTIONS
+  // ==========================================
 
 });
