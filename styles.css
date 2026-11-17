@@ -2,6 +2,7 @@
 /* =====================================================
    LEONIDA WHISPERS
    CONSOLIDATED MASTER STYLESHEET
+   DISCOVERY HUB CINEMATIC ARTWORK UPDATE
    ===================================================== */
 
 /* 01 — GLOBAL FOUNDATIONS */
@@ -38,8 +39,7 @@ a {
   text-decoration: none;
 }
 
-button,
-input {
+button, input {
   font: inherit;
 }
 
@@ -154,7 +154,7 @@ h1, h2, h3, p {
   padding: 0;
   overflow: hidden;
   background:
-    linear-gradient(90deg, rgba(9,0,25,.15), transparent 75%),
+    linear-gradient(90deg,rgba(9,0,25,.15),transparent 75%),
     url("assets/hero-banner.png") center center / cover no-repeat;
 }
 
@@ -162,7 +162,7 @@ h1, h2, h3, p {
   content: "";
   position: absolute;
   inset: 48% 0 0;
-  background: linear-gradient(180deg, transparent, #090713 98%);
+  background: linear-gradient(180deg,transparent,#090713 98%);
   z-index: 1;
 }
 
@@ -414,9 +414,7 @@ h1 strong {
 .article-card:hover {
   transform: translateY(-5px);
   border-color: var(--cyan);
-  box-shadow:
-    0 0 18px rgba(77,234,255,.13),
-    0 12px 35px rgba(0,0,0,.4);
+  box-shadow: 0 0 18px rgba(77,234,255,.13),0 12px 35px rgba(0,0,0,.4);
 }
 
 .article-card[hidden] {
@@ -927,32 +925,36 @@ h1 strong {
   color: var(--cyan);
 }
 
-/* =========================================
-   LEONIDA DISCOVERY HUB — MAIN DESIGN
-   ========================================= */
+/* =====================================================
+   13 — DISCOVERY HUB
+   CINEMATIC IMAGE CARD DESIGN
+   ===================================================== */
 
 .discovery-hub {
   max-width: 1500px;
   margin: 0 auto;
-  padding: 85px 8vw;
+  padding: 55px 6vw 65px;
+  background:
+    radial-gradient(ellipse at 50% 0%,rgba(142,91,255,.12),transparent 65%),
+    var(--ink);
 }
 
 .discovery-hub-heading {
-  max-width: 750px;
-  margin-bottom: 38px;
+  max-width: 1500px;
+  margin: 0 auto 32px;
 }
 
 .discovery-hub-heading .eyebrow {
   color: var(--cyan);
-  font: 700 11px Orbitron, sans-serif;
+  font: 700 11px Orbitron,sans-serif;
   letter-spacing: 3px;
   margin-bottom: 16px;
 }
 
 .discovery-hub-heading h2 {
   color: var(--white);
-  font: 800 clamp(30px, 4vw, 48px)/1.15 Orbitron, sans-serif;
-  margin-bottom: 20px;
+  font: 800 clamp(30px,4vw,48px)/1.1 Orbitron,sans-serif;
+  margin: 12px 0 18px;
 }
 
 .discovery-hub-heading h2 span {
@@ -960,78 +962,203 @@ h1 strong {
 }
 
 .discovery-hub-heading > p:last-child {
+  max-width: 650px;
   color: var(--muted);
-  font-size: 15px;
+  font-size: 14px;
   line-height: 1.8;
-  max-width: 620px;
 }
 
 .discovery-hub-grid {
+  max-width: 1500px;
+  margin: auto;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 18px;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 20px;
 }
+
+/* MAIN CARD STRUCTURE */
 
 .discovery-link {
   position: relative;
+  isolation: isolate;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  min-height: 175px;
+  align-items: flex-start;
+  min-width: 0;
+  min-height: 230px;
   padding: 28px;
   overflow: hidden;
-  border: 1px solid rgba(77,234,255,.25);
-  border-radius: 12px;
-  background: linear-gradient(
-    145deg,
-    rgba(25,18,43,.98),
-    rgba(9,7,19,.98)
-  );
-  transition: .3s ease;
+  border: 1px solid rgba(77,234,255,.35);
+  border-radius: 15px;
+  background: #100b1e;
+  box-shadow: 0 8px 25px rgba(0,0,0,.3);
+  transition:
+    transform .3s ease,
+    border-color .3s ease,
+    box-shadow .3s ease;
 }
 
-.discovery-link:hover {
-  transform: translateY(-5px);
-  border-color: var(--pink);
-  box-shadow: 0 0 25px rgba(255,79,200,.2);
+/* IMAGE LAYER */
+
+.discovery-link::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  transition: transform .6s ease;
 }
+
+/* DARK OVERLAY FOR READABILITY */
+
+.discovery-link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(9,7,19,.96) 0%,
+      rgba(9,7,19,.84) 34%,
+      rgba(9,7,19,.35) 72%,
+      rgba(9,7,19,.12) 100%
+    ),
+    linear-gradient(
+      0deg,
+      rgba(9,7,19,.35),
+      transparent 65%
+    );
+  transition: background .3s ease;
+}
+
+/* FOUR INDIVIDUAL DISCOVERY IMAGES */
+
+.discovery-hub-grid .discovery-link:nth-child(1)::before {
+  background-image: url("assets/discovery-leonida.jpg");
+}
+
+.discovery-hub-grid .discovery-link:nth-child(2)::before {
+  background-image: url("assets/discovery-database.jpg");
+}
+
+.discovery-hub-grid .discovery-link:nth-child(3)::before {
+  background-image: url("assets/discovery-news.jpg");
+}
+
+.discovery-hub-grid .discovery-link:nth-child(4)::before {
+  background-image: url("assets/discovery-guides.jpg");
+}
+
+/* CARD ACCENT COLOURS */
+
+.discovery-hub-grid .discovery-link:nth-child(1) {
+  border-color: rgba(255,79,200,.75);
+  box-shadow: 0 0 18px rgba(255,79,200,.09);
+}
+
+.discovery-hub-grid .discovery-link:nth-child(2) {
+  border-color: rgba(77,234,255,.75);
+  box-shadow: 0 0 18px rgba(77,234,255,.09);
+}
+
+.discovery-hub-grid .discovery-link:nth-child(3) {
+  border-color: rgba(142,91,255,.8);
+  box-shadow: 0 0 18px rgba(142,91,255,.09);
+}
+
+.discovery-hub-grid .discovery-link:nth-child(4) {
+  border-color: rgba(255,79,200,.65);
+  box-shadow: 0 0 18px rgba(255,79,200,.07);
+}
+
+/* CARD TEXT */
 
 .discovery-number {
-  color: var(--cyan);
-  font: 700 10px Orbitron, sans-serif;
+  position: relative;
+  z-index: 1;
+  color: var(--pink);
+  font: 800 11px Orbitron,sans-serif;
   letter-spacing: 2px;
-  margin-bottom: 15px;
+  margin-bottom: 17px;
 }
 
 .discovery-link strong {
+  position: relative;
+  z-index: 1;
   color: var(--white);
-  font: 700 17px Orbitron, sans-serif;
+  font: 700 18px/1.35 Orbitron,sans-serif;
   margin-bottom: 12px;
+  transition: color .25s ease;
 }
 
 .discovery-link small {
-  color: var(--muted);
-  font: 13px/1.7 Inter, sans-serif;
+  position: relative;
+  z-index: 1;
+  display: block;
+  color: #e0d8ed;
+  font: 13px/1.7 Inter,sans-serif;
+  max-width: 85%;
 }
 
 .discovery-link i {
-  color: var(--pink);
-  font-size: 20px;
+  position: absolute;
+  z-index: 1;
+  right: 22px;
+  bottom: 20px;
+  color: var(--cyan);
+  font-size: 24px;
   font-style: normal;
-  margin-top: 15px;
+  transition: transform .3s ease,color .3s ease;
+}
+
+/* HOVER EFFECTS */
+
+.discovery-link:hover {
+  transform: translateY(-5px);
+  box-shadow:
+    0 0 25px rgba(255,79,200,.2),
+    0 15px 35px rgba(0,0,0,.4);
+}
+
+.discovery-link:hover::before {
+  transform: scale(1.07);
 }
 
 .discovery-link:hover strong {
   color: var(--pink);
 }
 
-/* END DISCOVERY HUB DESIGN */
+.discovery-link:hover i {
+  color: var(--pink);
+  transform: translate(4px,-4px);
+}
 
-/* 13 — TABLET RESPONSIVENESS */
+.discovery-link:active {
+  transform: scale(.985);
+}
+
+.discovery-link:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 4px;
+}
+
+/* =====================================================
+   14 — TABLET RESPONSIVENESS
+   ===================================================== */
 
 @media (max-width: 900px) {
-  .main-nav { gap: 13px; }
-  .main-nav a { font-size: 8px; }
+
+  .main-nav {
+    gap: 13px;
+  }
+
+  .main-nav a {
+    font-size: 8px;
+  }
 
   .hero-sun {
     right: -8%;
@@ -1039,7 +1166,9 @@ h1 strong {
     height: 300px;
   }
 
-  .hero-stamp { display: none; }
+  .hero-stamp {
+    display: none;
+  }
 
   .article-grid {
     grid-template-columns: repeat(2,minmax(0,1fr));
@@ -1063,7 +1192,9 @@ h1 strong {
   }
 }
 
-/* 14 — MOBILE RESPONSIVENESS */
+/* =====================================================
+   15 — MOBILE RESPONSIVENESS
+   ===================================================== */
 
 @media (max-width: 620px) {
 
@@ -1277,104 +1408,9 @@ h1 strong {
     flex-wrap: wrap;
     gap: 12px;
   }
-}
 
-/* 15 — LEONIDA DISCOVERY HUB */
+  /* MOBILE DISCOVERY HUB */
 
-.discovery-hub {
-  padding: 55px 6vw 65px;
-  background:
-    radial-gradient(ellipse at 50% 0%, rgba(142,91,255,.12), transparent 65%),
-    var(--ink);
-}
-
-.discovery-hub-heading {
-  max-width: 1500px;
-  margin: 0 auto 32px;
-}
-
-.discovery-hub-heading h2 {
-  font: 800 clamp(30px,4vw,48px)/1.1 Orbitron,sans-serif;
-  color: var(--white);
-  margin: 12px 0 18px;
-}
-
-.discovery-hub-heading h2 span {
-  color: var(--pink);
-}
-
-.discovery-hub-heading > p:not(.eyebrow) {
-  max-width: 650px;
-  color: var(--muted);
-  font-size: 14px;
-  line-height: 1.8;
-}
-
-.discovery-hub-grid {
-  max-width: 1500px;
-  margin: auto;
-  display: grid;
-  grid-template-columns: repeat(2,minmax(0,1fr));
-  gap: 20px;
-}
-
-.discovery-link {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  min-height: 165px;
-  padding: 25px;
-  overflow: hidden;
-  border: 1px solid rgba(77,234,255,.2);
-  border-radius: 15px;
-  background: linear-gradient(145deg,#171027,#0c0918);
-  box-shadow: 0 8px 25px rgba(0,0,0,.25);
-  transition: .3s ease;
-}
-
-.discovery-link:hover {
-  transform: translateY(-5px);
-  border-color: var(--pink);
-  box-shadow: 0 0 22px rgba(255,79,200,.15);
-}
-
-.discovery-number {
-  color: var(--pink);
-  font: 800 11px Orbitron,sans-serif;
-  letter-spacing: 2px;
-  margin-bottom: 18px;
-}
-
-.discovery-link strong {
-  color: var(--white);
-  font: 700 17px Orbitron,sans-serif;
-  margin-bottom: 12px;
-}
-
-.discovery-link small {
-  color: var(--muted);
-  font: 13px/1.7 Inter,sans-serif;
-  max-width: 85%;
-}
-
-.discovery-link i {
-  position: absolute;
-  right: 22px;
-  bottom: 22px;
-  color: var(--cyan);
-  font-size: 19px;
-  font-style: normal;
-  transition: .3s;
-}
-
-.discovery-link:hover i {
-  color: var(--pink);
-  transform: translate(4px,-4px);
-}
-
-/* DISCOVERY HUB — MOBILE */
-
-@media (max-width: 620px) {
   .discovery-hub {
     padding: 42px 6vw 55px;
   }
@@ -1389,157 +1425,51 @@ h1 strong {
 
   .discovery-hub-grid {
     grid-template-columns: 1fr;
-    gap: 14px;
+    gap: 16px;
   }
 
   .discovery-link {
-    min-height: 165px;
-    padding: 24px;
+    min-height: 185px;
+    padding: 23px;
+  }
+
+  .discovery-number {
+    font-size: 10px;
+    margin-bottom: 12px;
   }
 
   .discovery-link strong {
     font-size: 16px;
+  }
+
+  .discovery-link small {
+    font-size: 12px;
+    max-width: 88%;
+  }
+
+  .discovery-link i {
+    right: 18px;
+    bottom: 16px;
+  }
+
+  /* DARKER MOBILE IMAGE OVERLAY */
+
+  .discovery-link::after {
+    background:
+      linear-gradient(
+        90deg,
+        rgba(9,7,19,.92),
+        rgba(9,7,19,.65) 55%,
+        rgba(9,7,19,.3)
+      ),
+      linear-gradient(
+        0deg,
+        rgba(9,7,19,.4),
+        transparent
+      );
   }
 }
 
 /* =====================================================
    END OF LEONIDA WHISPERS MASTER STYLESHEET
    ===================================================== */
-
-/* MOBILE DISCOVERY HUB — FINAL FIX */
-
-@media (max-width: 620px) {
-
-  .discovery-hub {
-    padding: 45px 6vw 55px !important;
-  }
-
-  .discovery-hub-heading {
-    margin-bottom: 28px !important;
-  }
-
-  .discovery-hub-grid {
-    display: grid !important;
-    grid-template-columns: 1fr !important;
-    gap: 16px !important;
-  }
-
-  .discovery-hub-grid .discovery-link {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: flex-start !important;
-    justify-content: center !important;
-    width: 100% !important;
-    min-height: 150px !important;
-    padding: 23px !important;
-    border: 1px solid rgba(77,234,255,.35) !important;
-    border-radius: 12px !important;
-    background: linear-gradient(
-      145deg,
-      #19122b,
-      #090713
-    ) !important;
-    text-align: left !important;
-  }
-
-  .discovery-link .discovery-number {
-    display: block !important;
-    margin-bottom: 12px !important;
-    color: var(--cyan) !important;
-    font: 700 10px Orbitron,sans-serif !important;
-    letter-spacing: 2px !important;
-  }
-
-  .discovery-link strong {
-    display: block !important;
-    font-size: 16px !important;
-    margin-bottom: 9px !important;
-  }
-
-  .discovery-link small {
-    display: block !important;
-    font-size: 12px !important;
-    line-height: 1.6 !important;
-  }
-
-  .discovery-link i {
-    display: block !important;
-    margin-top: 12px !important;
-  }
-}
-
-
-/* DISCOVERY HUB — PREMIUM CARD FINISH */
-
-.discovery-hub-grid .discovery-link {
-  transition: transform .25s ease,
-              border-color .25s ease,
-              box-shadow .25s ease !important;
-  box-shadow: 0 0 14px rgba(77,234,255,.06);
-}
-
-/* CARD 01 — LEONIDA */
-.discovery-hub-grid .discovery-link:nth-child(1) {
-  border-color: rgba(255,79,200,.55) !important;
-  box-shadow: 0 0 18px rgba(255,79,200,.09);
-}
-
-/* CARD 02 — DATABASE */
-.discovery-hub-grid .discovery-link:nth-child(2) {
-  border-color: rgba(77,234,255,.55) !important;
-  box-shadow: 0 0 18px rgba(77,234,255,.09);
-}
-
-/* CARD 03 — NEWS */
-.discovery-hub-grid .discovery-link:nth-child(3) {
-  border-color: rgba(142,91,255,.6) !important;
-  box-shadow: 0 0 18px rgba(142,91,255,.09);
-}
-
-/* CARD 04 — GUIDES */
-.discovery-hub-grid .discovery-link:nth-child(4) {
-  border-color: rgba(255,79,200,.4) !important;
-  box-shadow: 0 0 18px rgba(255,79,200,.07);
-}
-
-/* INTERACTION */
-.discovery-hub-grid .discovery-link:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 0 25px rgba(255,79,200,.2);
-}
-
-.discovery-hub-grid .discovery-link:active {
-  transform: scale(.985);
-}
-
-.discovery-hub-grid .discovery-link:focus-visible {
-  outline: 2px solid var(--cyan);
-  outline-offset: 4px;
-}
-
-/* END PREMIUM CARD FINISH */
-
-/* DISCOVERY HUB — MOBILE ACCENT COLOURS */
-
-@media (max-width: 620px) {
-
-  .discovery-hub-grid .discovery-link:nth-child(1) {
-    border-color: #ff4fc8 !important;
-    box-shadow: 0 0 18px rgba(255,79,200,.13);
-  }
-
-  .discovery-hub-grid .discovery-link:nth-child(2) {
-    border-color: #4deaff !important;
-    box-shadow: 0 0 18px rgba(77,234,255,.13);
-  }
-
-  .discovery-hub-grid .discovery-link:nth-child(3) {
-    border-color: #8e5bff !important;
-    box-shadow: 0 0 18px rgba(142,91,255,.16);
-  }
-
-  .discovery-hub-grid .discovery-link:nth-child(4) {
-    border-color: #ff4fc8 !important;
-    box-shadow: 0 0 18px rgba(255,79,200,.13);
-  }
-}
