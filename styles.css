@@ -1419,3 +1419,42 @@ h1 strong {
 /* =====================================================
    END OF LEONIDA WHISPERS MASTER STYLESHEET
    ===================================================== */
+/* MOBILE HEADER POLISH — NOVEMBER 2026 */
+
+@media (max-width: 620px) {
+
+  .site-header {
+    height: 76px;
+    padding: 0 5vw;
+  }
+
+  .brand {
+    gap: 9px;
+  }
+
+  .brand img {
+    width: 60px !important;
+    height: 60px !important;
+  }
+
+  .brand-name {
+    font-size: 10px;
+    letter-spacing: 1px;
+  }
+
+  .brand-name small {
+    font-size: 7px;
+    letter-spacing: 1.5px;
+    margin-top: 4px;
+  }
+
+  .menu-toggle {
+    font-size: 25px;
+    padding: 10px;
+  }
+
+  .main-nav {
+    top: 76px;
+  }
+
+}
