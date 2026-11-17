@@ -2,7 +2,7 @@
 /* ==========================================
    LEONIDA WHISPERS
    CINEMATIC WEBSITE FUNCTIONS
-   MASTER REPLACEMENT — 17 NOV 2026
+   MASTER REPLACEMENT — GUIDES PAGE UPDATE
 ========================================== */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -36,7 +36,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   // ==========================================
-  // 02 — ARTICLE ELEMENTS
+  // 02 — PAGE DETECTION
+  // ==========================================
+
+  const isGuidesPage =
+    document.body.dataset.page === "guides";
+
+
+  // ==========================================
+  // 03 — ARTICLE ELEMENTS
   // ==========================================
 
   const articleGrid = document.querySelector("#articleGrid");
@@ -48,7 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   // ==========================================
-  // 03 — CATEGORY DETECTION
+  // 04 — CATEGORY DETECTION
   // ==========================================
 
   function categoryFilter(category) {
@@ -73,7 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   // ==========================================
-  // 04 — CINEMATIC FALLBACK ARTWORK
+  // 05 — CINEMATIC FALLBACK ARTWORK
   // ==========================================
 
   function createFallbackArtwork(category) {
@@ -112,15 +120,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const symbol = document.createElement("div");
 
-    symbol.textContent =
-      symbols[category] || "LEONIDA";
+    symbol.textContent = symbols[category] || "LEONIDA";
 
     symbol.style.cssText = `
       font-family:Orbitron,sans-serif;
       font-size:${category === "secrets" ? "110px" : "65px"};
       font-weight:800;
       letter-spacing:5px;
-      color:${category === "guides" ? "#4deaff" : "#ff4fc8"};
+      color:${category === "guides" || category === "tips"
+        ? "#4deaff"
+        : "#ff4fc8"};
       text-shadow:
         0 0 12px currentColor,
         0 0 35px currentColor;
@@ -150,7 +159,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   // ==========================================
-  // 05 — CREATE CINEMATIC ARTICLE CARDS
+  // 06 — CREATE ARTICLE CARDS
   // ==========================================
 
   function createArticleCard(article) {
@@ -171,26 +180,22 @@ document.addEventListener("DOMContentLoaded", () => {
     ].join(" ").toLowerCase();
 
 
-    // ARTWORK CONTAINER
+    // ARTWORK
 
     const artwork = document.createElement("div");
 
-    artwork.className =
-      `article-art article-art-${categoryType}`;
+    artwork.className = `article-art article-art-${categoryType}`;
 
     artwork.style.position = "relative";
     artwork.style.overflow = "hidden";
     artwork.style.backgroundColor = "#100b20";
-
-
-    // FALLBACK ARTWORK
 
     const fallback = createFallbackArtwork(categoryType);
 
     artwork.appendChild(fallback);
 
 
-    // REAL ARTICLE COVER IMAGE
+    // COVER IMAGE
 
     if (
       article.cover_image_url &&
@@ -200,9 +205,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const image = document.createElement("img");
 
       image.src = article.cover_image_url;
-
       image.alt = article.title || "Leonida Whispers article artwork";
-
       image.loading = "lazy";
       image.decoding = "async";
 
@@ -217,13 +220,9 @@ document.addEventListener("DOMContentLoaded", () => {
         transition:transform .6s ease,filter .4s ease;
       `;
 
-      image.addEventListener("error", () => {
-        image.remove();
-      });
+      image.addEventListener("error", () => image.remove());
 
-      image.addEventListener("load", () => {
-        fallback.remove();
-      });
+      image.addEventListener("load", () => fallback.remove());
 
       artwork.appendChild(image);
     }
@@ -246,7 +245,7 @@ document.addEventListener("DOMContentLoaded", () => {
     artwork.appendChild(label);
 
 
-    // IMAGE GRADIENT OVERLAY
+    // IMAGE OVERLAY
 
     const overlay = document.createElement("div");
 
@@ -278,7 +277,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     category.className = "category";
 
-    if (categoryType === "guides" || categoryType === "tips") {
+    if (
+      categoryType === "guides" ||
+      categoryType === "tips"
+    ) {
       category.classList.add("cyan");
     }
 
@@ -290,8 +292,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const heading = document.createElement("h3");
 
-    heading.textContent =
-      article.title || "Untitled report";
+    heading.textContent = article.title || "Untitled report";
 
 
     // EXCERPT
@@ -318,38 +319,29 @@ document.addEventListener("DOMContentLoaded", () => {
       <span>→</span>
     `;
 
+    info.append(category, heading, excerpt, link);
 
-    info.append(
-      category,
-      heading,
-      excerpt,
-      link
-    );
-
-    card.append(
-      artwork,
-      info
-    );
+    card.append(artwork, info);
 
     return card;
   }
 
 
   // ==========================================
-  // 06 — FEATURED INTELLIGENCE BANNER
+  // 07 — FEATURED INTELLIGENCE BANNER
   // ==========================================
 
   function updateFeaturedArticle(articles) {
-
-    const featuredArticle = articles.find(article =>
-      article.featured === true ||
-      Number(article.featured) === 1
-    );
 
     const featuredSection =
       document.querySelector("#featuredIntel");
 
     if (!featuredSection) return;
+
+    const featuredArticle = articles.find(article =>
+      article.featured === true ||
+      Number(article.featured) === 1
+    );
 
     if (!featuredArticle) {
       featuredSection.hidden = true;
@@ -368,11 +360,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const featuredLink =
       document.querySelector("#featuredLink");
 
-
     featuredSection.hidden = false;
-
-
-    // FEATURED BACKGROUND IMAGE
 
     if (featuredImage) {
 
@@ -395,27 +383,15 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
 
-
-    // FEATURED TITLE
-
     if (featuredTitle) {
-      featuredTitle.textContent =
-        featuredArticle.title || "";
+      featuredTitle.textContent = featuredArticle.title || "";
     }
-
-
-    // FEATURED EXCERPT
 
     if (featuredExcerpt) {
-      featuredExcerpt.textContent =
-        featuredArticle.excerpt || "";
+      featuredExcerpt.textContent = featuredArticle.excerpt || "";
     }
 
-
-    // FEATURED LINK
-
     if (featuredLink) {
-
       featuredLink.href =
         "article.html?slug=" +
         encodeURIComponent(featuredArticle.slug);
@@ -424,81 +400,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   // ==========================================
-  // 07 — LOAD PUBLISHED ARTICLES
-  // CLOUDFLARE API
-  // ==========================================
-
-  async function loadPublishedArticles() {
-
-    if (!articleGrid) return;
-
-    try {
-
-      const response = await fetch("/api/articles", {
-        method: "GET",
-        cache: "no-store",
-        credentials: "same-origin"
-      });
-
-      if (!response.ok) {
-        throw new Error(
-          "Unable to retrieve published articles"
-        );
-      }
-
-      const data = await response.json();
-
-      if (!Array.isArray(data.articles)) {
-        throw new Error("Invalid article feed");
-      }
-
-
-      // UPDATE FEATURED BANNER
-
-      updateFeaturedArticle(data.articles);
-
-
-      // REMOVE PREVIOUS DYNAMIC ARTICLES
-
-      articleGrid
-        .querySelectorAll(".dynamic-article")
-        .forEach(card => card.remove());
-
-
-      // ADD PUBLISHED ARTICLES
-
-      data.articles.forEach(article => {
-
-        if (!article.slug || !article.title) return;
-
-        const card = createArticleCard(article);
-
-        articleGrid.appendChild(card);
-      });
-
-
-      // REFRESH SEARCH AND FILTERS
-
-      updateArticles();
-
-
-      console.log(
-        "Leonida Whispers: Published articles loaded.",
-        data.articles.length
-      );
-
-    } catch (error) {
-
-      console.error(
-        "Leonida Whispers article feed:",
-        error
-      );
-    }
-  }
-
-
-  // ==========================================
-  // 08 — SEARCH AND CATEGORY FILTERS
+  // 08 — SEARCH AND FILTERS
   // ==========================================
 
   function updateArticles() {
@@ -532,9 +434,6 @@ document.addEventListener("DOMContentLoaded", () => {
       if (show) visible++;
     });
 
-
-    // EMPTY SEARCH MESSAGE
-
     if (emptyState) {
       emptyState.hidden = visible !== 0;
     }
@@ -542,7 +441,106 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   // ==========================================
-  // 09 — FILTER BUTTONS
+  // 09 — LOAD PUBLISHED ARTICLES
+  // CLOUDFLARE API
+  // ==========================================
+
+  async function loadPublishedArticles() {
+
+    if (!articleGrid) return;
+
+    try {
+
+      const response = await fetch("/api/articles", {
+        method: "GET",
+        cache: "no-store",
+        credentials: "same-origin"
+      });
+
+      if (!response.ok) {
+        throw new Error("Unable to retrieve published articles");
+      }
+
+      const data = await response.json();
+
+      if (!Array.isArray(data.articles)) {
+        throw new Error("Invalid article feed");
+      }
+
+      const allArticles = data.articles.filter(article =>
+        article.slug && article.title
+      );
+
+
+      // GUIDES PAGE: ONLY GUIDES AND TIPS
+
+      if (isGuidesPage) {
+
+        const guideArticles = allArticles.filter(article => {
+
+          const category = categoryFilter(article.category);
+
+          return category === "guides" || category === "tips";
+        });
+
+        guideArticles.forEach(article => {
+          articleGrid.appendChild(createArticleCard(article));
+        });
+
+        updateArticles();
+
+        console.log(
+          "Leonida Whispers: Guides loaded.",
+          guideArticles.length
+        );
+
+        return;
+      }
+
+
+      // HOMEPAGE FEATURED BANNER
+
+      updateFeaturedArticle(allArticles);
+
+
+      // REMOVE OLD DYNAMIC CARDS
+
+      articleGrid
+        .querySelectorAll(".dynamic-article")
+        .forEach(card => card.remove());
+
+
+      // ADD ALL PUBLISHED ARTICLES
+
+      allArticles.forEach(article => {
+        articleGrid.appendChild(createArticleCard(article));
+      });
+
+      updateArticles();
+
+      console.log(
+        "Leonida Whispers: Published articles loaded.",
+        allArticles.length
+      );
+
+    } catch (error) {
+
+      console.error(
+        "Leonida Whispers article feed:",
+        error
+      );
+
+      if (emptyState) {
+        emptyState.hidden = false;
+        emptyState.textContent =
+          "Unable to load articles right now. Please try again shortly.";
+      }
+    }
+  }
+
+
+  // ==========================================
+  // 10 — HOMEPAGE FILTER BUTTONS
   // ==========================================
 
   filters.forEach(button => {
@@ -555,8 +553,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       button.classList.add("active");
 
-      activeFilter =
-        button.dataset.filter || "all";
+      activeFilter = button.dataset.filter || "all";
 
       updateArticles();
     });
@@ -564,17 +561,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   // ==========================================
-  // 10 — SEARCH INPUT
+  // 11 — SEARCH INPUT
   // ==========================================
 
-  searchInput?.addEventListener(
-    "input",
-    updateArticles
-  );
+  searchInput?.addEventListener("input", updateArticles);
 
 
   // ==========================================
-  // 11 — COPYRIGHT YEAR
+  // 12 — COPYRIGHT YEAR
   // ==========================================
 
   const year = document.querySelector("#year");
@@ -585,7 +579,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   // ==========================================
-  // 12 — INITIALISE WEBSITE
+  // 13 — INITIALISE WEBSITE
   // ==========================================
 
   updateArticles();
