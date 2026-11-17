@@ -213,7 +213,7 @@ h1,h2,h3,p {
   overflow: hidden;
   background:
     linear-gradient(90deg,rgba(9,0,25,.15),transparent 75%),
-    url("assets/hero-banner.png") center center / cover no-repeat;
+    url("assets/leonida-hero.png") center center / cover no-repeat;
 }
 
 .hero:after {
@@ -1307,8 +1307,8 @@ h1 strong {
     max-height: 680px;
     background-image:
       linear-gradient(rgba(9,0,25,.08),rgba(9,0,25,.25)),
-      url("assets/Hero-banner-clean.png");
-    background-size: 100% 100%;
+      url("assets/leonida-hero.png");
+    background-size: cover;
     background-position: center center;
   }
 
