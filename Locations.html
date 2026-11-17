@@ -5,327 +5,319 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#090612">
+
 <title>Location Intelligence | Leonida Whispers</title>
-<meta name="description" content="Explore the Leonida Whispers GTA VI location intelligence database.">
+<meta name="description" content="Explore the Leonida Whispers GTA VI location intelligence database. Discover Vice City, Leonida Keys, Port Gellhorn and more.">
+<link rel="canonical" href="https://leonidawhispers.com/Locations.html">
+
+<meta property="og:title" content="Location Intelligence | Leonida Whispers">
+<meta property="og:description" content="Explore the world of Leonida through our growing GTA VI location archive.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://leonidawhispers.com/Locations.html">
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 :root {
---bg:#090612;
---panel:#151024;
---pink:#ff36bd;
---cyan:#35eaff;
---muted:#aaa2ba;
---line:rgba(255,79,200,.2);
+  --bg:#090612;
+  --panel:#151024;
+  --pink:#ff36bd;
+  --cyan:#35eaff;
+  --muted:#aaa2ba;
+  --line:rgba(255,79,200,.2);
 }
 
-* {box-sizing:border-box}
+* {
+  box-sizing:border-box;
+}
+
+html {
+  scroll-behavior:smooth;
+  scroll-padding-top:100px;
+}
 
 body {
-margin:0;
-background:var(--bg);
-color:#fff;
-font-family:Inter,sans-serif;
+  margin:0;
+  background:var(--bg);
+  color:#fff;
+  font-family:Inter,sans-serif;
 }
 
-a {color:inherit;text-decoration:none}
+a {
+  color:inherit;
+  text-decoration:none;
+}
 
-header {
-height:76px;
-padding:12px 6%;
-display:flex;
-align-items:center;
-justify-content:space-between;
-border-bottom:1px solid var(--line);
-background:#0b0715;
+/* =====================================
+   MAIN SITE HEADER
+===================================== */
+
+.site-header {
+  min-height:82px;
+  padding:10px 5%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:25px;
+  position:sticky;
+  top:0;
+  z-index:1000;
+  border-bottom:1px solid var(--line);
+  background:rgba(9,6,18,.98);
+  backdrop-filter:blur(14px);
 }
 
 .brand {
-display:flex;
-align-items:center;
-gap:12px;
-font-family:Orbitron,sans-serif;
-font-weight:800;
-letter-spacing:1px;
-font-size:15px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  flex-shrink:0;
+  font-family:Orbitron,sans-serif;
+  font-weight:800;
+  letter-spacing:1px;
+  font-size:15px;
 }
 
 .brand img {
-width:48px;
-height:48px;
-object-fit:contain;
+  width:76px;
+  height:76px;
+  object-fit:contain;
+  border-radius:50%;
 }
 
-.brand span {color:var(--pink)}
-
-nav {
-display:flex;
-gap:24px;
-font-family:Orbitron,sans-serif;
-font-size:10px;
+.brand-name {
+  color:#fff;
+  line-height:1.5;
 }
 
-nav a:hover {color:var(--pink)}
+.brand-name span {
+  color:var(--pink);
+}
+
+.brand-name small {
+  display:block;
+  color:#aaa2ba;
+  font-size:9px;
+  font-weight:500;
+  letter-spacing:3px;
+}
+
+.main-nav {
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:clamp(14px,2.1vw,28px);
+  margin-left:auto;
+  font-family:Orbitron,sans-serif;
+  font-size:10px;
+}
+
+.main-nav a {
+  position:relative;
+  padding:12px 0;
+  color:#c9c2d2;
+  white-space:nowrap;
+  transition:color .2s ease;
+}
+
+.main-nav a:hover,
+.main-nav a.active {
+  color:var(--pink);
+}
+
+.main-nav a.active::after {
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:3px;
+  height:2px;
+  background:var(--pink);
+  box-shadow:0 0 10px var(--pink);
+}
+
+.menu-toggle {
+  display:none;
+  width:58px;
+  height:54px;
+  align-items:center;
+  justify-content:center;
+  background:rgba(255,54,189,.12);
+  border:1px solid rgba(255,54,189,.7);
+  border-radius:12px;
+  color:var(--pink);
+  font-size:29px;
+  cursor:pointer;
+  flex-shrink:0;
+}
+
+.menu-toggle:focus-visible,
+.main-nav a:focus-visible {
+  outline:2px solid var(--cyan);
+  outline-offset:5px;
+}
+
+/* =====================================
+   HERO
+===================================== */
 
 .hero {
-min-height:330px;
-padding:75px 8%;
-position:relative;
-overflow:hidden;
-background:
-radial-gradient(ellipse at 80% 50%,rgba(255,54,189,.3),transparent 45%),
-linear-gradient(120deg,#100b24,#17102d 55%,#290b38);
-border-bottom:1px solid var(--line);
+  min-height:330px;
+  padding:75px 8%;
+  position:relative;
+  overflow:hidden;
+  background:
+    radial-gradient(ellipse at 80% 50%,rgba(255,54,189,.3),transparent 45%),
+    linear-gradient(120deg,#100b24,#17102d 55%,#290b38);
+  border-bottom:1px solid var(--line);
 }
 
 .hero:before {
-content:"";
-position:absolute;
-inset:0;
-opacity:.22;
-background-image:
-linear-gradient(rgba(53,234,255,.3) 1px,transparent 1px),
-linear-gradient(90deg,rgba(53,234,255,.3) 1px,transparent 1px);
-background-size:45px 45px;
-transform:perspective(400px) rotateX(35deg) scale(1.5);
+  content:"";
+  position:absolute;
+  inset:0;
+  opacity:.22;
+  background-image:
+    linear-gradient(rgba(53,234,255,.3) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(53,234,255,.3) 1px,transparent 1px);
+  background-size:45px 45px;
+  transform:perspective(400px) rotateX(35deg) scale(1.5);
 }
 
 .hero-content {
-position:relative;
-z-index:1;
-max-width:750px;
+  position:relative;
+  z-index:1;
+  max-width:750px;
 }
 
 .eyebrow {
-color:var(--cyan);
-font:600 10px Orbitron,sans-serif;
-letter-spacing:3px;
+  color:var(--cyan);
+  font:600 10px Orbitron,sans-serif;
+  letter-spacing:3px;
 }
 
 h1 {
-font:800 clamp(32px,6vw,64px) Orbitron,sans-serif;
-line-height:1.12;
-margin:18px 0;
+  font:800 clamp(32px,6vw,64px) Orbitron,sans-serif;
+  line-height:1.12;
+  margin:18px 0;
 }
 
-h1 span {color:var(--pink)}
+h1 span {
+  color:var(--pink);
+}
 
 .hero p {
-max-width:570px;
-color:#c0b8ce;
-line-height:1.8;
-font-size:14px;
+  max-width:570px;
+  color:#c0b8ce;
+  line-height:1.8;
+  font-size:14px;
 }
 
 .hero-stamp {
-position:absolute;
-right:10%;
-top:35%;
-font:800 clamp(55px,10vw,110px) Orbitron,sans-serif;
-color:rgba(255,79,200,.12);
+  position:absolute;
+  right:10%;
+  top:35%;
+  font:800 clamp(55px,10vw,110px) Orbitron,sans-serif;
+  color:rgba(255,79,200,.12);
 }
 
+/* =====================================
+   MAIN CONTENT
+===================================== */
+
 main {
-max-width:1200px;
-margin:auto;
-padding:65px 6%;
+  max-width:1200px;
+  margin:auto;
+  padding:65px 6%;
 }
 
 .section-heading {
-display:flex;
-justify-content:space-between;
-align-items:end;
-gap:15px;
-margin-bottom:30px;
+  display:flex;
+  justify-content:space-between;
+  align-items:end;
+  gap:15px;
+  margin-bottom:30px;
 }
 
 h2 {
-font:700 clamp(23px,4vw,35px) Orbitron,sans-serif;
-margin:10px 0;
+  font:700 clamp(23px,4vw,35px) Orbitron,sans-serif;
+  margin:10px 0;
 }
 
-h2 span {color:var(--pink)}
+h2 span {
+  color:var(--pink);
+}
 
 .file-count {
-font:10px Orbitron,sans-serif;
-color:var(--muted);
-white-space:nowrap;
+  font:10px Orbitron,sans-serif;
+  color:var(--muted);
+  white-space:nowrap;
 }
 
 .toolbar {
-display:flex;
-gap:12px;
-flex-wrap:wrap;
-margin-bottom:25px;
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-bottom:25px;
 }
 
 .search {
-flex:1;
-min-width:220px;
-background:#120d20;
-border:1px solid var(--line);
-padding:15px;
-color:#fff;
-outline:none;
+  flex:1;
+  min-width:220px;
+  background:#120d20;
+  border:1px solid var(--line);
+  padding:15px;
+  color:#fff;
+  outline:none;
+  font:14px Inter,sans-serif;
 }
 
-.search:focus {border-color:var(--cyan)}
+.search:focus {
+  border-color:var(--cyan);
+}
+
+.search::placeholder {
+  color:#817990;
+}
 
 .filters {
-display:flex;
-gap:8px;
-flex-wrap:wrap;
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
 }
 
 .filter {
-background:#151024;
-color:#bbb2c9;
-border:1px solid var(--line);
-padding:12px 15px;
-font:600 10px Orbitron,sans-serif;
-cursor:pointer;
+  background:#151024;
+  color:#bbb2c9;
+  border:1px solid var(--line);
+  padding:12px 15px;
+  font:600 10px Orbitron,sans-serif;
+  cursor:pointer;
+  transition:.2s ease;
 }
 
-.filter.active,.filter:hover {
-background:var(--pink);
-color:#100719;
-border-color:var(--pink);
+.filter.active,
+.filter:hover {
+  background:var(--pink);
+  color:#100719;
+  border-color:var(--pink);
 }
 
-.location-grid {
-display:grid;
-grid-template-columns:repeat(3,minmax(0,1fr));
-gap:18px;
-}
-
-.location-card {
-background:var(--panel);
-border:1px solid var(--line);
-overflow:hidden;
-transition:.25s;
-}
-
-.location-card:hover {
-transform:translateY(-5px);
-border-color:var(--cyan);
-box-shadow:0 10px 35px rgba(53,234,255,.1);
-}
-
-.card-art {
-height:165px;
-position:relative;
-display:flex;
-align-items:center;
-justify-content:center;
-overflow:hidden;
-background:
-radial-gradient(circle at 50% 65%,rgba(255,54,189,.5),transparent 45%),
-linear-gradient(135deg,#171047,#35104e,#091c38);
-}
-
-.card-art:before {
-content:"";
-position:absolute;
-inset:0;
-background:repeating-linear-gradient(
-0deg,transparent 0 24px,
-rgba(255,255,255,.04) 25px
-);
-}
-
-.card-symbol {
-position:relative;
-font:800 55px Orbitron,sans-serif;
-color:var(--cyan);
-text-shadow:0 0 25px var(--cyan);
-}
-
-.card-index {
-position:absolute;
-top:14px;
-left:15px;
-font:10px Orbitron,sans-serif;
-color:#fff;
-}
-
-.card-info {padding:22px}
-
-.tag {
-font:600 9px Orbitron,sans-serif;
-letter-spacing:1px;
-color:var(--pink);
-}
-
-.card-info h3 {
-font:700 17px Orbitron,sans-serif;
-margin:12px 0;
-}
-
-.card-info p {
-font-size:12px;
-color:var(--muted);
-line-height:1.8;
-min-height:43px;
-}
-
-.card-footer {
-display:flex;
-justify-content:space-between;
-align-items:center;
-border-top:1px solid var(--line);
-padding-top:15px;
-margin-top:17px;
-font:10px Orbitron,sans-serif;
-color:var(--cyan);
-}
-
-.status {color:#aaa2ba}
-
-.empty {
-display:none;
-padding:35px;
-text-align:center;
-color:var(--muted);
-}
-
-footer {
-padding:30px 6%;
-text-align:center;
-border-top:1px solid var(--line);
-color:var(--muted);
-font-size:11px;
-line-height:2;
-}
-
-footer span {color:var(--pink)}
-
-@media(max-width:800px) {
-.location-grid {grid-template-columns:repeat(2,minmax(0,1fr))}
-nav {gap:12px;font-size:8px}
-}
-
-@media(max-width:560px) {
-header {height:70px;padding:10px 4%}
-.brand {font-size:11px;gap:7px}
-.brand img {width:42px;height:42px}
-nav {gap:10px}
-nav a:nth-child(2),nav a:nth-child(3) {display:none}
-.hero {padding:65px 6%;min-height:310px}
-.hero-stamp {right:3%;top:55%;font-size:65px}
-main {padding:45px 4%}
-.location-grid {grid-template-columns:1fr}
-.card-art {height:180px}
-.section-heading {align-items:start}
-}
-  
 /* =====================================
-   LEONIDA WHISPERS - CINEMATIC CARD UPGRADE
+   LOCATION CARDS
 ===================================== */
 
+.location-grid {
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:18px;
+}
+
 .location-card {
-  border: 1px solid rgba(255,79,200,.35);
-  border-radius: 16px;
+  background:var(--panel);
+  border:1px solid rgba(255,79,200,.35);
+  border-radius:16px;
+  overflow:hidden;
   box-shadow:
     0 0 12px rgba(255,79,200,.08),
     inset 0 0 15px rgba(77,234,255,.04);
@@ -336,8 +328,8 @@ main {padding:45px 4%}
 }
 
 .location-card:hover {
-  transform: translateY(-7px);
-  border-color: var(--pink);
+  transform:translateY(-7px);
+  border-color:var(--pink);
   box-shadow:
     0 0 12px rgba(255,79,200,.45),
     0 0 28px rgba(77,234,255,.2),
@@ -345,197 +337,564 @@ main {padding:45px 4%}
 }
 
 .card-art {
-  overflow: hidden;
-  isolation: isolate;
+  height:165px;
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  isolation:isolate;
+  background:
+    radial-gradient(circle at 50% 65%,rgba(255,54,189,.5),transparent 45%),
+    linear-gradient(135deg,#171047,#35104e,#091c38);
+}
+
+.card-art:before {
+  content:"";
+  position:absolute;
+  inset:0;
+  background:repeating-linear-gradient(
+    0deg,
+    transparent 0 24px,
+    rgba(255,255,255,.04) 25px
+  );
 }
 
 .card-art img {
-  transition: transform .6s ease, filter .6s ease;
+  transition:transform .6s ease,filter .6s ease;
 }
 
 .location-card:hover .card-art img {
-  transform: scale(1.06);
-  filter: brightness(.85) saturate(1.2);
+  transform:scale(1.06);
+  filter:brightness(.85) saturate(1.2);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .location-card,
-  .card-art img {
-    transition: none;
+.card-symbol {
+  position:relative;
+  font:800 55px Orbitron,sans-serif;
+  color:var(--cyan);
+  text-shadow:0 0 25px var(--cyan);
+}
+
+.card-index {
+  position:absolute;
+  top:14px;
+  left:15px;
+  font:10px Orbitron,sans-serif;
+  color:#fff;
+}
+
+.card-info {
+  padding:22px;
+}
+
+.tag {
+  font:600 9px Orbitron,sans-serif;
+  letter-spacing:1px;
+  color:var(--pink);
+}
+
+.card-info h3 {
+  font:700 17px Orbitron,sans-serif;
+  margin:12px 0;
+}
+
+.card-info p {
+  font-size:12px;
+  color:var(--muted);
+  line-height:1.8;
+  min-height:43px;
+}
+
+.card-footer {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border-top:1px solid var(--line);
+  padding-top:15px;
+  margin-top:17px;
+  font:10px Orbitron,sans-serif;
+  color:var(--cyan);
+}
+
+.card-footer a:hover {
+  color:var(--pink);
+}
+
+.status {
+  color:#aaa2ba;
+}
+
+.empty {
+  display:none;
+  padding:35px;
+  text-align:center;
+  color:var(--muted);
+}
+
+/* =====================================
+   FOOTER
+===================================== */
+
+footer {
+  padding:30px 6%;
+  text-align:center;
+  border-top:1px solid var(--line);
+  color:var(--muted);
+  font-size:11px;
+  line-height:2;
+}
+
+footer span {
+  color:var(--pink);
+}
+
+/* =====================================
+   TABLET
+===================================== */
+
+@media(max-width:1050px) and (min-width:761px) {
+  .site-header {
+    padding-left:3%;
+    padding-right:3%;
+    gap:16px;
+  }
+
+  .brand {
+    font-size:12px;
+    gap:8px;
+  }
+
+  .brand img {
+    width:60px;
+    height:60px;
+  }
+
+  .brand-name small {
+    font-size:8px;
+    letter-spacing:2px;
+  }
+
+  .main-nav {
+    gap:13px;
+    font-size:9px;
+  }
+
+  .location-grid {
+    grid-template-columns:repeat(2,minmax(0,1fr));
   }
 }
 
+/* =====================================
+   MOBILE NAVIGATION
+===================================== */
+
+@media(max-width:760px) {
+  html {
+    scroll-padding-top:90px;
+  }
+
+  .site-header {
+    min-height:76px;
+    height:76px;
+    padding:7px 5%;
+    gap:12px;
+  }
+
+  .brand {
+    font-size:13px;
+    gap:9px;
+  }
+
+  .brand img {
+    width:60px;
+    height:60px;
+  }
+
+  .brand-name small {
+    font-size:8px;
+    letter-spacing:2px;
+  }
+
+  .menu-toggle {
+    display:flex;
+  }
+
+  .main-nav {
+    display:none;
+    position:absolute;
+    top:76px;
+    left:0;
+    right:0;
+    width:100%;
+    margin:0;
+    padding:12px 6% 18px;
+    flex-direction:column;
+    align-items:stretch;
+    gap:0;
+    background:#090612;
+    border-bottom:1px solid rgba(255,54,189,.45);
+    box-shadow:0 18px 30px rgba(0,0,0,.65);
+    z-index:1001;
+  }
+
+  .main-nav.open {
+    display:flex;
+    animation:menuDrop .2s ease-out;
+  }
+
+  .main-nav a {
+    display:flex;
+    align-items:center;
+    min-height:58px;
+    padding:12px 8px;
+    border-bottom:1px solid rgba(255,255,255,.09);
+    font-size:13px;
+  }
+
+  .main-nav a:last-child {
+    border-bottom:0;
+  }
+
+  .main-nav a.active::after {
+    left:8px;
+    right:auto;
+    bottom:7px;
+    width:38px;
+  }
+
+  @keyframes menuDrop {
+    from {
+      opacity:0;
+      transform:translateY(-8px);
+    }
+    to {
+      opacity:1;
+      transform:translateY(0);
+    }
+  }
+
+  .hero {
+    padding:65px 6%;
+    min-height:310px;
+  }
+
+  .hero-stamp {
+    right:3%;
+    top:55%;
+    font-size:65px;
+  }
+
+  main {
+    padding:45px 4%;
+  }
+
+  .location-grid {
+    grid-template-columns:1fr;
+  }
+
+  .card-art {
+    height:180px;
+  }
+
+  .section-heading {
+    align-items:start;
+  }
+
+  .toolbar {
+    flex-direction:column;
+  }
+
+  .search {
+    width:100%;
+    min-width:0;
+  }
+}
+
+@media(max-width:380px) {
+  .brand {
+    font-size:11px;
+    gap:7px;
+  }
+
+  .brand img {
+    width:52px;
+    height:52px;
+  }
+
+  .brand-name small {
+    font-size:7px;
+    letter-spacing:1.5px;
+  }
+
+  .menu-toggle {
+    width:50px;
+    height:48px;
+  }
+}
+
+@media(prefers-reduced-motion:reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior:auto !important;
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;
+  }
+}
 </style>
 </head>
 
 <body>
 
-<header>
-<a class="brand" href="index.html">
-<img src="assets/Leonida-logo.png" alt="Leonida Whispers">
-<div>LEONIDA <span>WHISPERS</span></div>
-</a>
+<header class="site-header">
 
-<nav>
-<a href="index.html">HOME</a>
-<a href="index.html#latest">LATEST</a>
-<a href="index.html#guides">GUIDES</a>
-</nav>
+  <a class="brand" href="index.html" aria-label="Leonida Whispers home">
+    <img src="assets/Leonida-logo.png" alt="Leonida Whispers">
+
+    <span class="brand-name">
+      LEONIDA <span>WHISPERS</span>
+      <small>THE HOME OF GTA VI</small>
+    </span>
+  </a>
+
+  <button
+    class="menu-toggle"
+    type="button"
+    aria-label="Open navigation"
+    aria-expanded="false"
+    aria-controls="mainNavigation"
+  >
+    ☰
+  </button>
+
+  <nav class="main-nav" id="mainNavigation" aria-label="Main navigation">
+    <a href="index.html">HOME</a>
+    <a href="Locations.html" class="active" aria-current="page">EXPLORE LEONIDA</a>
+    <a href="index.html#latest">NEWS</a>
+    <a href="index.html#guides">GUIDES</a>
+    <a href="index.html#database">DATABASE</a>
+  </nav>
+
 </header>
 
 <section class="hero">
-<div class="hero-content">
-<div class="eyebrow">LEONIDA INTELLIGENCE NETWORK / 001</div>
-<h1>LOCATION <span>INTELLIGENCE.</span></h1>
-<p>
-Explore the world of Leonida. Discover cities,
-coastal regions, landmarks and places of interest
-through our growing independent GTA VI research archive.
-</p>
-</div>
-<div class="hero-stamp">LW+</div>
+  <div class="hero-content">
+    <div class="eyebrow">LEONIDA INTELLIGENCE NETWORK / 001</div>
+
+    <h1>LOCATION <span>INTELLIGENCE.</span></h1>
+
+    <p>
+      Explore the world of Leonida. Discover cities,
+      coastal regions, landmarks and places of interest
+      through our growing independent GTA VI research archive.
+    </p>
+  </div>
+
+  <div class="hero-stamp">LW+</div>
 </section>
 
 <main>
 
-<div class="section-heading">
-<div>
-<div class="eyebrow">THE GEOGRAPHIC ARCHIVE</div>
-<h2>THE <span>LOCATIONS.</span></h2>
-</div>
-<div class="file-count" id="fileCount">06 FIELD FILES</div>
-</div>
+  <div class="section-heading">
+    <div>
+      <div class="eyebrow">THE GEOGRAPHIC ARCHIVE</div>
+      <h2>THE <span>LOCATIONS.</span></h2>
+    </div>
 
-<div class="toolbar">
-<input
-class="search"
-id="search"
-type="search"
-placeholder="⌕ Search locations..."
-aria-label="Search locations"
->
+    <div class="file-count" id="fileCount">06 FIELD FILES</div>
+  </div>
 
-<div class="filters">
-<button class="filter active" data-filter="all">ALL</button>
-<button class="filter" data-filter="city">CITIES</button>
-<button class="filter" data-filter="coast">COAST</button>
-<button class="filter" data-filter="nature">NATURE</button>
-</div>
-</div>
+  <div class="toolbar">
 
-<div class="location-grid" id="locationGrid">
+    <input
+      class="search"
+      id="search"
+      type="search"
+      placeholder="⌕ Search locations..."
+      aria-label="Search locations"
+    >
 
-<article class="location-card" data-category="city">
-<div class="card-art">
-<span class="card-index">FILE 001</span>
-<div class="card-symbol">VC</div>
-</div>
-<div class="card-info">
-<div class="tag">URBAN / METROPOLIS</div>
-<h3>Vice City</h3>
-<p>The iconic urban centre of Leonida. Explore the city and its districts.</p>
-<div class="card-footer">
-<a href="vice-city.html" style="color:inherit;text-decoration:none;">OPEN FILE →</a>
-<span class="status">RESEARCH</span>
-</div>
-</div>
-</article>
+    <div class="filters">
+      <button class="filter active" data-filter="all">ALL</button>
+      <button class="filter" data-filter="city">CITIES</button>
+      <button class="filter" data-filter="coast">COAST</button>
+      <button class="filter" data-filter="nature">NATURE</button>
+    </div>
 
-<article class="location-card" data-category="coast">
-<div class="card-art">
-<span class="card-index">FILE 002</span>
-<div class="card-symbol">LK</div>
-</div>
-<div class="card-info">
-<div class="tag">COASTAL / ISLANDS</div>
-<h3>Leonida Keys</h3>
-<p>A tropical island region. A location file awaiting detailed research.</p>
-<div class="card-footer">
-<a href="leonida-keys.html" style="color:inherit;text-decoration:none;">OPEN FILE →</a>
-<span class="status">RESEARCH</span>
-</div>
-</div>
-</article>
+  </div>
 
-<article class="location-card" data-category="city">
-<div class="card-art">
-<span class="card-index">FILE 003</span>
-<div class="card-symbol">PG</div>
-</div>
-<div class="card-info">
-<div class="tag">URBAN / INDUSTRIAL</div>
-<h3>Port Gellhorn</h3>
-<p>A Leonida location with plenty more to investigate and document.</p>
-<div class="card-footer">
-<a href="port-gellhorn.html" style="color:inherit;text-decoration:none;">OPEN FILE →</a>
-<span class="status">RESEARCH</span>
-</div>
-</div>
-</article>
+  <div class="location-grid" id="locationGrid">
 
-<article class="location-card" data-category="nature">
-<div class="card-art">
-<span class="card-index">FILE 004</span>
-<div class="card-symbol">GR</div>
-</div>
-<div class="card-info">
-<div class="tag">WETLANDS / WILDLIFE</div>
-<h3>Grassrivers</h3>
-<p>A natural region of Leonida. Field notes and points of interest to follow.</p>
-<div class="card-footer">
-<a href="grassrivers.html" style="color:inherit;text-decoration:none;">OPEN FILE →</a>
-<span class="status">RESEARCH</span>
-</div>
-</div>
-</article>
+    <article class="location-card" data-category="city">
+      <div class="card-art">
+        <span class="card-index">FILE 001</span>
+        <div class="card-symbol">VC</div>
+      </div>
 
-<article class="location-card" data-category="city">
-<div class="card-art">
-<span class="card-index">FILE 005</span>
-<div class="card-symbol">AM</div>
-</div>
-<div class="card-info">
-<div class="tag">REGION / COMMUNITY</div>
-<h3>Ambrosia</h3>
-<p>A regional intelligence file for discoveries, landmarks and local details.</p>
-<div class="card-footer">
-<a href="ambrosia.html" style="color:inherit;text-decoration:none;">OPEN FILE →</a>
-<span class="status">RESEARCH</span>
-</div>
-</div>
-</article>
+      <div class="card-info">
+        <div class="tag">URBAN / METROPOLIS</div>
+        <h3>Vice City</h3>
+        <p>The iconic urban centre of Leonida. Explore the city and its districts.</p>
 
-<article class="location-card" data-category="nature">
-<div class="card-art">
-<span class="card-index">FILE 006</span>
-<div class="card-symbol">MK</div>
-</div>
-<div class="card-info">
-<div class="tag">WILDERNESS / PARK</div>
-<h3>Mount Kalaga National Park</h3>
-<p>A wilderness location to investigate for landmarks and discoveries.</p>
-<div class="card-footer">
-<a href="mount-kalaga.html" style="color:inherit;text-decoration:none;">OPEN FILE →</a>
-<span class="status">RESEARCH</span>
-</div>
-</div>
-</article>
+        <div class="card-footer">
+          <a href="vice-city.html">OPEN FILE →</a>
+          <span class="status">RESEARCH</span>
+        </div>
+      </div>
+    </article>
 
-</div>
+    <article class="location-card" data-category="coast">
+      <div class="card-art">
+        <span class="card-index">FILE 002</span>
+        <div class="card-symbol">LK</div>
+      </div>
 
-<div class="empty" id="empty">
-NO MATCHING LOCATION FILES FOUND.
-</div>
+      <div class="card-info">
+        <div class="tag">COASTAL / ISLANDS</div>
+        <h3>Leonida Keys</h3>
+        <p>A tropical island region. A location file awaiting detailed research.</p>
+
+        <div class="card-footer">
+          <a href="leonida-keys.html">OPEN FILE →</a>
+          <span class="status">RESEARCH</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="location-card" data-category="city">
+      <div class="card-art">
+        <span class="card-index">FILE 003</span>
+        <div class="card-symbol">PG</div>
+      </div>
+
+      <div class="card-info">
+        <div class="tag">URBAN / INDUSTRIAL</div>
+        <h3>Port Gellhorn</h3>
+        <p>A Leonida location with plenty more to investigate and document.</p>
+
+        <div class="card-footer">
+          <a href="port-gellhorn.html">OPEN FILE →</a>
+          <span class="status">RESEARCH</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="location-card" data-category="nature">
+      <div class="card-art">
+        <span class="card-index">FILE 004</span>
+        <div class="card-symbol">GR</div>
+      </div>
+
+      <div class="card-info">
+        <div class="tag">WETLANDS / WILDLIFE</div>
+        <h3>Grassrivers</h3>
+        <p>A natural region of Leonida. Field notes and points of interest to follow.</p>
+
+        <div class="card-footer">
+          <a href="grassrivers.html">OPEN FILE →</a>
+          <span class="status">RESEARCH</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="location-card" data-category="city">
+      <div class="card-art">
+        <span class="card-index">FILE 005</span>
+        <div class="card-symbol">AM</div>
+      </div>
+
+      <div class="card-info">
+        <div class="tag">REGION / COMMUNITY</div>
+        <h3>Ambrosia</h3>
+        <p>A regional intelligence file for discoveries, landmarks and local details.</p>
+
+        <div class="card-footer">
+          <a href="ambrosia.html">OPEN FILE →</a>
+          <span class="status">RESEARCH</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="location-card" data-category="nature">
+      <div class="card-art">
+        <span class="card-index">FILE 006</span>
+        <div class="card-symbol">MK</div>
+      </div>
+
+      <div class="card-info">
+        <div class="tag">WILDERNESS / PARK</div>
+        <h3>Mount Kalaga National Park</h3>
+        <p>A wilderness location to investigate for landmarks and discoveries.</p>
+
+        <div class="card-footer">
+          <a href="mount-kalaga.html">OPEN FILE →</a>
+          <span class="status">RESEARCH</span>
+        </div>
+      </div>
+    </article>
+
+  </div>
+
+  <div class="empty" id="empty">
+    NO MATCHING LOCATION FILES FOUND.
+  </div>
 
 </main>
 
 <footer>
-LEONIDA <span>WHISPERS</span><br>
-THE GTA INTELLIGENCE NETWORK<br>
-Independent fan publication. Not affiliated with Rockstar Games.
+  LEONIDA <span>WHISPERS</span><br>
+  THE GTA INTELLIGENCE NETWORK<br>
+  Independent fan publication. Not affiliated with Rockstar Games.
 </footer>
 
 <script>
+/* =====================================
+   MOBILE NAVIGATION
+===================================== */
+
+const menuToggle = document.querySelector(".menu-toggle");
+const mainNavigation = document.querySelector(".main-nav");
+
+if (menuToggle && mainNavigation) {
+
+  menuToggle.addEventListener("click", () => {
+    const isOpen = mainNavigation.classList.toggle("open");
+
+    menuToggle.setAttribute("aria-expanded", String(isOpen));
+    menuToggle.setAttribute(
+      "aria-label",
+      isOpen ? "Close navigation" : "Open navigation"
+    );
+
+    menuToggle.textContent = isOpen ? "✕" : "☰";
+  });
+
+  mainNavigation.querySelectorAll("a").forEach(link => {
+    link.addEventListener("click", () => {
+      mainNavigation.classList.remove("open");
+      menuToggle.setAttribute("aria-expanded", "false");
+      menuToggle.setAttribute("aria-label", "Open navigation");
+      menuToggle.textContent = "☰";
+    });
+  });
+
+  document.addEventListener("keydown", event => {
+    if (event.key === "Escape") {
+      mainNavigation.classList.remove("open");
+      menuToggle.setAttribute("aria-expanded", "false");
+      menuToggle.setAttribute("aria-label", "Open navigation");
+      menuToggle.textContent = "☰";
+    }
+  });
+
+}
+
+/* =====================================
+   LOCATION SEARCH AND FILTERS
+===================================== */
+
 const search = document.getElementById("search");
 const cards = [...document.querySelectorAll(".location-card")];
 const filters = document.querySelectorAll(".filter");
@@ -545,30 +904,47 @@ const empty = document.getElementById("empty");
 let category = "all";
 
 function updateCards() {
-const term = search.value.toLowerCase();
-let visible = 0;
 
-cards.forEach(card => {
-const matchesText = card.innerText.toLowerCase().includes(term);
-const matchesCategory = category === "all" ||
-card.dataset.category === category;
+  const term = search.value.toLowerCase();
+  let visible = 0;
 
-const show = matchesText && matchesCategory;
-card.style.display = show ? "" : "none";
-if(show) visible++;
-});
+  cards.forEach(card => {
 
-count.textContent = String(visible).padStart(2,"0") + " FIELD FILES";
-empty.style.display = visible ? "none" : "block";
+    const matchesText = card.innerText.toLowerCase().includes(term);
+
+    const matchesCategory =
+      category === "all" ||
+      card.dataset.category === category;
+
+    const show = matchesText && matchesCategory;
+
+    card.style.display = show ? "" : "none";
+
+    if (show) visible++;
+
+  });
+
+  count.textContent =
+    String(visible).padStart(2, "0") + " FIELD FILES";
+
+  empty.style.display = visible ? "none" : "block";
+
 }
 
 filters.forEach(button => {
-button.addEventListener("click", () => {
-filters.forEach(item => item.classList.remove("active"));
-button.classList.add("active");
-category = button.dataset.filter;
-updateCards();
-});
+
+  button.addEventListener("click", () => {
+
+    filters.forEach(item => item.classList.remove("active"));
+
+    button.classList.add("active");
+
+    category = button.dataset.filter;
+
+    updateCards();
+
+  });
+
 });
 
 search.addEventListener("input", updateCards);
