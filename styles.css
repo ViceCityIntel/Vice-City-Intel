@@ -1,7 +1,9 @@
+
 /* =====================================================
    LEONIDA WHISPERS
    MASTER STYLESHEET
    CINEMATIC EDITION — NOVEMBER 2026
+   NAVIGATION EDITION
    ===================================================== */
 
 /* 01 — GLOBAL FOUNDATIONS */
@@ -23,6 +25,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 95px;
 }
 
 body {
@@ -69,16 +72,17 @@ h1,h2,h3,p {
 /* 02 — HEADER AND BRANDING */
 
 .site-header {
-  height: 82px;
+  min-height: 82px;
   padding: 0 6vw;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: rgba(9,7,19,.94);
+  gap: 28px;
+  background: rgba(9,7,19,.96);
   border-bottom: 1px solid var(--line);
   position: sticky;
   top: 0;
-  z-index: 10;
+  z-index: 100;
   backdrop-filter: blur(14px);
 }
 
@@ -86,6 +90,12 @@ h1,h2,h3,p {
   display: flex;
   align-items: center;
   gap: 12px;
+  flex-shrink: 0;
+}
+
+.brand img {
+  display: block;
+  flex-shrink: 0;
 }
 
 .brand-mark {
@@ -102,6 +112,7 @@ h1,h2,h3,p {
 .brand-name {
   font: 700 13px Orbitron,sans-serif;
   letter-spacing: 1.2px;
+  white-space: nowrap;
 }
 
 .brand-name b {
@@ -118,28 +129,75 @@ h1,h2,h3,p {
 
 .main-nav {
   display: flex;
-  gap: 27px;
+  align-items: center;
+  justify-content: flex-end;
+  gap: clamp(14px,2.1vw,28px);
+  margin-left: auto;
 }
 
 .main-nav a {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   font: 600 10px Orbitron,sans-serif;
   letter-spacing: 1px;
+  white-space: nowrap;
   color: #c7bfd4;
-  transition: .2s;
+  transition: color .2s ease,text-shadow .2s ease;
+}
+
+.main-nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 5px;
+  height: 2px;
+  background: var(--pink);
+  box-shadow: 0 0 10px var(--pink);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .25s ease;
 }
 
 .main-nav a:hover,
 .main-nav a.active {
   color: var(--pink);
-  text-shadow: 0 0 12px var(--pink);
+  text-shadow: 0 0 12px rgba(255,79,200,.5);
+}
+
+.main-nav a:hover::after,
+.main-nav a.active::after {
+  transform: scaleX(1);
 }
 
 .menu-toggle {
   display: none;
-  background: none;
-  border: 0;
-  color: white;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: rgba(255,79,200,.07);
+  border: 1px solid rgba(255,79,200,.35);
+  border-radius: 8px;
+  color: var(--pink);
   font-size: 25px;
+  cursor: pointer;
+  transition: background .2s ease,border-color .2s ease;
+}
+
+.menu-toggle:hover,
+.menu-toggle:focus-visible {
+  background: rgba(255,79,200,.16);
+  border-color: var(--pink);
+  outline: none;
+}
+
+.main-nav a:focus-visible,
+.brand:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 5px;
 }
 
 /* 03 — CINEMATIC HERO */
@@ -675,8 +733,6 @@ h1 strong {
   margin: 22px 0 28px;
 }
 
-/* FIELD MANUAL — IMAGE ELEMENT */
-
 .feature-visual {
   position: relative;
   overflow: hidden;
@@ -694,8 +750,6 @@ h1 strong {
   object-fit: cover;
   object-position: center;
 }
-
-/* REMOVE LEGACY MAP GRAPHICS IF PRESENT */
 
 .feature-visual .map-lines,
 .feature-visual .map-pin,
@@ -955,8 +1009,6 @@ h1 strong {
   gap: 20px;
 }
 
-/* DISCOVERY CARDS */
-
 .discovery-link {
   position: relative;
   isolation: isolate;
@@ -977,8 +1029,6 @@ h1 strong {
   box-shadow: 0 8px 25px rgba(0,0,0,.3);
   transition: transform .3s ease,border-color .3s ease,box-shadow .3s ease;
 }
-
-/* INDIVIDUAL PHOTOGRAPHIC BACKGROUNDS */
 
 .discovery-hub-grid .discovery-link:nth-child(1) {
   background-image: url("assets/discovery-leonida.jpg");
@@ -1004,8 +1054,6 @@ h1 strong {
   box-shadow: 0 0 18px rgba(255,79,200,.07);
 }
 
-/* IMAGE DARKENING OVERLAY */
-
 .discovery-link::after {
   content: "";
   position: absolute;
@@ -1026,8 +1074,6 @@ h1 strong {
     );
   transition: opacity .3s ease;
 }
-
-/* DISCOVERY CARD TEXT */
 
 .discovery-number {
   position: relative;
@@ -1067,8 +1113,6 @@ h1 strong {
   transition: transform .3s ease,color .3s ease;
 }
 
-/* DISCOVERY HOVER EFFECTS */
-
 .discovery-link:hover {
   transform: translateY(-5px);
   box-shadow: 0 0 25px rgba(255,79,200,.2),0 15px 35px rgba(0,0,0,.4);
@@ -1094,7 +1138,32 @@ h1 strong {
 
 /* 14 — TABLET RESPONSIVENESS */
 
-@media (max-width: 900px) {
+@media (max-width: 1050px) and (min-width: 761px) {
+
+  .site-header {
+    padding-left: 3vw;
+    padding-right: 3vw;
+    gap: 15px;
+  }
+
+  .brand {
+    gap: 8px;
+  }
+
+  .brand img {
+    width: 62px !important;
+    height: 62px !important;
+  }
+
+  .brand-name {
+    font-size: 10px;
+    letter-spacing: .7px;
+  }
+
+  .brand-name small {
+    font-size: 7px;
+    letter-spacing: 1.2px;
+  }
 
   .main-nav {
     gap: 13px;
@@ -1102,16 +1171,7 @@ h1 strong {
 
   .main-nav a {
     font-size: 8px;
-  }
-
-  .hero-sun {
-    right: -8%;
-    width: 300px;
-    height: 300px;
-  }
-
-  .hero-stamp {
-    display: none;
+    letter-spacing: .5px;
   }
 
   .article-grid {
@@ -1120,10 +1180,6 @@ h1 strong {
 
   .feature-copy {
     padding: 65px 7vw;
-  }
-
-  .hero-content {
-    left: 5%;
   }
 
   .section-wrap {
@@ -1136,42 +1192,110 @@ h1 strong {
   }
 }
 
-/* 15 — MOBILE RESPONSIVENESS */
+/* 15 — MOBILE NAVIGATION AND RESPONSIVENESS */
 
-@media (max-width: 620px) {
+@media (max-width: 760px) {
+
+  html {
+    scroll-padding-top: 85px;
+  }
 
   .site-header {
-    height: 70px;
+    height: 76px;
+    min-height: 76px;
     padding: 0 5vw;
+    gap: 12px;
+  }
+
+  .brand {
+    gap: 9px;
+  }
+
+  .brand img {
+    width: 60px !important;
+    height: 60px !important;
   }
 
   .brand-name {
-    font-size: 11px;
+    font-size: 10px;
+    letter-spacing: 1px;
+  }
+
+  .brand-name small {
+    font-size: 7px;
+    letter-spacing: 1.5px;
+    margin-top: 4px;
   }
 
   .menu-toggle {
-    display: block;
+    display: inline-flex;
+    flex-shrink: 0;
+    font-size: 25px;
+    padding: 8px;
   }
+
+  /* CLOSED MOBILE MENU */
 
   .main-nav {
     display: none;
     position: absolute;
-    top: 70px;
+    top: 76px;
     left: 0;
     right: 0;
-    background: #100b1d;
-    padding: 20px 6vw;
+    width: 100%;
+    margin: 0;
+    padding: 12px 6vw 22px;
     flex-direction: column;
-    border-bottom: 1px solid var(--line);
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 0;
+    background: rgba(12,8,25,.98);
+    border-bottom: 1px solid rgba(255,79,200,.4);
+    box-shadow: 0 16px 28px rgba(0,0,0,.4);
+    backdrop-filter: blur(16px);
   }
+
+  /* OPEN MOBILE MENU */
 
   .main-nav.open {
     display: flex;
+    animation: menuSlideDown .22s ease-out;
   }
 
   .main-nav a {
-    font-size: 10px;
-    padding: 8px 0;
+    display: flex;
+    align-items: center;
+    min-height: 50px;
+    padding: 13px 4px;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+    color: #e4dced;
+    font: 700 11px Orbitron,sans-serif;
+    letter-spacing: 1.3px;
+  }
+
+  .main-nav a:last-child {
+    border-bottom: 0;
+  }
+
+  .main-nav a::after {
+    display: none;
+  }
+
+  .main-nav a:hover,
+  .main-nav a.active {
+    color: var(--pink);
+    text-shadow: 0 0 12px rgba(255,79,200,.45);
+  }
+
+  @keyframes menuSlideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   /* MOBILE HERO */
@@ -1398,8 +1522,6 @@ h1 strong {
     bottom: 16px;
   }
 
-  /* MOBILE IMAGE OVERLAY */
-
   .discovery-link::after {
     background:
       linear-gradient(
@@ -1416,45 +1538,22 @@ h1 strong {
   }
 }
 
+/* 16 — REDUCED MOTION ACCESSIBILITY */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
+
 /* =====================================================
    END OF LEONIDA WHISPERS MASTER STYLESHEET
    ===================================================== */
-/* MOBILE HEADER POLISH — NOVEMBER 2026 */
-
-@media (max-width: 620px) {
-
-  .site-header {
-    height: 76px;
-    padding: 0 5vw;
-  }
-
-  .brand {
-    gap: 9px;
-  }
-
-  .brand img {
-    width: 60px !important;
-    height: 60px !important;
-  }
-
-  .brand-name {
-    font-size: 10px;
-    letter-spacing: 1px;
-  }
-
-  .brand-name small {
-    font-size: 7px;
-    letter-spacing: 1.5px;
-    margin-top: 4px;
-  }
-
-  .menu-toggle {
-    font-size: 25px;
-    padding: 10px;
-  }
-
-  .main-nav {
-    top: 76px;
-  }
-
-}
