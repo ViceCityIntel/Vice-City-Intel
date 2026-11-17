@@ -1,4 +1,3 @@
-
 /* =====================================================
    LEONIDA WHISPERS
    MASTER STYLESHEET
@@ -676,22 +675,27 @@ h1 strong {
   margin: 22px 0 28px;
 }
 
-/* CINEMATIC FIELD MANUAL ARTWORK */
+/* FIELD MANUAL — IMAGE ELEMENT */
 
 .feature-visual {
   position: relative;
   overflow: hidden;
   min-height: 440px;
-  background:
-    linear-gradient(
-      180deg,
-      rgba(9,7,19,.04),
-      rgba(9,7,19,.18)
-    ),
-    url("assets/field-manual-art.png") center center / cover no-repeat;
+  padding: 0;
+  background: #151024 !important;
 }
 
-/* Remove old generic artwork */
+.feature-visual img {
+  display: block;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* REMOVE LEGACY MAP GRAPHICS IF PRESENT */
 
 .feature-visual .map-lines,
 .feature-visual .map-pin,
@@ -1287,7 +1291,10 @@ h1 strong {
 
   .feature-visual {
     min-height: 320px;
-    background-position: center center;
+  }
+
+  .feature-visual img {
+    object-position: center;
   }
 
   /* DATABASE */
