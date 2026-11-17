@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -44,7 +45,6 @@
 
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <!-- UPDATED CSS CACHE VERSION -->
   <link rel="stylesheet" href="styles.css?v=20261118">
 
   <script async src="https://subscribe-forms.beehiiv.com/attribution.js"></script>
@@ -53,6 +53,8 @@
 <body>
 
   <div class="scanlines" aria-hidden="true"></div>
+
+  <!-- MAIN NAVIGATION -->
 
   <header class="site-header">
 
@@ -69,16 +71,25 @@
       </span>
     </a>
 
-    <button class="menu-toggle" aria-label="Open navigation" aria-expanded="false">
+    <button
+      class="menu-toggle"
+      aria-label="Open navigation"
+      aria-expanded="false"
+      aria-controls="mainNavigation"
+    >
       ☰
     </button>
 
-    <nav class="main-nav" aria-label="Main navigation">
+    <nav
+      class="main-nav"
+      id="mainNavigation"
+      aria-label="Main navigation"
+    >
       <a class="active" href="#home">HOME</a>
-      <a href="#latest">LATEST</a>
+      <a href="Locations.html">EXPLORE LEONIDA</a>
+      <a href="#latest">NEWS</a>
       <a href="#guides">GUIDES</a>
-      <a href="#database">DISCOVERIES</a>
-      <a href="#briefing">NEWSLETTER</a>
+      <a href="#database">DATABASE</a>
     </nav>
 
   </header>
@@ -310,7 +321,7 @@
 
       </div>
 
-      <!-- ARTICLE GRID: READY FOR PUBLISHED STORIES -->
+      <!-- ARTICLE GRID -->
 
       <div class="article-grid" id="articleGrid">
       </div>
@@ -345,8 +356,6 @@
         </a>
 
       </div>
-
-      <!-- FIELD MANUAL IMAGE -->
 
       <div class="feature-visual">
         <img
