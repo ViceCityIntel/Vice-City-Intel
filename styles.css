@@ -1557,3 +1557,224 @@ h1 strong {
 /* =====================================================
    END OF LEONIDA WHISPERS MASTER STYLESHEET
    ===================================================== */
+
+/* =====================================================
+   17 — DEDICATED GUIDES PAGE
+   LEONIDA WHISPERS
+   ===================================================== */
+
+.guides-hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  min-height: 510px;
+  overflow: hidden;
+  background:
+    radial-gradient(
+      ellipse at 15% 50%,
+      rgba(142,91,255,.18),
+      transparent 60%
+    ),
+    linear-gradient(120deg,#10091e,#090713 75%);
+  border-bottom: 1px solid rgba(255,79,200,.25);
+}
+
+.guides-hero-content {
+  position: relative;
+  z-index: 2;
+  padding: 75px 5vw 75px 12vw;
+}
+
+.guides-hero-content h1 {
+  font: 800 clamp(48px,7vw,82px)/1.05 Orbitron,sans-serif;
+  letter-spacing: -3px;
+  margin: 20px 0;
+}
+
+.guides-hero-content h1 em {
+  color: var(--pink);
+  font-style: normal;
+}
+
+.guides-intro {
+  max-width: 490px;
+  color: #d0c6dd;
+  font-size: 14px;
+  line-height: 1.9;
+  margin-bottom: 30px;
+}
+
+.guides-hero-art {
+  position: relative;
+  align-self: stretch;
+  min-height: 430px;
+  overflow: hidden;
+}
+
+.guides-hero-art::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    #090713 0%,
+    rgba(9,7,19,.35) 30%,
+    rgba(9,7,19,.05) 100%
+  );
+}
+
+.guides-hero-art img {
+  width: 100%;
+  height: 100%;
+  min-height: 430px;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+}
+
+.guides-intro-strip {
+  padding: 65px 8vw 25px;
+  max-width: 1200px;
+  margin: auto;
+  text-align: center;
+}
+
+.guides-intro-strip h2 {
+  font: 800 clamp(26px,4vw,42px)/1.2 Orbitron,sans-serif;
+  margin: 15px 0;
+}
+
+.guides-intro-strip h2 span {
+  color: var(--pink);
+}
+
+.guides-intro-strip > p {
+  max-width: 680px;
+  margin: 0 auto;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.9;
+}
+
+.guides-library {
+  padding-top: 45px;
+}
+
+.guides-library .search-box {
+  max-width: 520px;
+}
+
+.guides-library .article-grid {
+  margin-top: 10px;
+}
+
+.guides-back-link {
+  margin-top: 45px;
+  text-align: center;
+}
+
+.guides-cta {
+  position: relative;
+  overflow: hidden;
+  padding: 85px 20px;
+  text-align: center;
+  background:
+    radial-gradient(
+      ellipse at 50% 100%,
+      rgba(255,79,200,.2),
+      transparent 65%
+    ),
+    #100b1e;
+  border-top: 1px solid rgba(77,234,255,.2);
+}
+
+.guides-cta h2 {
+  font: 800 clamp(32px,5vw,55px)/1.15 Orbitron,sans-serif;
+  margin: 18px 0;
+}
+
+.guides-cta h2 span {
+  color: var(--pink);
+}
+
+.guides-cta > p:not(.eyebrow) {
+  max-width: 550px;
+  margin: 0 auto 28px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+/* GUIDES TABLET */
+
+@media (max-width: 1050px) and (min-width: 761px) {
+  .guides-hero-content {
+    padding-left: 7vw;
+  }
+
+  .guides-hero-content h1 {
+    font-size: 58px;
+  }
+}
+
+/* GUIDES MOBILE */
+
+@media (max-width: 760px) {
+
+  .guides-hero {
+    grid-template-columns: 1fr;
+    min-height: 0;
+  }
+
+  .guides-hero-content {
+    padding: 65px 7vw 35px;
+  }
+
+  .guides-hero-content h1 {
+    font-size: clamp(45px,12vw,65px);
+    letter-spacing: -2px;
+    margin: 18px 0;
+  }
+
+  .guides-intro {
+    font-size: 13px;
+    line-height: 1.8;
+  }
+
+  .guides-hero-art {
+    min-height: 260px;
+    max-height: 340px;
+  }
+
+  .guides-hero-art img {
+    min-height: 260px;
+    max-height: 340px;
+  }
+
+  .guides-hero-art::after {
+    background: linear-gradient(
+      180deg,
+      #090713 0%,
+      rgba(9,7,19,.15) 35%,
+      rgba(9,7,19,.05) 100%
+    );
+  }
+
+  .guides-intro-strip {
+    padding: 45px 7vw 15px;
+  }
+
+  .guides-intro-strip h2 {
+    font-size: 26px;
+  }
+
+  .guides-library {
+    padding-top: 35px;
+  }
+
+  .guides-cta {
+    padding: 65px 22px;
+  }
+
+}
