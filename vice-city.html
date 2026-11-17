@@ -4,39 +4,166 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#090612">
+
 <title>Vice City Intelligence | Leonida Whispers</title>
-<meta name="description" content="The Leonida Whispers Vice City intelligence dossier. Explore the urban heart of Leonida.">
+<meta name="description" content="The Leonida Whispers Vice City intelligence dossier. Explore the urban heart of Leonida, its districts, landmarks and discoveries.">
+<link rel="canonical" href="https://leonidawhispers.com/vice-city.html">
+
+<meta property="og:title" content="Vice City Intelligence | Leonida Whispers">
+<meta property="og:description" content="Explore Vice City, its districts, landmarks and discoveries in the Leonida Whispers research archive.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://leonidawhispers.com/vice-city.html">
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:#080511;color:#f8f3ff;font-family:Arial,sans-serif;line-height:1.6}
-a{color:inherit;text-decoration:none}
-header{background:#090713;border-bottom:1px solid #30203d;padding:18px 6%;display:flex;justify-content:space-between;align-items:center}
-.logo{font-weight:900;letter-spacing:2px}
-.logo span{color:#ff36bd}
-nav{display:flex;gap:20px;font-size:12px}
-.hero{padding:85px 7%;background:radial-gradient(ellipse at 75% 40%,#74165d 0%,#29103e 42%,#0a0718 78%);border-bottom:3px solid #ed35bb}
-.eyebrow{color:#40eaff;font-size:11px;letter-spacing:3px;font-weight:bold}
-h1{font-size:clamp(42px,9vw,82px);line-height:1.05;margin:20px 0}
-h1 span,h2 span{color:#ff3fbd}
-.intro{max-width:650px;color:#d0c5dc;font-size:15px}
-.status{display:inline-block;border:1px solid #ff3fbd;color:#ff69ca;padding:6px 12px;font-size:10px;letter-spacing:2px;margin-top:25px}
-main{max-width:1100px;margin:auto;padding:55px 6%}
-section{margin-bottom:55px}
-h2{font-size:27px;margin:10px 0 18px}
-p{color:#c4b9ce;font-size:14px;margin-bottom:12px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px}
-.panel{background:#160f22;border:1px solid #382343;padding:23px}
-.panel h3{color:#ff55c5;font-size:16px;margin-bottom:9px}
-.number{font-size:34px;color:#3ceaff;font-weight:900;margin-bottom:8px}
-.notice{border-left:3px solid #39dff7;background:#110e20;padding:18px;margin:20px 0}
-.label{font-size:10px;letter-spacing:2px;color:#40eaff;margin-bottom:8px}
-footer{text-align:center;padding:30px 15px;border-top:1px solid #30203d;color:#9c8ca9;font-size:11px}
-.back{display:inline-block;border:1px solid #40dff5;padding:12px 18px;color:#40dff5;font-size:12px;margin-top:15px}
-.back:hover{background:#40dff5;color:#080511}
-@media(max-width:500px){nav{gap:10px;font-size:10px}.hero{padding:65px 6%}}
-  
-/* PHASE 2 - VICE CITY CINEMATIC HERO */
-.hero{
+:root {
+  --bg:#090612;
+  --panel:#151024;
+  --pink:#ff36bd;
+  --cyan:#35eaff;
+  --muted:#aaa2ba;
+  --line:rgba(255,79,200,.2);
+}
+
+* {
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html {
+  scroll-behavior:smooth;
+  scroll-padding-top:105px;
+}
+
+body {
+  background:var(--bg);
+  color:#f8f3ff;
+  font-family:Inter,sans-serif;
+  line-height:1.6;
+}
+
+a {
+  color:inherit;
+  text-decoration:none;
+}
+
+/* =====================================
+   MAIN SITE HEADER
+===================================== */
+
+.site-header {
+  min-height:82px;
+  padding:10px 5%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:25px;
+  position:sticky;
+  top:0;
+  z-index:1000;
+  border-bottom:1px solid var(--line);
+  background:rgba(9,6,18,.98);
+  backdrop-filter:blur(14px);
+}
+
+.brand {
+  display:flex;
+  align-items:center;
+  gap:12px;
+  flex-shrink:0;
+  font-family:Orbitron,sans-serif;
+  font-weight:800;
+  letter-spacing:1px;
+  font-size:15px;
+}
+
+.brand img {
+  width:76px;
+  height:76px;
+  object-fit:contain;
+  border-radius:50%;
+}
+
+.brand-name {
+  color:#fff;
+  line-height:1.5;
+}
+
+.brand-name span {
+  color:var(--pink);
+}
+
+.brand-name small {
+  display:block;
+  color:#aaa2ba;
+  font-size:9px;
+  font-weight:500;
+  letter-spacing:3px;
+}
+
+.main-nav {
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:clamp(14px,2.1vw,28px);
+  margin-left:auto;
+  font-family:Orbitron,sans-serif;
+  font-size:10px;
+}
+
+.main-nav a {
+  position:relative;
+  padding:12px 0;
+  color:#c9c2d2;
+  white-space:nowrap;
+  transition:color .2s ease;
+}
+
+.main-nav a:hover,
+.main-nav a.active {
+  color:var(--pink);
+}
+
+.main-nav a.active::after {
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:3px;
+  height:2px;
+  background:var(--pink);
+  box-shadow:0 0 10px var(--pink);
+}
+
+.menu-toggle {
+  display:none;
+  width:58px;
+  height:54px;
+  align-items:center;
+  justify-content:center;
+  background:rgba(255,54,189,.12);
+  border:1px solid rgba(255,54,189,.7);
+  border-radius:12px;
+  color:var(--pink);
+  font-size:29px;
+  cursor:pointer;
+  flex-shrink:0;
+}
+
+.menu-toggle:focus-visible,
+.main-nav a:focus-visible {
+  outline:2px solid var(--cyan);
+  outline-offset:5px;
+}
+
+/* =====================================
+   VICE CITY HERO
+===================================== */
+
+.hero {
   position:relative;
   overflow:hidden;
   background-image:
@@ -45,96 +172,615 @@ footer{text-align:center;padding:30px 15px;border-top:1px solid #30203d;color:#9
   background-size:cover;
   background-position:center;
   min-height:520px;
+  padding:85px 7%;
   display:flex;
   flex-direction:column;
   justify-content:center;
+  border-bottom:3px solid var(--pink);
 }
 
-.hero>*{
+.hero > * {
   position:relative;
   z-index:1;
 }
 
-/* VICE CITY SCREENSHOT GALLERY */
-.image-gallery{
+.eyebrow {
+  color:var(--cyan);
+  font:700 10px Orbitron,sans-serif;
+  letter-spacing:3px;
+}
+
+h1 {
+  font:800 clamp(42px,9vw,82px) Orbitron,sans-serif;
+  line-height:1.08;
+  margin:20px 0;
+}
+
+h1 span,
+h2 span {
+  color:var(--pink);
+}
+
+.intro {
+  max-width:650px;
+  color:#d0c5dc;
+  font-size:15px;
+  line-height:1.9;
+}
+
+.status {
+  display:inline-block;
+  width:fit-content;
+  border:1px solid var(--pink);
+  color:#ff69ca;
+  padding:7px 13px;
+  font:600 10px Orbitron,sans-serif;
+  letter-spacing:2px;
+  margin-top:25px;
+}
+
+/* =====================================
+   IMAGE GALLERY
+===================================== */
+
+.image-gallery {
   max-width:1100px;
   margin:55px auto;
   padding:0 6%;
 }
 
-.gallery-heading{
-  color:#40eaff;
-  font-size:11px;
+.gallery-heading {
+  color:var(--cyan);
+  font:600 10px Orbitron,sans-serif;
   letter-spacing:3px;
   margin-bottom:10px;
 }
 
-.gallery-title{
-  font-size:28px;
+.gallery-title {
+  font:700 clamp(23px,4vw,35px) Orbitron,sans-serif;
   margin-bottom:22px;
 }
 
-.gallery-title span{
-  color:#ff3fbd;
+.gallery-title span {
+  color:var(--pink);
 }
 
-.gallery-grid{
+.gallery-grid {
   display:grid;
-  grid-template-columns:repeat(2,1fr);
+  grid-template-columns:repeat(2,minmax(0,1fr));
   gap:16px;
 }
 
-.gallery-card{
-  background:#160f22;
-  border:1px solid #392442;
+.gallery-card {
+  background:var(--panel);
+  border:1px solid rgba(255,79,200,.3);
+  border-radius:12px;
   overflow:hidden;
 }
 
-.gallery-card img{
+.gallery-card img {
   width:100%;
   height:220px;
   object-fit:cover;
   display:block;
-  transition:transform .4s;
+  transition:transform .4s,filter .4s;
+  cursor:pointer;
 }
 
-.gallery-card:hover img{
+.gallery-card:hover img {
   transform:scale(1.04);
+  filter:brightness(1.1);
 }
 
-.gallery-card figcaption{
+.gallery-card figcaption {
   padding:13px;
-  color:#ff55c5;
-  font-size:12px;
+  color:var(--pink);
+  font:600 10px Orbitron,sans-serif;
   letter-spacing:1px;
 }
 
-@media(max-width:600px){
-  .hero{min-height:430px}
-  .gallery-grid{grid-template-columns:1fr}
-  .gallery-card img{height:230px}
+/* =====================================
+   MAIN CONTENT
+===================================== */
+
+main {
+  max-width:1100px;
+  margin:auto;
+  padding:55px 6%;
 }
 
+section.content-section {
+  margin-bottom:55px;
+}
+
+h2 {
+  font:700 clamp(23px,4vw,35px) Orbitron,sans-serif;
+  margin:10px 0 18px;
+}
+
+p {
+  color:#c4b9ce;
+  font-size:14px;
+  line-height:1.85;
+  margin-bottom:12px;
+}
+
+/* =====================================
+   PANELS AND DISTRICT GRID
+===================================== */
+
+.grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:15px;
+}
+
+.panel {
+  background:var(--panel);
+  border:1px solid rgba(255,79,200,.25);
+  border-radius:12px;
+  padding:23px;
+  transition:.25s ease;
+}
+
+.panel:hover {
+  border-color:var(--cyan);
+  box-shadow:0 0 20px rgba(53,234,255,.08);
+}
+
+.panel h3 {
+  color:#ff55c5;
+  font:700 16px Orbitron,sans-serif;
+  margin-bottom:9px;
+}
+
+.number {
+  font:800 28px Orbitron,sans-serif;
+  color:var(--cyan);
+  margin-bottom:8px;
+}
+
+.district-card {
+  display:block;
+  padding:0;
+  overflow:hidden;
+  color:inherit;
+}
+
+.district-card img {
+  width:100%;
+  height:170px;
+  object-fit:cover;
+  display:block;
+  transition:transform .4s ease;
+}
+
+.district-card:hover img {
+  transform:scale(1.04);
+}
+
+.district-card-content {
+  padding:17px;
+}
+
+.district-card-content h3 {
+  margin:10px 0;
+}
+
+.district-card-content p {
+  font-size:12px;
+}
+
+.district-action {
+  color:var(--cyan);
+  font:600 10px Orbitron,sans-serif;
+  letter-spacing:1px;
+  margin-top:12px;
+}
+
+.notice {
+  border-left:3px solid var(--cyan);
+  background:#110e20;
+  border-radius:0 10px 10px 0;
+  padding:20px;
+  margin:20px 0;
+}
+
+.label {
+  font:600 10px Orbitron,sans-serif;
+  letter-spacing:2px;
+  color:var(--cyan);
+  margin-bottom:8px;
+}
+
+.back {
+  display:inline-block;
+  border:1px solid var(--cyan);
+  border-radius:5px;
+  padding:12px 18px;
+  color:var(--cyan);
+  font:600 10px Orbitron,sans-serif;
+  letter-spacing:1px;
+  margin-top:15px;
+  transition:.2s ease;
+}
+
+.back:hover {
+  background:var(--cyan);
+  color:#080511;
+}
+
+/* =====================================
+   FOOTER
+===================================== */
+
+footer {
+  text-align:center;
+  padding:30px 15px;
+  border-top:1px solid var(--line);
+  color:#9c8ca9;
+  font-size:11px;
+  line-height:2;
+}
+
+footer span {
+  color:var(--pink);
+}
+
+/* =====================================
+   IMAGE VIEWER
+===================================== */
+
+.image-viewer {
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  background:rgba(5,3,12,.97);
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  padding:20px;
+}
+
+.image-viewer.active {
+  display:flex;
+}
+
+.image-viewer img {
+  max-width:90%;
+  max-height:75vh;
+  object-fit:contain;
+  border:1px solid var(--pink);
+  border-radius:5px;
+  box-shadow:0 0 30px rgba(255,63,189,.25);
+}
+
+.viewer-close,
+.viewer-prev,
+.viewer-next {
+  position:absolute;
+  background:#170f24;
+  color:var(--cyan);
+  border:1px solid var(--pink);
+  border-radius:5px;
+  font-size:25px;
+  padding:10px 17px;
+  cursor:pointer;
+}
+
+.viewer-close {
+  top:20px;
+  right:20px;
+}
+
+.viewer-prev {
+  left:12px;
+  top:50%;
+}
+
+.viewer-next {
+  right:12px;
+  top:50%;
+}
+
+#viewerCaption {
+  color:#ff55c5;
+  margin-top:18px;
+  letter-spacing:2px;
+  font:600 11px Orbitron,sans-serif;
+  text-align:center;
+}
+
+/* =====================================
+   TABLET
+===================================== */
+
+@media(max-width:1050px) and (min-width:761px) {
+  .site-header {
+    padding-left:3%;
+    padding-right:3%;
+    gap:16px;
+  }
+
+  .brand {
+    font-size:12px;
+    gap:8px;
+  }
+
+  .brand img {
+    width:60px;
+    height:60px;
+  }
+
+  .brand-name small {
+    font-size:8px;
+    letter-spacing:2px;
+  }
+
+  .main-nav {
+    gap:13px;
+    font-size:9px;
+  }
+}
+
+/* =====================================
+   MOBILE
+===================================== */
+
+@media(max-width:760px) {
+
+  html {
+    scroll-padding-top:90px;
+  }
+
+  .site-header {
+    min-height:76px;
+    height:76px;
+    padding:7px 5%;
+    gap:12px;
+  }
+
+  .brand {
+    font-size:13px;
+    gap:9px;
+  }
+
+  .brand img {
+    width:60px;
+    height:60px;
+  }
+
+  .brand-name small {
+    font-size:8px;
+    letter-spacing:2px;
+  }
+
+  .menu-toggle {
+    display:flex;
+  }
+
+  .main-nav {
+    display:none;
+    position:absolute;
+    top:76px;
+    left:0;
+    right:0;
+    width:100%;
+    margin:0;
+    padding:12px 6% 18px;
+    flex-direction:column;
+    align-items:stretch;
+    gap:0;
+    background:#090612;
+    border-bottom:1px solid rgba(255,54,189,.45);
+    box-shadow:0 18px 30px rgba(0,0,0,.65);
+    z-index:1001;
+  }
+
+  .main-nav.open {
+    display:flex;
+    animation:menuDrop .2s ease-out;
+  }
+
+  .main-nav a {
+    display:flex;
+    align-items:center;
+    min-height:58px;
+    padding:12px 8px;
+    border-bottom:1px solid rgba(255,255,255,.09);
+    font-size:13px;
+  }
+
+  .main-nav a:last-child {
+    border-bottom:0;
+  }
+
+  .main-nav a.active::after {
+    left:8px;
+    right:auto;
+    bottom:7px;
+    width:38px;
+  }
+
+  @keyframes menuDrop {
+    from {
+      opacity:0;
+      transform:translateY(-8px);
+    }
+    to {
+      opacity:1;
+      transform:translateY(0);
+    }
+  }
+
+  .hero {
+    min-height:430px;
+    padding:65px 6%;
+    background-position:center;
+  }
+
+  .hero .intro {
+    font-size:14px;
+  }
+
+  .image-gallery {
+    margin:42px auto;
+    padding:0 5%;
+  }
+
+  .gallery-grid {
+    grid-template-columns:1fr;
+  }
+
+  .gallery-card img {
+    height:230px;
+  }
+
+  main {
+    padding:45px 5%;
+  }
+
+  .grid {
+    grid-template-columns:1fr;
+  }
+
+  .panel {
+    padding:20px;
+  }
+
+  .district-card {
+    padding:0;
+  }
+
+  .image-viewer {
+    padding:15px;
+  }
+
+  .image-viewer img {
+    max-width:100%;
+    max-height:70vh;
+  }
+
+  .viewer-prev {
+    left:8px;
+  }
+
+  .viewer-next {
+    right:8px;
+  }
+
+}
+
+@media(max-width:380px) {
+  .brand {
+    font-size:11px;
+    gap:7px;
+  }
+
+  .brand img {
+    width:52px;
+    height:52px;
+  }
+
+  .brand-name small {
+    font-size:7px;
+    letter-spacing:1.5px;
+  }
+
+  .menu-toggle {
+    width:50px;
+    height:48px;
+  }
+
+  h1 {
+    font-size:37px;
+  }
+}
+
+@media(prefers-reduced-motion:reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior:auto !important;
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;
+  }
+}
 </style>
 </head>
+
 <body>
 
-<header>
-<a href="index.html" class="logo">LEONIDA <span>WHISPERS</span></a>
-<nav>
-<a href="index.html">HOME</a>
-<a href="Locations.html">LOCATIONS</a>
-</nav>
+<!-- =====================================
+     MAIN SITE HEADER
+===================================== -->
+
+<header class="site-header">
+
+  <a class="brand" href="index.html" aria-label="Leonida Whispers home">
+    <img src="assets/Leonida-logo.png" alt="Leonida Whispers">
+
+    <span class="brand-name">
+      LEONIDA <span>WHISPERS</span>
+      <small>THE HOME OF GTA VI</small>
+    </span>
+  </a>
+
+  <button
+    class="menu-toggle"
+    type="button"
+    aria-label="Open navigation"
+    aria-expanded="false"
+    aria-controls="mainNavigation"
+  >
+    ☰
+  </button>
+
+  <nav class="main-nav" id="mainNavigation" aria-label="Main navigation">
+    <a href="index.html">HOME</a>
+    <a href="Locations.html" class="active">EXPLORE LEONIDA</a>
+    <a href="index.html#latest">NEWS</a>
+    <a href="index.html#guides">GUIDES</a>
+    <a href="index.html#database">DATABASE</a>
+  </nav>
+
 </header>
 
+<!-- =====================================
+     VICE CITY HERO
+===================================== -->
+
 <div class="hero">
-<div class="eyebrow">LEONIDA INTELLIGENCE NETWORK / FILE 001</div>
-<h1>VICE CITY<br><span>AFTER DARK.</span></h1>
-<p class="intro">The urban heart of Leonida. A sprawling coastal metropolis, its districts, landmarks and hidden stories form one of the most intriguing parts of our growing GTA VI research archive.</p>
-<div class="status">FIELD DOSSIER / RESEARCH IN PROGRESS</div>
+
+  <div class="eyebrow">
+    LEONIDA INTELLIGENCE NETWORK / FILE 001
+  </div>
+
+  <h1>
+    VICE CITY<br>
+    <span>AFTER DARK.</span>
+  </h1>
+
+  <p class="intro">
+    The urban heart of Leonida. A sprawling coastal metropolis,
+    its districts, landmarks and hidden stories form one of the
+    most intriguing parts of our growing GTA VI research archive.
+  </p>
+
+  <div class="status">
+    FIELD DOSSIER / RESEARCH IN PROGRESS
+  </div>
+
 </div>
 
+<!-- =====================================
+     VICE CITY IMAGE GALLERY
+===================================== -->
+
 <section class="image-gallery">
+
   <div class="gallery-heading">
     LEONIDA VISUAL INTELLIGENCE / 001
   </div>
@@ -161,268 +807,396 @@ footer{text-align:center;padding:30px 15px;border-top:1px solid #30203d;color:#9
     </figure>
 
   </div>
+
 </section>
 
 <main>
 
-<section>
-<div class="eyebrow">01 / CITY OVERVIEW</div>
-<h2>WELCOME TO <span>VICE CITY.</span></h2>
-<p>Vice City is one of the major locations featured in Grand Theft Auto VI. Inspired by the atmosphere and geography of South Florida, the city is a central part of the fictional state of Leonida.</p>
-<p>Our objective is to document its districts, landmarks, atmosphere and points of interest as reliable information becomes available.</p>
-</section>
+  <!-- CITY OVERVIEW -->
 
-<section>
-  <div class="eyebrow">02 / DISTRICT DIRECTORY</div>
-  <h2>EXPLORE <span>VICE CITY.</span></h2>
-  <p>Select a district to access its intelligence file.</p>
+  <section class="content-section">
 
-  <div class="grid">
+    <div class="eyebrow">01 / CITY OVERVIEW</div>
 
-    
-<a class="panel" href="#district-downtown" style="display:block;padding:0;overflow:hidden;text-decoration:none;color:inherit;">
-  <img src="assets/district-downtown.png" alt="Downtown Vice City" style="width:100%;height:170px;object-fit:cover;display:block;">
-  <div style="padding:15px;">
-    <div class="number">FILE 001 / VC</div>
-    <h3>DOWNTOWN</h3>
-    <p>Urban skyline, business and nightlife.</p>
-    <p>ACCESS INTELLIGENCE FILE →</p>
-  </div>
-</a>
+    <h2>WELCOME TO <span>VICE CITY.</span></h2>
 
-<a class="panel" href="#district-ocean" style="display:block;padding:0;overflow:hidden;text-decoration:none;color:inherit;">
-  <img src="assets/district-ocean-beach.png" alt="Ocean Beach" style="width:100%;height:170px;object-fit:cover;display:block;">
-  <div style="padding:15px;">
-    <div class="number">FILE 002 / VC</div>
-    <h3>OCEAN BEACH</h3>
-    <p>Coastal living and beachfront culture.</p>
-    <p>ACCESS INTELLIGENCE FILE →</p>
-  </div>
-</a>
+    <p>
+      Vice City is one of the major locations featured in Grand Theft Auto VI.
+      Inspired by the atmosphere and geography of South Florida, the city is
+      a central part of the fictional state of Leonida.
+    </p>
 
-<a class="panel" href="#district-cuba" style="display:block;padding:0;overflow:hidden;text-decoration:none;color:inherit;">
-  <img src="assets/district-little-cuba.png" alt="Little Cuba" style="width:100%;height:170px;object-fit:cover;display:block;">
-  <div style="padding:15px;">
-    <div class="number">FILE 003 / VC</div>
-    <h3>LITTLE CUBA</h3>
-    <p>Culture, businesses and neighbourhood life.</p>
-    <p>ACCESS INTELLIGENCE FILE →</p>
-  </div>
-</a>
+    <p>
+      Our objective is to document its districts, landmarks, atmosphere
+      and points of interest as reliable information becomes available.
+    </p>
 
-<a class="panel" href="#district-haiti" style="display:block;padding:0;overflow:hidden;text-decoration:none;color:inherit;">
-  <img src="assets/district-little-haiti.png" alt="Little Haiti" style="width:100%;height:170px;object-fit:cover;display:block;">
-  <div style="padding:15px;">
-    <div class="number">FILE 004 / VC</div>
-    <h3>LITTLE HAITI</h3>
-    <p>Community and local landmarks.</p>
-    <p>ACCESS INTELLIGENCE FILE →</p>
-  </div>
-</a>
+  </section>
 
-<a class="panel" href="#district-vice-dale" style="display:block;padding:0;overflow:hidden;text-decoration:none;color:inherit;">
-  <img src="assets/district-vice-dale.png" alt="Vice-Dale" style="width:100%;height:170px;object-fit:cover;display:block;">
-  <div style="padding:15px;">
-    <div class="number">FILE 005 / VC</div>
-    <h3>VICE-DALE</h3>
-    <p>Residential environments and exploration.</p>
-    <p>ACCESS INTELLIGENCE FILE →</p>
-  </div>
-</a>
+  <!-- DISTRICT DIRECTORY -->
 
-<a class="panel" href="#district-coast" style="display:block;padding:0;overflow:hidden;text-decoration:none;color:inherit;">
-  <img src="assets/district-coastal-frontier.png" alt="Coastal Frontier" style="width:100%;height:170px;object-fit:cover;display:block;">
-  <div style="padding:15px;">
-    <div class="number">FILE 006 / VC</div>
-    <h3>COASTAL FRONTIER</h3>
-    <p>Waterfront exploration.</p>
-    <p>ACCESS INTELLIGENCE FILE →</p>
-  </div>
-</a>
+  <section class="content-section">
 
+    <div class="eyebrow">02 / DISTRICT DIRECTORY</div>
 
-  </div>
-</section>
+    <h2>EXPLORE <span>VICE CITY.</span></h2>
 
-<section>
-<div class="eyebrow">02 / INTELLIGENCE DATABASE</div>
-<h2>THE CITY <span>AT A GLANCE.</span></h2>
-<div class="grid">
-<div class="panel">
-<div class="number">01</div>
-<h3>Urban districts</h3>
-<p>Investigating the city's neighbourhoods, streets and distinctive environments.</p>
-</div>
-<div class="panel">
-<div class="number">02</div>
-<h3>Coastal areas</h3>
-<p>Researching waterfront environments, beaches and coastal landmarks.</p>
-</div>
-<div class="panel">
-<div class="number">03</div>
-<h3>Landmarks</h3>
-<p>Building a reference archive of notable locations and recognisable buildings.</p>
-</div>
-<div class="panel">
-<div class="number">04</div>
-<h3>Hidden discoveries</h3>
-<p>Recording potential secrets, mysteries and discoveries as they are verified.</p>
-</div>
-</div>
-</section>
+    <p>Select a district to access its intelligence file.</p>
 
-<section>
-<div class="eyebrow">03 / FIELD RESEARCH</div>
-<h2>WHAT WE'RE <span>INVESTIGATING.</span></h2>
-<div class="panel">
-<h3>Vice City research priorities</h3>
-<p>• Districts and neighbourhoods</p>
-<p>• Beaches and waterfront locations</p>
-<p>• Notable buildings and landmarks</p>
-<p>• Roads, bridges and transport routes</p>
-<p>• Activities and points of interest</p>
-<p>• Environmental details and hidden discoveries</p>
-</div>
-</section>
+    <div class="grid">
 
-<section>
-<div class="eyebrow">04 / INTELLIGENCE STATUS</div>
-<h2>THE INVESTIGATION <span>CONTINUES.</span></h2>
-<div class="notice">
-<div class="label">ARCHIVE NOTICE</div>
-<p>This dossier is an independent fan research project. Information is being compiled and checked as reliable GTA VI material becomes available. Unverified discoveries will not be presented as confirmed facts.</p>
-</div>
-<a href="Locations.html" class="back">← RETURN TO LOCATION DATABASE</a>
-</section>
+      <a class="panel district-card" href="#district-downtown">
+        <img src="assets/district-downtown.png" alt="Downtown Vice City">
 
-<!-- DISTRICT INTELLIGENCE PROFILES -->
+        <div class="district-card-content">
+          <div class="number">FILE 001 / VC</div>
+          <h3>DOWNTOWN</h3>
+          <p>Urban skyline, business and nightlife.</p>
+          <div class="district-action">ACCESS INTELLIGENCE FILE →</div>
+        </div>
+      </a>
 
-<section id="district-downtown">
-  <div class="eyebrow">DISTRICT FILE 001 / VICE CITY</div>
-  <h2>DOWNTOWN <span>INTELLIGENCE.</span></h2>
-  <div class="panel">
-    <div class="number">FILE 001</div>
-    <h3>URBAN CORE</h3>
-    <p>Intelligence archive covering the central urban environment, architecture, transport and commercial activity.</p>
-    <p>DISCOVERY STATUS: UNDER INVESTIGATION</p>
-  </div>
-</section>
+      <a class="panel district-card" href="#district-ocean">
+        <img src="assets/district-ocean-beach.png" alt="Ocean Beach">
 
-<section id="district-ocean">
-  <div class="eyebrow">DISTRICT FILE 002 / VICE CITY</div>
-  <h2>OCEAN BEACH <span>INTELLIGENCE.</span></h2>
-  <div class="panel">
-    <div class="number">FILE 002</div>
-    <h3>COASTAL DISTRICT</h3>
-    <p>Archive covering beaches, beachfront environments, nightlife and coastal landmarks.</p>
-    <p>DISCOVERY STATUS: UNDER INVESTIGATION</p>
-  </div>
-</section>
+        <div class="district-card-content">
+          <div class="number">FILE 002 / VC</div>
+          <h3>OCEAN BEACH</h3>
+          <p>Coastal living and beachfront culture.</p>
+          <div class="district-action">ACCESS INTELLIGENCE FILE →</div>
+        </div>
+      </a>
 
-<section id="district-cuba">
-  <div class="eyebrow">DISTRICT FILE 003 / VICE CITY</div>
-  <h2>LITTLE CUBA <span>INTELLIGENCE.</span></h2>
-  <div class="panel">
-    <div class="number">FILE 003</div>
-    <h3>NEIGHBOURHOOD FILE</h3>
-    <p>Research into local environments, culture, businesses and points of interest.</p>
-    <p>DISCOVERY STATUS: UNDER INVESTIGATION</p>
-  </div>
-</section>
+      <a class="panel district-card" href="#district-cuba">
+        <img src="assets/district-little-cuba.png" alt="Little Cuba">
 
-<section id="district-haiti">
-  <div class="eyebrow">DISTRICT FILE 004 / VICE CITY</div>
-  <h2>LITTLE HAITI <span>INTELLIGENCE.</span></h2>
-  <div class="panel">
-    <div class="number">FILE 004</div>
-    <h3>NEIGHBOURHOOD FILE</h3>
-    <p>Research into local landmarks, community environments and exploration opportunities.</p>
-    <p>DISCOVERY STATUS: UNDER INVESTIGATION</p>
-  </div>
-</section>
+        <div class="district-card-content">
+          <div class="number">FILE 003 / VC</div>
+          <h3>LITTLE CUBA</h3>
+          <p>Culture, businesses and neighbourhood life.</p>
+          <div class="district-action">ACCESS INTELLIGENCE FILE →</div>
+        </div>
+      </a>
 
-<section id="district-vice-dale">
-  <div class="eyebrow">DISTRICT FILE 005 / VICE CITY</div>
-  <h2>VICE-DALE <span>INTELLIGENCE.</span></h2>
-  <div class="panel">
-    <div class="number">FILE 005</div>
-    <h3>RESIDENTIAL FILE</h3>
-    <p>Archive for residential environments, surrounding roads and points of interest.</p>
-    <p>DISCOVERY STATUS: UNVERIFIED LOCATION</p>
-  </div>
-</section>
+      <a class="panel district-card" href="#district-haiti">
+        <img src="assets/district-little-haiti.png" alt="Little Haiti">
 
-<section id="district-coast">
-  <div class="eyebrow">DISTRICT FILE 006 / VICE CITY</div>
-  <h2>COASTAL FRONTIER <span>INTELLIGENCE.</span></h2>
-  <div class="panel">
-    <div class="number">FILE 006</div>
-    <h3>WATERFRONT FILE</h3>
-    <p>Research into coastal environments, waterways and waterfront exploration.</p>
-    <p>DISCOVERY STATUS: PROVISIONAL CATEGORY</p>
-  </div>
-</section>
+        <div class="district-card-content">
+          <div class="number">FILE 004 / VC</div>
+          <h3>LITTLE HAITI</h3>
+          <p>Community and local landmarks.</p>
+          <div class="district-action">ACCESS INTELLIGENCE FILE →</div>
+        </div>
+      </a>
+
+      <a class="panel district-card" href="#district-vice-dale">
+        <img src="assets/district-vice-dale.png" alt="Vice-Dale">
+
+        <div class="district-card-content">
+          <div class="number">FILE 005 / VC</div>
+          <h3>VICE-DALE</h3>
+          <p>Residential environments and exploration.</p>
+          <div class="district-action">ACCESS INTELLIGENCE FILE →</div>
+        </div>
+      </a>
+
+      <a class="panel district-card" href="#district-coast">
+        <img src="assets/district-coastal-frontier.png" alt="Coastal Frontier">
+
+        <div class="district-card-content">
+          <div class="number">FILE 006 / VC</div>
+          <h3>COASTAL FRONTIER</h3>
+          <p>Waterfront exploration.</p>
+          <div class="district-action">ACCESS INTELLIGENCE FILE →</div>
+        </div>
+      </a>
+
+    </div>
+
+  </section>
+
+  <!-- INTELLIGENCE DATABASE -->
+
+  <section class="content-section">
+
+    <div class="eyebrow">02 / INTELLIGENCE DATABASE</div>
+
+    <h2>THE CITY <span>AT A GLANCE.</span></h2>
+
+    <div class="grid">
+
+      <div class="panel">
+        <div class="number">01</div>
+        <h3>Urban districts</h3>
+        <p>Investigating the city's neighbourhoods, streets and distinctive environments.</p>
+      </div>
+
+      <div class="panel">
+        <div class="number">02</div>
+        <h3>Coastal areas</h3>
+        <p>Researching waterfront environments, beaches and coastal landmarks.</p>
+      </div>
+
+      <div class="panel">
+        <div class="number">03</div>
+        <h3>Landmarks</h3>
+        <p>Building a reference archive of notable locations and recognisable buildings.</p>
+      </div>
+
+      <div class="panel">
+        <div class="number">04</div>
+        <h3>Hidden discoveries</h3>
+        <p>Recording potential secrets, mysteries and discoveries as they are verified.</p>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- FIELD RESEARCH -->
+
+  <section class="content-section">
+
+    <div class="eyebrow">03 / FIELD RESEARCH</div>
+
+    <h2>WHAT WE'RE <span>INVESTIGATING.</span></h2>
+
+    <div class="panel">
+      <h3>Vice City research priorities</h3>
+
+      <p>• Districts and neighbourhoods</p>
+      <p>• Beaches and waterfront locations</p>
+      <p>• Notable buildings and landmarks</p>
+      <p>• Roads, bridges and transport routes</p>
+      <p>• Activities and points of interest</p>
+      <p>• Environmental details and hidden discoveries</p>
+    </div>
+
+  </section>
+
+  <!-- INTELLIGENCE STATUS -->
+
+  <section class="content-section">
+
+    <div class="eyebrow">04 / INTELLIGENCE STATUS</div>
+
+    <h2>THE INVESTIGATION <span>CONTINUES.</span></h2>
+
+    <div class="notice">
+      <div class="label">ARCHIVE NOTICE</div>
+
+      <p>
+        This dossier is an independent fan research project.
+        Information is being compiled and checked as reliable GTA VI
+        material becomes available. Unverified discoveries will not
+        be presented as confirmed facts.
+      </p>
+    </div>
+
+    <a href="Locations.html" class="back">
+      ← RETURN TO LOCATION DATABASE
+    </a>
+
+  </section>
+
+  <!-- DISTRICT INTELLIGENCE PROFILES -->
+
+  <section class="content-section" id="district-downtown">
+
+    <div class="eyebrow">DISTRICT FILE 001 / VICE CITY</div>
+
+    <h2>DOWNTOWN <span>INTELLIGENCE.</span></h2>
+
+    <div class="panel">
+      <div class="number">FILE 001</div>
+      <h3>URBAN CORE</h3>
+      <p>
+        Intelligence archive covering the central urban environment,
+        architecture, transport and commercial activity.
+      </p>
+      <p>DISCOVERY STATUS: UNDER INVESTIGATION</p>
+    </div>
+
+  </section>
+
+  <section class="content-section" id="district-ocean">
+
+    <div class="eyebrow">DISTRICT FILE 002 / VICE CITY</div>
+
+    <h2>OCEAN BEACH <span>INTELLIGENCE.</span></h2>
+
+    <div class="panel">
+      <div class="number">FILE 002</div>
+      <h3>COASTAL DISTRICT</h3>
+      <p>
+        Archive covering beaches, beachfront environments,
+        nightlife and coastal landmarks.
+      </p>
+      <p>DISCOVERY STATUS: UNDER INVESTIGATION</p>
+    </div>
+
+  </section>
+
+  <section class="content-section" id="district-cuba">
+
+    <div class="eyebrow">DISTRICT FILE 003 / VICE CITY</div>
+
+    <h2>LITTLE CUBA <span>INTELLIGENCE.</span></h2>
+
+    <div class="panel">
+      <div class="number">FILE 003</div>
+      <h3>NEIGHBOURHOOD FILE</h3>
+      <p>
+        Research into local environments, culture,
+        businesses and points of interest.
+      </p>
+      <p>DISCOVERY STATUS: UNDER INVESTIGATION</p>
+    </div>
+
+  </section>
+
+  <section class="content-section" id="district-haiti">
+
+    <div class="eyebrow">DISTRICT FILE 004 / VICE CITY</div>
+
+    <h2>LITTLE HAITI <span>INTELLIGENCE.</span></h2>
+
+    <div class="panel">
+      <div class="number">FILE 004</div>
+      <h3>NEIGHBOURHOOD FILE</h3>
+      <p>
+        Research into local landmarks, community environments
+        and exploration opportunities.
+      </p>
+      <p>DISCOVERY STATUS: UNDER INVESTIGATION</p>
+    </div>
+
+  </section>
+
+  <section class="content-section" id="district-vice-dale">
+
+    <div class="eyebrow">DISTRICT FILE 005 / VICE CITY</div>
+
+    <h2>VICE-DALE <span>INTELLIGENCE.</span></h2>
+
+    <div class="panel">
+      <div class="number">FILE 005</div>
+      <h3>RESIDENTIAL FILE</h3>
+      <p>
+        Archive for residential environments,
+        surrounding roads and points of interest.
+      </p>
+      <p>DISCOVERY STATUS: UNVERIFIED LOCATION</p>
+    </div>
+
+  </section>
+
+  <section class="content-section" id="district-coast">
+
+    <div class="eyebrow">DISTRICT FILE 006 / VICE CITY</div>
+
+    <h2>COASTAL FRONTIER <span>INTELLIGENCE.</span></h2>
+
+    <div class="panel">
+      <div class="number">FILE 006</div>
+      <h3>WATERFRONT FILE</h3>
+      <p>
+        Research into coastal environments,
+        waterways and waterfront exploration.
+      </p>
+      <p>DISCOVERY STATUS: PROVISIONAL CATEGORY</p>
+    </div>
+
+  </section>
 
 </main>
 
 <footer>
-<p>LEONIDA <span style="color:#ff3fbd">WHISPERS</span></p>
-<p>THE GTA INTELLIGENCE NETWORK</p>
-<p>Independent fan publication. Not affiliated with Rockstar Games.</p>
+  <p>LEONIDA <span>WHISPERS</span></p>
+  <p>THE GTA INTELLIGENCE NETWORK</p>
+  <p>Independent fan publication. Not affiliated with Rockstar Games.</p>
 </footer>
 
-<!-- VICE CITY FULL SCREEN IMAGE VIEWER -->
+<!-- =====================================
+     FULL SCREEN IMAGE VIEWER
+===================================== -->
+
 <div id="imageViewer" class="image-viewer">
-  <button class="viewer-close" onclick="closeViewer()">×</button>
-  <button class="viewer-prev" onclick="changeImage(-1)">❮</button>
+
+  <button class="viewer-close" type="button" onclick="closeViewer()" aria-label="Close image viewer">×</button>
+
+  <button class="viewer-prev" type="button" onclick="changeImage(-1)" aria-label="Previous image">❮</button>
+
   <img id="viewerImage" src="" alt="Vice City gallery image">
-  <button class="viewer-next" onclick="changeImage(1)">❯</button>
+
+  <button class="viewer-next" type="button" onclick="changeImage(1)" aria-label="Next image">❯</button>
+
   <div id="viewerCaption"></div>
+
 </div>
 
-<style>
-.image-viewer{
-  display:none;
-  position:fixed;
-  inset:0;
-  z-index:9999;
-  background:rgba(5,3,12,.97);
-  align-items:center;
-  justify-content:center;
-  flex-direction:column;
-  padding:20px;
-}
-.image-viewer.active{
-  display:flex;
-}
-.image-viewer img{
-  max-width:90%;
-  max-height:75vh;
-  object-fit:contain;
-  border:1px solid #ff3fbd;
-  box-shadow:0 0 30px rgba(255,63,189,.25);
-}
-.viewer-close,.viewer-prev,.viewer-next{
-  position:absolute;
-  background:#170f24;
-  color:#40eaff;
-  border:1px solid #ff3fbd;
-  font-size:25px;
-  padding:10px 17px;
-  cursor:pointer;
-}
-.viewer-close{top:20px;right:20px}
-.viewer-prev{left:12px;top:50%}
-.viewer-next{right:12px;top:50%}
-#viewerCaption{
-  color:#ff55c5;
-  margin-top:18px;
-  letter-spacing:2px;
-  font-size:12px;
-}
-</style>
-
 <script>
+
+/* =====================================
+   MOBILE NAVIGATION
+===================================== */
+
+const menuToggle = document.querySelector(".menu-toggle");
+const mainNavigation = document.querySelector(".main-nav");
+
+if (menuToggle && mainNavigation) {
+
+  menuToggle.addEventListener("click", () => {
+
+    const isOpen = mainNavigation.classList.toggle("open");
+
+    menuToggle.setAttribute("aria-expanded", String(isOpen));
+
+    menuToggle.setAttribute(
+      "aria-label",
+      isOpen ? "Close navigation" : "Open navigation"
+    );
+
+    menuToggle.textContent = isOpen ? "✕" : "☰";
+
+  });
+
+  mainNavigation.querySelectorAll("a").forEach(link => {
+
+    link.addEventListener("click", () => {
+
+      mainNavigation.classList.remove("open");
+
+      menuToggle.setAttribute("aria-expanded", "false");
+      menuToggle.setAttribute("aria-label", "Open navigation");
+
+      menuToggle.textContent = "☰";
+
+    });
+
+  });
+
+  document.addEventListener("keydown", event => {
+
+    if (event.key === "Escape") {
+
+      mainNavigation.classList.remove("open");
+
+      menuToggle.setAttribute("aria-expanded", "false");
+      menuToggle.setAttribute("aria-label", "Open navigation");
+
+      menuToggle.textContent = "☰";
+
+    }
+
+  });
+
+}
+
+/* =====================================
+   VICE CITY IMAGE VIEWER
+===================================== */
+
 const galleryImages = [
   {
     src:"assets/vice-city-waterfront.jpg",
@@ -440,41 +1214,74 @@ const galleryImages = [
 
 let currentImage = 0;
 
-function openViewer(index){
+function openViewer(index) {
+
   currentImage = index;
+
   showViewerImage();
+
   document.getElementById("imageViewer").classList.add("active");
+
+  document.body.style.overflow = "hidden";
+
 }
 
-function closeViewer(){
+function closeViewer() {
+
   document.getElementById("imageViewer").classList.remove("active");
+
+  document.body.style.overflow = "";
+
 }
 
-function changeImage(direction){
-  currentImage = (currentImage + direction + galleryImages.length) % galleryImages.length;
+function changeImage(direction) {
+
+  currentImage =
+    (currentImage + direction + galleryImages.length) %
+    galleryImages.length;
+
   showViewerImage();
+
 }
 
-function showViewerImage(){
-  document.getElementById("viewerImage").src = galleryImages[currentImage].src;
-  document.getElementById("viewerCaption").textContent = galleryImages[currentImage].caption;
+function showViewerImage() {
+
+  document.getElementById("viewerImage").src =
+    galleryImages[currentImage].src;
+
+  document.getElementById("viewerCaption").textContent =
+    galleryImages[currentImage].caption;
+
 }
 
-document.querySelectorAll(".gallery-card img").forEach((img,index)=>{
-  img.style.cursor="pointer";
-  img.addEventListener("click",()=>openViewer(index));
+document.querySelectorAll(".gallery-card img").forEach((img,index) => {
+
+  img.addEventListener("click", () => openViewer(index));
+
 });
 
-document.getElementById("imageViewer").addEventListener("click",function(e){
-  if(e.target === this) closeViewer();
+document.getElementById("imageViewer").addEventListener("click", event => {
+
+  if (event.target === document.getElementById("imageViewer")) {
+    closeViewer();
+  }
+
 });
 
-document.addEventListener("keydown",function(e){
-  if(!document.getElementById("imageViewer").classList.contains("active")) return;
-  if(e.key==="Escape") closeViewer();
-  if(e.key==="ArrowRight") changeImage(1);
-  if(e.key==="ArrowLeft") changeImage(-1);
+document.addEventListener("keydown", event => {
+
+  if (!document.getElementById("imageViewer").classList.contains("active")) {
+    return;
+  }
+
+  if (event.key === "Escape") closeViewer();
+
+  if (event.key === "ArrowRight") changeImage(1);
+
+  if (event.key === "ArrowLeft") changeImage(-1);
+
 });
+
 </script>
 
 </body>
