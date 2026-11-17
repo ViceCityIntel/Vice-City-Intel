@@ -160,20 +160,36 @@ a {
 }
 
 /* =====================================
-   LEONIDA KEYS HERO
+   CINEMATIC LEONIDA KEYS HERO
 ===================================== */
 
 .hero {
   position:relative;
   overflow:hidden;
-  min-height:520px;
+  min-height:560px;
   padding:85px 7%;
   display:flex;
   flex-direction:column;
   justify-content:center;
+
   background:
-    radial-gradient(ellipse at 75% 40%,rgba(8,125,134,.8) 0%,transparent 48%),
-    linear-gradient(120deg,#0a0718,#15394f 55%,#087d86);
+    linear-gradient(
+      90deg,
+      rgba(5,7,19,.88) 0%,
+      rgba(5,12,25,.63) 48%,
+      rgba(5,15,25,.25) 100%
+    ),
+    linear-gradient(
+      0deg,
+      rgba(5,7,19,.48),
+      transparent 65%
+    ),
+    url("assets/leonida-keys-hero.jpg");
+
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+
   border-bottom:3px solid var(--cyan);
 }
 
@@ -181,7 +197,8 @@ a {
   content:"";
   position:absolute;
   inset:0;
-  opacity:.18;
+  opacity:.13;
+  pointer-events:none;
   background-image:
     linear-gradient(rgba(64,233,233,.3) 1px,transparent 1px),
     linear-gradient(90deg,rgba(64,233,233,.3) 1px,transparent 1px);
@@ -214,9 +231,10 @@ h2 span {
 
 .intro {
   max-width:650px;
-  color:#d0e1e5;
+  color:#e0e9ed;
   font-size:15px;
   line-height:1.9;
+  text-shadow:0 2px 8px rgba(0,0,0,.7);
 }
 
 .status {
@@ -229,6 +247,7 @@ h2 span {
   font:600 10px Orbitron,sans-serif;
   letter-spacing:2px;
   margin-top:25px;
+  background:rgba(5,10,20,.4);
 }
 
 /* =====================================
@@ -469,8 +488,9 @@ footer span {
   }
 
   .hero {
-    min-height:430px;
+    min-height:540px;
     padding:65px 6%;
+    background-position:center center;
   }
 
   .hero .intro {
@@ -488,7 +508,6 @@ footer span {
   .panel {
     padding:20px;
   }
-
 }
 
 @media(max-width:380px) {
@@ -532,10 +551,6 @@ footer span {
 
 <body>
 
-<!-- =====================================
-     MAIN SITE HEADER
-===================================== -->
-
 <header class="site-header">
 
   <a class="brand" href="index.html" aria-label="Leonida Whispers home">
@@ -567,9 +582,7 @@ footer span {
 
 </header>
 
-<!-- =====================================
-     LEONIDA KEYS HERO
-===================================== -->
+<!-- CINEMATIC LEONIDA KEYS HERO -->
 
 <section class="hero">
 
@@ -600,8 +613,6 @@ footer span {
 
 <main>
 
-  <!-- REGIONAL OVERVIEW -->
-
   <section class="content-section">
 
     <div class="eyebrow">01 / REGIONAL OVERVIEW</div>
@@ -620,8 +631,6 @@ footer span {
     </p>
 
   </section>
-
-  <!-- INTELLIGENCE DATABASE -->
 
   <section class="content-section">
 
@@ -659,8 +668,6 @@ footer span {
 
   </section>
 
-  <!-- FIELD RESEARCH -->
-
   <section class="content-section">
 
     <div class="eyebrow">03 / FIELD RESEARCH</div>
@@ -681,8 +688,6 @@ footer span {
     </div>
 
   </section>
-
-  <!-- INTELLIGENCE STATUS -->
 
   <section class="content-section">
 
@@ -717,11 +722,6 @@ footer span {
 </footer>
 
 <script>
-
-/* =====================================
-   MOBILE NAVIGATION
-===================================== */
-
 const menuToggle = document.querySelector(".menu-toggle");
 const mainNavigation = document.querySelector(".main-nav");
 
@@ -773,7 +773,6 @@ if (menuToggle && mainNavigation) {
   });
 
 }
-
 </script>
 
 </body>
