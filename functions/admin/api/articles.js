@@ -14,6 +14,14 @@ const DESTINATION_CATEGORIES = {
   database: ["Locations", "Vehicles"]
 };
 
+const VEHICLE_TYPES = [
+  "Cars",
+  "Motorcycles",
+  "Aircraft",
+  "Boats",
+  "Other"
+];
+
 function json(data, status = 200) {
   return Response.json(data, {
     status,
@@ -186,8 +194,6 @@ function validateArticle(body) {
     return "Featured must be true or false";
   }
 
-  // Validate destination and category when the new editor supplies them.
-  // Older editor requests without destination remain temporarily supported.
   if (body.destination !== undefined) {
     if (!DESTINATIONS.includes(body.destination)) {
       return "Invalid publishing destination";
@@ -199,6 +205,23 @@ function validateArticle(body) {
     if (!allowedCategories.includes(body.category)) {
       return "That category is not available for the selected destination";
     }
+  }
+
+  if (body.vehicle_type !== undefined && body.vehicle_type !== null) {
+    if (
+      typeof body.vehicle_type !== "string" ||
+      !VEHICLE_TYPES.includes(body.vehicle_type)
+    ) {
+      return "Invalid vehicle type";
+    }
+  }
+
+  if (
+    body.destination === "database" &&
+    body.category === "Vehicles" &&
+    !VEHICLE_TYPES.includes(body.vehicle_type)
+  ) {
+    return "Choose a valid vehicle type";
   }
 
   return null;
@@ -214,9 +237,20 @@ export async function onRequest({ request, env }) {
     if (request.method === "GET") {
       const result = await env.DB.prepare(`
         SELECT
-          id, title, slug, excerpt, content_markdown,
-          category, destination, status, featured, cover_image_url,
-          published_at, created_at, updated_at
+          id,
+          title,
+          slug,
+          excerpt,
+          content_markdown,
+          category,
+          destination,
+          vehicle_type,
+          status,
+          featured,
+          cover_image_url,
+          published_at,
+          created_at,
+          updated_at
         FROM articles
         ORDER BY updated_at DESC
       `).all();
@@ -260,15 +294,31 @@ export async function onRequest({ request, env }) {
       const now = new Date().toISOString();
       const status = body.status || "draft";
       const destination = body.destination || "news";
+
+      const vehicleType =
+        destination === "database" && body.category === "Vehicles"
+          ? body.vehicle_type
+          : null;
+
       const publishedAt = status === "published" ? now : null;
 
       const result = await env.DB.prepare(`
         INSERT INTO articles (
-          title, slug, excerpt, content_markdown,
-          category, destination, status, featured, cover_image_url,
-          published_at, created_at, updated_at
+          title,
+          slug,
+          excerpt,
+          content_markdown,
+          category,
+          destination,
+          vehicle_type,
+          status,
+          featured,
+          cover_image_url,
+          published_at,
+          created_at,
+          updated_at
         )
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
       `).bind(
         title,
         slug,
@@ -276,9 +326,12 @@ export async function onRequest({ request, env }) {
         body.content_markdown,
         typeof body.category === "string" ? body.category.trim() : "General",
         destination,
+        vehicleType,
         status,
         body.featured ? 1 : 0,
-        typeof body.cover_image_url === "string" ? body.cover_image_url.trim() : "",
+        typeof body.cover_image_url === "string"
+          ? body.cover_image_url.trim()
+          : "",
         publishedAt,
         now,
         now
@@ -296,6 +349,7 @@ export async function onRequest({ request, env }) {
         id: result.meta.last_row_id,
         slug,
         destination,
+        vehicle_type: vehicleType,
         indexNow
       }, 201);
     }
@@ -314,16 +368,19 @@ export async function onRequest({ request, env }) {
         return json({ error: "A valid article ID is required" }, 400);
       }
 
-      const validationError = validateArticle(body);
-
-      if (validationError) {
-        return json({ error: validationError }, 400);
-      }
-
       const existing = await env.DB.prepare(`
         SELECT
-          id, title, slug, excerpt, content_markdown,
-          category, destination, status, featured, cover_image_url,
+          id,
+          title,
+          slug,
+          excerpt,
+          content_markdown,
+          category,
+          destination,
+          vehicle_type,
+          status,
+          featured,
+          cover_image_url,
           published_at
         FROM articles
         WHERE id = ?
@@ -331,6 +388,28 @@ export async function onRequest({ request, env }) {
 
       if (!existing) {
         return json({ error: "Article not found" }, 404);
+      }
+
+      const destination =
+        body.destination || existing.destination || "news";
+
+      const category =
+        typeof body.category === "string"
+          ? body.category.trim()
+          : existing.category || "General";
+
+      const validationError = validateArticle({
+        ...body,
+        destination,
+        category,
+        vehicle_type:
+          body.vehicle_type !== undefined
+            ? body.vehicle_type
+            : existing.vehicle_type
+      });
+
+      if (validationError) {
+        return json({ error: validationError }, 400);
       }
 
       const title = body.title.trim();
@@ -352,13 +431,18 @@ export async function onRequest({ request, env }) {
       const now = new Date().toISOString();
 
       const excerpt =
-        typeof body.excerpt === "string" ? body.excerpt.trim() : "";
+        typeof body.excerpt === "string"
+          ? body.excerpt.trim()
+          : "";
 
-      const category =
-        typeof body.category === "string" ? body.category.trim() : "General";
-
-      const destination =
-        body.destination || existing.destination || "news";
+      const vehicleType =
+        destination === "database" && category === "Vehicles"
+          ? (
+              body.vehicle_type !== undefined
+                ? body.vehicle_type
+                : existing.vehicle_type
+            )
+          : null;
 
       const coverImageUrl =
         typeof body.cover_image_url === "string"
@@ -372,6 +456,7 @@ export async function onRequest({ request, env }) {
         existing.content_markdown !== body.content_markdown ||
         existing.category !== category ||
         existing.destination !== destination ||
+        existing.vehicle_type !== vehicleType ||
         existing.cover_image_url !== coverImageUrl;
 
       const shouldNotifyIndexNow =
@@ -390,6 +475,7 @@ export async function onRequest({ request, env }) {
           content_markdown = ?,
           category = ?,
           destination = ?,
+          vehicle_type = ?,
           status = ?,
           featured = ?,
           cover_image_url = ?,
@@ -403,6 +489,7 @@ export async function onRequest({ request, env }) {
         body.content_markdown,
         category,
         destination,
+        vehicleType,
         status,
         body.featured ? 1 : 0,
         coverImageUrl,
@@ -423,6 +510,7 @@ export async function onRequest({ request, env }) {
         id,
         slug,
         destination,
+        vehicle_type: vehicleType,
         indexNow
       });
     }
