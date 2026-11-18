@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,19 +7,105 @@
 <meta name="theme-color" content="#090713">
 <title>Leonida Whispers | Newsroom</title>
 <style>
-*{box-sizing:border-box}body{margin:0;padding:24px 16px;background:radial-gradient(ellipse at 50% -10%,rgba(112,45,145,.25),transparent 48%),linear-gradient(160deg,#090713,#100d20 55%,#080b18);color:#f7f2ff;font-family:Arial,sans-serif}.wrap{max-width:1100px;margin:auto;padding-bottom:50px}.brand{color:#ff55bd;font-size:30px;font-weight:bold;letter-spacing:6px;text-shadow:0 0 22px rgba(255,79,200,.45)}.sub{color:#65e7f5;font-size:12px;letter-spacing:7px;margin-top:7px}header{margin:38px 0 30px;padding:25px;border-left:3px solid #ff4fc8;background:linear-gradient(100deg,rgba(255,79,200,.09),transparent)}header h1{font-size:clamp(23px,4vw,34px);line-height:1.3;letter-spacing:1.5px}.panel{background:linear-gradient(145deg,#19142b,#0e0b1c);border:1px solid rgba(255,79,200,.22);border-radius:14px;padding:25px;margin-bottom:22px;box-shadow:0 12px 35px rgba(0,0,0,.25)}.panel h2{font-size:19px;letter-spacing:1.5px;margin:0 0 20px}.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.stats>div{padding:18px;background:rgba(77,234,255,.045);border:1px solid rgba(77,234,255,.16);border-radius:10px}.stat-number{font-size:36px;color:#65e7f5;font-weight:bold}.stat-label{margin-top:7px;color:#aaa3bd;font-size:11px;letter-spacing:1.4px}label{display:block;margin:16px 0 7px;color:#c9c2dd;font-size:12px;letter-spacing:.8px;font-weight:700}input,select,textarea{width:100%;padding:13px;border-radius:9px;border:1px solid #423655;background:#090817;color:white;font:inherit;min-width:0}input:focus,select:focus,textarea:focus{outline:none;border-color:#ff4fc8;box-shadow:0 0 15px rgba(255,79,200,.13)}textarea{min-height:300px;resize:vertical;line-height:1.6}button{border:0;border-radius:8px;padding:13px 17px;background:linear-gradient(100deg,#a52c86,#5941ae);color:white;font-weight:bold;letter-spacing:.4px;cursor:pointer;margin:4px 3px 4px 0}button:disabled{opacity:.5;cursor:wait}button.secondary{background:#211c35;border:1px solid #51466b}button.danger{background:#862b50}button.cover-button{background:linear-gradient(100deg,#087e91,#2455a5)}.toolbar,.actions{display:flex;flex-wrap:wrap;gap:7px;margin:13px 0}.toolbar button{padding:9px 11px;margin:0;background:#29243e;border:1px solid rgba(77,234,255,.18);font-size:11px}.article{padding:18px 0;border-bottom:1px solid rgba(255,255,255,.1)}.article h3{margin:0 0 8px;font-size:18px}.article p,.muted{color:#aaa3bd;font-size:13px;line-height:1.7}.status{color:#65edbb;font-size:13px;line-height:1.7;margin:12px 0;min-height:18px;overflow-wrap:anywhere}.checkrow{display:flex;align-items:center;gap:10px;margin-top:15px;padding:14px;border:1px solid rgba(255,79,200,.2);border-radius:9px;background:rgba(255,79,200,.04)}.checkrow input{width:auto}.checkrow label{margin:0}#auth{color:#65ffbd}.destination-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin:12px 0 4px}.destination-option{display:block;padding:14px 12px;border:1px solid #423655;border-radius:10px;background:#100d20;cursor:pointer;min-height:88px}.destination-option:has(input:checked){border-color:#ff55bd;background:rgba(255,79,200,.1);box-shadow:0 0 16px rgba(255,79,200,.1)}.destination-option input{width:auto;margin:0 7px 0 0;accent-color:#ff55bd}.destination-option strong{display:block;font-size:12px;letter-spacing:.5px;margin-top:8px}.destination-option small{display:block;color:#aaa3bd;font-size:11px;line-height:1.4;margin-top:5px}.destination-help{padding:12px 14px;border:1px solid rgba(101,231,245,.18);border-radius:9px;background:rgba(101,231,245,.04);color:#b9b3c9;font-size:12px;line-height:1.6;margin-top:12px}.media-upload-panel{margin:18px 0;padding:17px;border:1px solid #38304d;border-radius:12px;background:#151023}.media-upload-panel h3{color:#58dff5;margin:0 0 8px}.media-grid{display:grid;grid-template-columns:1fr 180px;gap:10px;margin:16px 0}.media-card{margin:12px 0;padding:14px;border:1px solid #38304d;border-radius:10px;background:rgba(9,8,23,.6);min-width:0}.media-card[hidden]{display:none}.media-card a{color:#65e7f5;overflow-wrap:anywhere}.media-card img,.media-card video{display:block;width:100%;max-height:260px;object-fit:contain;margin-top:12px;border-radius:9px;background:#000}.media-details{color:#aaa3bd;font-size:12px;margin-top:9px;overflow-wrap:anywhere}.cover-preview{display:none;margin-top:12px;padding:12px;border:1px solid #38304d;border-radius:10px;background:#090817}.cover-preview img{display:block;width:100%;max-height:240px;object-fit:contain;border-radius:8px}.cover-preview p{font-size:12px;color:#65e7f5;overflow-wrap:anywhere}#mediaUploadProgress{width:100%;margin:12px 0;accent-color:#ff55bd}.library-filters{display:grid;grid-template-columns:1fr 190px;gap:10px;margin:15px 0}.tag{display:inline-block;padding:5px 8px;border-radius:20px;background:rgba(101,231,245,.1);color:#65e7f5;border:1px solid rgba(101,231,245,.2);font-size:10px;letter-spacing:.7px;margin:3px 5px 3px 0}.tag.pink{background:rgba(255,79,200,.1);color:#ff75cf;border-color:rgba(255,79,200,.2)}[hidden]{display:none!important}
-@media(max-width:700px){body{padding:20px 12px}.brand{font-size:25px}header{margin:28px 0;padding:19px 15px}.panel{padding:18px;margin-bottom:17px}.destination-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.media-grid,.library-filters{grid-template-columns:1fr}.stats{gap:9px}.stats>div{padding:14px 10px}.stat-number{font-size:31px}.stat-label{font-size:10px}.toolbar button{font-size:10px;padding:9px}.actions button{flex:1 1 auto}textarea{min-height:260px}}
+*{box-sizing:border-box}
+body{margin:0;padding:24px 16px;background:radial-gradient(ellipse at 50% -10%,rgba(112,45,145,.25),transparent 48%),linear-gradient(160deg,#090713,#100d20 55%,#080b18);color:#f7f2ff;font-family:Arial,sans-serif}
+.wrap{max-width:1100px;margin:auto;padding-bottom:50px}
+.brand{color:#ff55bd;font-size:30px;font-weight:bold;letter-spacing:6px;text-shadow:0 0 22px rgba(255,79,200,.45)}
+.sub{color:#65e7f5;font-size:12px;letter-spacing:7px;margin-top:7px}
+header{margin:38px 0 30px;padding:25px;border-left:3px solid #ff4fc8;background:linear-gradient(100deg,rgba(255,79,200,.09),transparent)}
+header h1{font-size:clamp(23px,4vw,34px);line-height:1.3;letter-spacing:1.5px}
+.panel{background:linear-gradient(145deg,#19142b,#0e0b1c);border:1px solid rgba(255,79,200,.22);border-radius:14px;padding:25px;margin-bottom:22px;box-shadow:0 12px 35px rgba(0,0,0,.25)}
+.panel h2{font-size:19px;letter-spacing:1.5px;margin:0 0 20px}
+.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.stats>div{padding:18px;background:rgba(77,234,255,.045);border:1px solid rgba(77,234,255,.16);border-radius:10px}
+.stat-number{font-size:36px;color:#65e7f5;font-weight:bold}
+.stat-label{margin-top:7px;color:#aaa3bd;font-size:11px;letter-spacing:1.4px}
+label{display:block;margin:16px 0 7px;color:#c9c2dd;font-size:12px;letter-spacing:.8px;font-weight:700}
+input,select,textarea{width:100%;padding:13px;border-radius:9px;border:1px solid #423655;background:#090817;color:white;font:inherit;min-width:0}
+input:focus,select:focus,textarea:focus{outline:none;border-color:#ff4fc8;box-shadow:0 0 15px rgba(255,79,200,.13)}
+textarea{min-height:300px;resize:vertical;line-height:1.6}
+button{border:0;border-radius:8px;padding:13px 17px;background:linear-gradient(100deg,#a52c86,#5941ae);color:white;font-weight:bold;letter-spacing:.4px;cursor:pointer;margin:4px 3px 4px 0}
+button:disabled{opacity:.5;cursor:wait}
+button.secondary{background:#211c35;border:1px solid #51466b}
+button.danger{background:#862b50}
+button.cover-button{background:linear-gradient(100deg,#087e91,#2455a5)}
+.toolbar,.actions{display:flex;flex-wrap:wrap;gap:7px;margin:13px 0}
+.toolbar button{padding:9px 11px;margin:0;background:#29243e;border:1px solid rgba(77,234,255,.18);font-size:11px}
+.article{padding:18px 0;border-bottom:1px solid rgba(255,255,255,.1)}
+.article h3{margin:0 0 8px;font-size:18px}
+.article p,.muted{color:#aaa3bd;font-size:13px;line-height:1.7}
+.status{color:#65edbb;font-size:13px;line-height:1.7;margin:12px 0;min-height:18px;overflow-wrap:anywhere}
+.checkrow{display:flex;align-items:center;gap:10px;margin-top:15px;padding:14px;border:1px solid rgba(255,79,200,.2);border-radius:9px;background:rgba(255,79,200,.04)}
+.checkrow input{width:auto}
+.checkrow label{margin:0}
+#auth{color:#65ffbd}
+.destination-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin:12px 0 4px}
+.destination-option{display:block;padding:14px 12px;border:1px solid #423655;border-radius:10px;background:#100d20;cursor:pointer;min-height:88px}
+.destination-option:has(input:checked){border-color:#ff55bd;background:rgba(255,79,200,.1);box-shadow:0 0 16px rgba(255,79,200,.1)}
+.destination-option input{width:auto;margin:0 7px 0 0;accent-color:#ff55bd}
+.destination-option strong{display:block;font-size:12px;letter-spacing:.5px;margin-top:8px}
+.destination-option small{display:block;color:#aaa3bd;font-size:11px;line-height:1.4;margin-top:5px}
+.destination-help{padding:12px 14px;border:1px solid rgba(101,231,245,.18);border-radius:9px;background:rgba(101,231,245,.04);color:#b9b3c9;font-size:12px;line-height:1.6;margin-top:12px}
+.vehicle-type-panel{margin-top:14px;padding:15px;border:1px solid rgba(101,231,245,.28);border-radius:10px;background:rgba(101,231,245,.045)}
+.vehicle-type-panel label{color:#65e7f5;margin-top:0}
+.vehicle-type-panel p{font-size:12px;color:#aaa3bd;line-height:1.6;margin:8px 0 0}
+.media-upload-panel{margin:18px 0;padding:17px;border:1px solid #38304d;border-radius:12px;background:#151023}
+.media-upload-panel h3{color:#58dff5;margin:0 0 8px}
+.media-grid{display:grid;grid-template-columns:1fr 180px;gap:10px;margin:16px 0}
+.media-card{margin:12px 0;padding:14px;border:1px solid #38304d;border-radius:10px;background:rgba(9,8,23,.6);min-width:0}
+.media-card[hidden]{display:none}
+.media-card a{color:#65e7f5;overflow-wrap:anywhere}
+.media-card img,.media-card video{display:block;width:100%;max-height:260px;object-fit:contain;margin-top:12px;border-radius:9px;background:#000}
+.media-details{color:#aaa3bd;font-size:12px;margin-top:9px;overflow-wrap:anywhere}
+.cover-preview{display:none;margin-top:12px;padding:12px;border:1px solid #38304d;border-radius:10px;background:#090817}
+.cover-preview img{display:block;width:100%;max-height:240px;object-fit:contain;border-radius:8px}
+.cover-preview p{font-size:12px;color:#65e7f5;overflow-wrap:anywhere}
+#mediaUploadProgress{width:100%;margin:12px 0;accent-color:#ff55bd}
+.library-filters{display:grid;grid-template-columns:1fr 190px;gap:10px;margin:15px 0}
+.tag{display:inline-block;padding:5px 8px;border-radius:20px;background:rgba(101,231,245,.1);color:#65e7f5;border:1px solid rgba(101,231,245,.2);font-size:10px;letter-spacing:.7px;margin:3px 5px 3px 0}
+.tag.pink{background:rgba(255,79,200,.1);color:#ff75cf;border-color:rgba(255,79,200,.2)}
+[hidden]{display:none!important}
+@media(max-width:700px){
+body{padding:20px 12px}
+.brand{font-size:25px}
+header{margin:28px 0;padding:19px 15px}
+.panel{padding:18px;margin-bottom:17px}
+.destination-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.media-grid,.library-filters{grid-template-columns:1fr}
+.stats{gap:9px}
+.stats>div{padding:14px 10px}
+.stat-number{font-size:31px}
+.stat-label{font-size:10px}
+.toolbar button{font-size:10px;padding:9px}
+.actions button{flex:1 1 auto}
+textarea{min-height:260px}
+}
 </style>
 </head>
 <body>
 <main class="wrap">
 <div class="brand">LEONIDA</div><div class="sub">W H I S P E R S</div>
 <header><h1>INTELLIGENCE COMMAND CENTRE</h1><p class="muted">RESTRICTED NEWSROOM ACCESS · CONTENT CONTROL</p></header>
-<section class="panel"><h2>AUTHENTICATION STATUS</h2><p id="auth" class="status">Verifying secure session...</p><button id="logout" class="secondary" hidden>LOG OUT</button></section>
-<section class="panel"><h2>NEWSROOM OVERVIEW</h2><div class="stats"><div><div class="stat-number" id="publishedCount">—</div><div class="stat-label">PUBLISHED STORIES</div></div><div><div class="stat-number" id="draftCount">—</div><div class="stat-label">SAVED DRAFTS</div></div></div><p id="libraryStatus" class="muted">Loading newsroom...</p></section>
+
+<section class="panel">
+<h2>AUTHENTICATION STATUS</h2>
+<p id="auth" class="status">Verifying secure session...</p>
+<button id="logout" class="secondary" hidden>LOG OUT</button>
+</section>
+
+<section class="panel">
+<h2>NEWSROOM OVERVIEW</h2>
+<div class="stats">
+<div><div class="stat-number" id="publishedCount">—</div><div class="stat-label">PUBLISHED STORIES</div></div>
+<div><div class="stat-number" id="draftCount">—</div><div class="stat-label">SAVED DRAFTS</div></div>
+</div>
+<p id="libraryStatus" class="muted">Loading newsroom...</p>
+</section>
+
 <section class="panel" id="editorPanel" hidden>
 <h2 id="editorHeading">CREATE NEW CONTENT</h2>
 <form id="articleForm">
+
 <label>PUBLISH TO</label>
 <div class="destination-grid" role="radiogroup" aria-label="Publishing destination">
 <label class="destination-option"><input type="radio" name="destination" value="news" checked><strong>NEWS</strong><small>News, updates and reports</small></label>
@@ -26,75 +113,1009 @@
 <label class="destination-option"><input type="radio" name="destination" value="classifieds"><strong>CLASSIFIEDS</strong><small>Verified secrets and discoveries</small></label>
 <label class="destination-option"><input type="radio" name="destination" value="database"><strong>DATABASE</strong><small>Locations and vehicles</small></label>
 </div>
+
 <div id="destinationHelp" class="destination-help" aria-live="polite">News articles will appear in News & Discoveries.</div>
-<label for="title">ARTICLE / ENTRY TITLE</label><input id="title" maxlength="200" required placeholder="Enter a headline or entry title">
-<label for="slug">URL SLUG (OPTIONAL)</label><input id="slug" placeholder="automatically-created-from-title">
-<label for="excerpt">SHORT SUMMARY</label><textarea id="excerpt" rows="3" style="min-height:85px" placeholder="A short introduction..."></textarea>
-<label for="category">CATEGORY</label><select id="category" required></select>
-<label for="cover">COVER IMAGE URL</label><input id="cover" type="url" placeholder="https://media.leonidawhispers.com/...">
-<div id="coverPreview" class="cover-preview"><img id="coverPreviewImage" alt="Selected cover image preview"><p id="coverPreviewText">CURRENT COVER IMAGE</p><button type="button" id="clearCover" class="secondary">REMOVE COVER IMAGE</button></div>
-<div class="media-upload-panel"><h3>MEDIA STUDIO</h3><p class="muted">Upload photographs and gameplay footage directly from your device.</p>
-<label for="mediaFile">SELECT PHOTOS OR VIDEOS</label><input type="file" id="mediaFile" accept="image/jpeg,image/png,image/webp,image/gif,image/avif,video/mp4,video/webm,video/quicktime" style="margin:10px 0">
-<label for="imageCaption">IMAGE CAPTION (OPTIONAL)</label><input type="text" id="imageCaption" maxlength="240" placeholder="e.g. A sunset view across Vice City">
-<p class="muted">Uploaded photos can be assigned as the cover image or inserted into the article.</p><button type="button" id="uploadMedia">UPLOAD TO MEDIA LIBRARY</button><p id="mediaUploadStatus" class="status" aria-live="polite"></p>
-<div class="media-grid"><input type="search" id="mediaSearch" placeholder="Search your media library..."><select id="mediaFilter"><option value="all">ALL MEDIA</option><option value="image">PHOTOS ONLY</option><option value="video">VIDEOS ONLY</option></select></div><div id="uploadedMedia"></div></div>
-<label for="content">STORY / ENTRY CONTENT</label><div class="toolbar"><button type="button" data-before="**" data-after="**">BOLD</button><button type="button" data-before="*" data-after="*">ITALIC</button><button type="button" data-before="## " data-after="">HEADING</button><button type="button" data-before="- " data-after="">LIST</button><button type="button" data-before="[Link text](" data-after=")">LINK</button><button type="button" data-before="![Image description](" data-after=")">IMAGE</button><button type="button" id="insertGallery" class="secondary">GALLERY</button><button type="button" data-before="> " data-after="">QUOTE</button></div>
-<textarea id="content" required placeholder="Write your article or database entry here..."></textarea><p class="muted">Content is stored as Markdown. Use the media library to insert uploaded photos and videos.</p>
-<div class="checkrow"><input type="checkbox" id="featured"><label for="featured">FEATURE THIS STORY ON THE HOMEPAGE (where supported)</label></div>
-<p id="saveStatus" class="status" aria-live="polite"></p><div class="actions"><button type="button" id="saveDraft">SAVE DRAFT</button><button type="button" id="previewArticle" class="secondary">PREVIEW</button><button type="button" id="publish">PUBLISH</button><button type="button" id="cancelEdit" class="secondary">CANCEL</button></div>
-</form></section>
-<section class="panel"><h2>CONTENT LIBRARY</h2><button id="newArticle">+ CREATE NEW CONTENT</button><div class="library-filters"><input id="articleSearch" type="search" placeholder="Search titles, summaries and categories..."><select id="articleDestinationFilter"><option value="all">ALL DESTINATIONS</option><option value="news">NEWS</option><option value="guides">GUIDES</option><option value="classifieds">CLASSIFIEDS</option><option value="database">DATABASE</option></select></div><div id="articleList"><p class="muted">Loading content...</p></div></section>
+
+<label for="title">ARTICLE / ENTRY TITLE</label>
+<input id="title" maxlength="200" required placeholder="Enter a headline or entry title">
+
+<label for="slug">URL SLUG (OPTIONAL)</label>
+<input id="slug" placeholder="automatically-created-from-title">
+
+<label for="excerpt">SHORT SUMMARY</label>
+<textarea id="excerpt" rows="3" style="min-height:85px" placeholder="A short introduction..."></textarea>
+
+<label for="category">CATEGORY</label>
+<select id="category" required></select>
+
+<div id="vehicleTypePanel" class="vehicle-type-panel" hidden>
+<label for="vehicleType">VEHICLE TYPE</label>
+<select id="vehicleType">
+<option value="">SELECT VEHICLE TYPE</option>
+<option value="Cars">Cars</option>
+<option value="Motorcycles">Motorcycles</option>
+<option value="Aircraft">Aircraft</option>
+<option value="Boats">Boats</option>
+<option value="Other">Other</option>
+</select>
+<p>Choose the type of vehicle. This will be used to organise the public Vehicles database.</p>
+</div>
+
+<label for="cover">COVER IMAGE URL</label>
+<input id="cover" type="url" placeholder="https://media.leonidawhispers.com/...">
+
+<div id="coverPreview" class="cover-preview">
+<img id="coverPreviewImage" alt="Selected cover image preview">
+<p id="coverPreviewText">CURRENT COVER IMAGE</p>
+<button type="button" id="clearCover" class="secondary">REMOVE COVER IMAGE</button>
+</div>
+
+<div class="media-upload-panel">
+<h3>MEDIA STUDIO</h3>
+<p class="muted">Upload photographs and gameplay footage directly from your device.</p>
+<label for="mediaFile">SELECT PHOTOS OR VIDEOS</label>
+<input type="file" id="mediaFile" accept="image/jpeg,image/png,image/webp,image/gif,image/avif,video/mp4,video/webm,video/quicktime" style="margin:10px 0">
+<label for="imageCaption">IMAGE CAPTION (OPTIONAL)</label>
+<input type="text" id="imageCaption" maxlength="240" placeholder="e.g. A sunset view across Vice City">
+<p class="muted">Uploaded photos can be assigned as the cover image or inserted into the article.</p>
+<button type="button" id="uploadMedia">UPLOAD TO MEDIA LIBRARY</button>
+<p id="mediaUploadStatus" class="status" aria-live="polite"></p>
+<div class="media-grid">
+<input type="search" id="mediaSearch" placeholder="Search your media library...">
+<select id="mediaFilter">
+<option value="all">ALL MEDIA</option>
+<option value="image">PHOTOS ONLY</option>
+<option value="video">VIDEOS ONLY</option>
+</select>
+</div>
+<div id="uploadedMedia"></div>
+</div>
+
+<label for="content">STORY / ENTRY CONTENT</label>
+<div class="toolbar">
+<button type="button" data-before="**" data-after="**">BOLD</button>
+<button type="button" data-before="*" data-after="*">ITALIC</button>
+<button type="button" data-before="## " data-after="">HEADING</button>
+<button type="button" data-before="- " data-after="">LIST</button>
+<button type="button" data-before="[Link text](" data-after=")">LINK</button>
+<button type="button" data-before="![Image description](" data-after=")">IMAGE</button>
+<button type="button" id="insertGallery" class="secondary">GALLERY</button>
+<button type="button" data-before="> " data-after="">QUOTE</button>
+</div>
+<textarea id="content" required placeholder="Write your article or database entry here..."></textarea>
+<p class="muted">Content is stored as Markdown. Use the media library to insert uploaded photos and videos.</p>
+
+<div class="checkrow">
+<input type="checkbox" id="featured">
+<label for="featured">FEATURE THIS STORY ON THE HOMEPAGE (where supported)</label>
+</div>
+
+<p id="saveStatus" class="status" aria-live="polite"></p>
+<div class="actions">
+<button type="button" id="saveDraft">SAVE DRAFT</button>
+<button type="button" id="previewArticle" class="secondary">PREVIEW</button>
+<button type="button" id="publish">PUBLISH</button>
+<button type="button" id="cancelEdit" class="secondary">CANCEL</button>
+</div>
+</form>
+</section>
+
+<section class="panel">
+<h2>CONTENT LIBRARY</h2>
+<button id="newArticle">+ CREATE NEW CONTENT</button>
+<div class="library-filters">
+<input id="articleSearch" type="search" placeholder="Search titles, summaries and categories...">
+<select id="articleDestinationFilter">
+<option value="all">ALL DESTINATIONS</option>
+<option value="news">NEWS</option>
+<option value="guides">GUIDES</option>
+<option value="classifieds">CLASSIFIEDS</option>
+<option value="database">DATABASE</option>
+</select>
+</div>
+<div id="articleList"><p class="muted">Loading content...</p></div>
+</section>
 </main>
+
 <script>
 "use strict";
+
 const API="/admin/api/articles",MEDIA_API="/admin/api/media",MEDIA_HOST="media.leonidawhispers.com";
+
 const DESTINATIONS={
  news:{label:"News & Discoveries",categories:["GTA News","Updates"],help:"News articles and confirmed updates will appear in the News section."},
  guides:{label:"Guides & Tips",categories:["Beginner Guides","Tips & Tricks","Secrets & Discoveries"],help:"Guides will appear in the Guides library. Choose the most relevant guide category."},
  classifieds:{label:"Classifieds",categories:["Secrets & Discoveries"],help:"Classifieds is reserved exclusively for genuine secrets and discoveries. Rumours and theories do not belong here."},
  database:{label:"Database",categories:["Locations","Vehicles"],help:"Database entries are saved with a Locations or Vehicles category. The public Database page must support these article records to display them."}
 };
+
+const VEHICLE_TYPES=["Cars","Motorcycles","Aircraft","Boats","Other"];
+
 let articles=[],editingId=null,authenticated=false,lastContentCursor=null;
+
 const $=id=>document.getElementById(id);
-function selectedDestination(){return document.querySelector('input[name="destination"]:checked')?.value||"news";}
-function setDestination(value,category){const dest=DESTINATIONS[value]?value:"news";const radio=document.querySelector('input[name="destination"][value="'+dest+'"]');if(radio)radio.checked=true;updateDestinationUI(category);}
-function updateDestinationUI(preferredCategory){const dest=selectedDestination(),config=DESTINATIONS[dest],select=$("category");select.replaceChildren();config.categories.forEach(cat=>{const opt=document.createElement("option");opt.value=cat;opt.textContent=cat;select.appendChild(opt);});if(preferredCategory&&config.categories.includes(preferredCategory))select.value=preferredCategory;$("destinationHelp").textContent=config.help;$("category").disabled=config.categories.length===1;}
-document.querySelectorAll('input[name="destination"]').forEach(r=>r.addEventListener("change",()=>updateDestinationUI()));
-async function checkSession(){try{const r=await fetch("/admin/session",{credentials:"same-origin",cache:"no-store"});const d=await r.json();if(!r.ok||!d.authenticated){$("auth").textContent="Session expired. Please log in again.";return false;}authenticated=true;$("auth").textContent="SECURE SESSION ACTIVE — "+(d.email||"ADMINISTRATOR");$("logout").hidden=false;$("editorPanel").hidden=false;return true;}catch{$("auth").textContent="Unable to verify administrator session.";return false;}}
-async function apiRequest(method,body){const o={method,credentials:"same-origin",cache:"no-store",headers:{}};if(body!==undefined){o.headers["Content-Type"]="application/json";o.body=JSON.stringify(body);}const r=await fetch(API,o);let d;try{d=await r.json();}catch{throw Error("The server returned an invalid response.");}if(r.status===401)throw Error("Your admin session has expired. Please log in again.");if(!r.ok)throw Error(d.error||"Request failed.");return d;}
-function validImageURL(value){if(typeof value!=="string"||!value.trim())return"";try{const u=new URL(value.trim());return u.protocol==="https:"||u.protocol==="http:"?u.href:"";}catch{return"";}}
-function updateCoverPreview(){const url=validImageURL($("cover").value);if(!url){$("coverPreview").style.display="none";$("coverPreviewImage").removeAttribute("src");return;}$("coverPreviewImage").src=url;$("coverPreview").style.display="block";}
-function setCoverImage(url){const valid=validImageURL(url);if(!valid){$("mediaUploadStatus").textContent="Invalid cover image URL.";return;}$("cover").value=valid;updateCoverPreview();$("mediaUploadStatus").textContent="Cover image selected. Save or publish the entry to apply it.";$("cover").scrollIntoView({behavior:"smooth",block:"center"});}
-$("cover").addEventListener("input",updateCoverPreview);$("clearCover").addEventListener("click",()=>{$("cover").value="";updateCoverPreview();$("mediaUploadStatus").textContent="Cover image removed. Save the entry to apply this change.";});
-function destinationLabel(value){return DESTINATIONS[value]?.label||"News & Discoveries (legacy)";}
-async function loadArticles(){$("libraryStatus").textContent="Loading content library...";try{const d=await apiRequest("GET");articles=Array.isArray(d.articles)?d.articles:[];$("publishedCount").textContent=articles.filter(a=>a.status==="published").length;$("draftCount").textContent=articles.filter(a=>a.status==="draft").length;$("libraryStatus").textContent=articles.length+" total entries · "+articles.filter(a=>a.status==="published").length+" published · "+articles.filter(a=>a.status==="draft").length+" drafts";renderArticles();}catch(e){$("libraryStatus").textContent=e.message;$("articleList").textContent="Unable to load content.";}}
-function renderArticles(){const list=$("articleList");list.replaceChildren();const search=$("articleSearch").value.trim().toLowerCase(),filter=$("articleDestinationFilter").value;const filtered=articles.filter(a=>{const dest=a.destination||"news";const hay=[a.title,a.excerpt,a.category,a.slug].join(" ").toLowerCase();return(!search||hay.includes(search))&&(filter==="all"||dest===filter);});if(!filtered.length){const p=document.createElement("p");p.className="muted";p.textContent=articles.length?"No entries match these filters.":"No content yet. Create your first entry above.";list.appendChild(p);return;}filtered.forEach(a=>{const item=document.createElement("div");item.className="article";const h=document.createElement("h3");h.textContent=a.title||"Untitled entry";const meta=document.createElement("p");meta.textContent=(a.category||"Uncategorised")+" · "+(a.status||"draft").toUpperCase()+(a.featured?" · FEATURED":"");const tags=document.createElement("div");const d=document.createElement("span");d.className="tag pink";d.textContent=destinationLabel(a.destination||"news");tags.appendChild(d);const slug=document.createElement("span");slug.className="tag";slug.textContent="/"+(a.slug||"");tags.appendChild(slug);const actions=document.createElement("div");actions.className="actions";const edit=document.createElement("button");edit.textContent="EDIT";edit.className="secondary";edit.addEventListener("click",()=>editArticle(a.id));const del=document.createElement("button");del.textContent="DELETE";del.className="danger";del.addEventListener("click",()=>deleteArticle(a.id));actions.append(edit,del);item.append(h,meta,tags,actions);list.appendChild(item);});}
-$("articleSearch").addEventListener("input",renderArticles);$("articleDestinationFilter").addEventListener("change",renderArticles);
-function clearEditor(){editingId=null;$("articleForm").reset();$("editorHeading").textContent="CREATE NEW CONTENT";$("saveStatus").textContent="";$("mediaUploadStatus").textContent="";$("coverPreview").style.display="none";$("coverPreviewImage").removeAttribute("src");lastContentCursor=null;setDestination("news");}
-function openEditor(){clearEditor();$("editorPanel").hidden=false;$("editorPanel").scrollIntoView({behavior:"smooth"});$("title").focus();}
-function editArticle(id){const a=articles.find(x=>Number(x.id)===Number(id));if(!a)return;editingId=a.id;$("editorHeading").textContent="EDIT CONTENT · #"+a.id;setDestination(a.destination||"news",a.category||"");$("title").value=a.title||"";$("slug").value=a.slug||"";$("excerpt").value=a.excerpt||"";$("cover").value=a.cover_image_url||"";$("content").value=a.content_markdown||"";$("featured").checked=Boolean(a.featured);updateCoverPreview();$("saveStatus").textContent="Editing "+destinationLabel(a.destination||"news")+" entry #"+a.id;$("editorPanel").hidden=false;$("editorPanel").scrollIntoView({behavior:"smooth"});}
-function insertFormatting(before,after){const f=$("content"),s=f.selectionStart,e=f.selectionEnd,selected=f.value.substring(s,e);f.setRangeText(before+selected+after,s,e,"end");f.focus();}
-document.querySelectorAll(".toolbar button:not(#insertGallery)").forEach(b=>b.addEventListener("click",()=>insertFormatting(b.dataset.before,b.dataset.after)));
-$("insertGallery").addEventListener("click",()=>{const c=$("content"),block=":::gallery\n\n:::\n",start=c.selectionStart??c.value.length,end=c.selectionEnd??c.value.length;c.setRangeText(block,start,end,"end");const cursor=start+":::gallery\n".length;c.focus();c.setSelectionRange(cursor,cursor);lastContentCursor=cursor;$("saveStatus").textContent="Gallery block inserted. Place the cursor inside it and insert images from Media Studio.";});
-function escapeHTML(v){return String(v).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[c]);}
-function renderMarkdown(markdown){function inline(t){let h=escapeHTML(t);h=h.replace(/!\[([^\]]*)\]\((https?:\/\/[^\s)]+)\)/g,(m,alt,url)=>'<figure class="story-image-wrap"><img class="story-image" alt="'+escapeHTML(alt)+'" src="'+escapeHTML(url)+'" loading="lazy">'+(alt.trim()?'<figcaption>'+escapeHTML(alt)+'</figcaption>':"")+"</figure>");h=h.replace(/\[Watch gameplay: ([^\]]*)\]\((https?:\/\/[^\s)]+)\)/gi,'<video class="story-video" controls playsinline preload="metadata"><source src="$2"></video>');h=h.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,'<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');h=h.replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>").replace(/(?<!\*)\*([^*]+)\*(?!\*)/g,"<em>$1</em>").replace(/`([^`]+)`/g,"<code>$1</code>");return h;}const lines=String(markdown||"").split(/\r?\n/),out=[];let p=[],list=false;function cp(){if(p.length){out.push("<p>"+inline(p.join(" "))+"</p>");p=[];}}function cl(){if(list){out.push("</ul>");list=false;}}for(let i=0;i<lines.length;i++){const t=lines[i].trim();if(t===":::gallery"){cp();cl();const items=[];for(i++;i<lines.length&&lines[i].trim()!==":::";i++){if(/^!\[[^\]]*\]\(https?:\/\/[^\s)]+\)$/.test(lines[i].trim()))items.push(inline(lines[i].trim()));}if(items.length)out.push('<div class="story-gallery">'+items.map(x=>'<div class="story-gallery-item">'+x+'</div>').join("")+"</div>");continue;}if(!t){cp();cl();continue;}const m=t.match(/^(#{1,3})\s+(.+)$/);if(m){cp();cl();const n=m[1].length;out.push(`<h${n}>${inline(m[2])}</h${n}>`);continue;}if(t.startsWith("- ")||t.startsWith("* ")){cp();if(!list){out.push("<ul>");list=true;}out.push("<li>"+inline(t.slice(2))+"</li>");continue;}if(t.startsWith("> ")){cp();cl();out.push("<blockquote>"+inline(t.slice(2))+"</blockquote>");continue;}cl();p.push(t);}cp();cl();return out.join("\n");}
-function previewArticle(){const title=$("title").value.trim(),excerpt=$("excerpt").value.trim(),category=$("category").value,content=$("content").value,cover=validImageURL($("cover").value),dest=destinationLabel(selectedDestination());if(!title||!content.trim()){$("saveStatus").textContent="Enter a title and content before previewing.";return;}const w=window.open("","_blank");if(!w){$("saveStatus").textContent="Please allow pop-ups to preview your content.";return;}w.document.write(`<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHTML(title)} | Preview</title><style>*{box-sizing:border-box}body{margin:0;padding:30px 18px;background:#090713;color:#fff;font-family:Arial,sans-serif}main{max-width:850px;margin:auto}.tag{color:#65e7f5;letter-spacing:2px;font-size:12px}h1{font-size:clamp(30px,6vw,52px);line-height:1.2}.excerpt{color:#c2b9d3;font-size:18px;line-height:1.7}img{max-width:100%;height:auto;border-radius:12px;margin:20px 0}.content{overflow-wrap:anywhere;line-height:1.9;color:#e6e0ef;font-size:17px}.content a{color:#65e7f5}.content blockquote{border-left:3px solid #ff55bd;padding-left:15px;color:#c2b9d3}.story-image-wrap{margin:22px 0;padding:12px;background:#111020;border:1px solid #39304f;border-radius:12px}.story-image-wrap .story-image{display:block;width:100%;margin:0}.story-gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}.story-video{display:block;width:100%;max-height:520px;margin:22px 0}button{padding:13px 20px;background:#a52c86;color:white;border:0;border-radius:7px;margin-top:25px}</style></head><body><main><p class="tag">LEONIDA WHISPERS / PREVIEW</p><p class="tag">${escapeHTML(dest)} · ${escapeHTML(category)}</p><h1>${escapeHTML(title)}</h1><p class="excerpt">${escapeHTML(excerpt)}</p>${cover?`<img src="${escapeHTML(cover)}" alt="">`:""}<div class="content">${renderMarkdown(content)}</div><button onclick="window.close()">CLOSE PREVIEW</button></main></body></html>`);w.document.close();}
+
+function selectedDestination(){
+return document.querySelector('input[name="destination"]:checked')?.value||"news";
+}
+
+function updateVehicleTypeUI(){
+const show=selectedDestination()==="database"&&$("category").value==="Vehicles";
+$("vehicleTypePanel").hidden=!show;
+$("vehicleType").required=show;
+if(!show)$("vehicleType").value="";
+}
+
+function setDestination(value,category){
+const dest=DESTINATIONS[value]?value:"news";
+const radio=document.querySelector('input[name="destination"][value="'+dest+'"]');
+if(radio)radio.checked=true;
+updateDestinationUI(category);
+}
+
+function updateDestinationUI(preferredCategory){
+const dest=selectedDestination();
+const config=DESTINATIONS[dest];
+const select=$("category");
+select.replaceChildren();
+
+config.categories.forEach(cat=>{
+const opt=document.createElement("option");
+opt.value=cat;
+opt.textContent=cat;
+select.appendChild(opt);
+});
+
+if(preferredCategory&&config.categories.includes(preferredCategory)){
+select.value=preferredCategory;
+}
+
+$("destinationHelp").textContent=config.help;
+$("category").disabled=config.categories.length===1;
+updateVehicleTypeUI();
+}
+
+document.querySelectorAll('input[name="destination"]').forEach(r=>{
+r.addEventListener("change",()=>{
+updateDestinationUI();
+});
+});
+
+$("category").addEventListener("change",updateVehicleTypeUI);
+
+async function checkSession(){
+try{
+const r=await fetch("/admin/session",{credentials:"same-origin",cache:"no-store"});
+const d=await r.json();
+if(!r.ok||!d.authenticated){
+$("auth").textContent="Session expired. Please log in again.";
+return false;
+}
+authenticated=true;
+$("auth").textContent="SECURE SESSION ACTIVE — "+(d.email||"ADMINISTRATOR");
+$("logout").hidden=false;
+$("editorPanel").hidden=false;
+return true;
+}catch{
+$("auth").textContent="Unable to verify administrator session.";
+return false;
+}
+}
+
+async function apiRequest(method,body){
+const o={method,credentials:"same-origin",cache:"no-store",headers:{}};
+if(body!==undefined){
+o.headers["Content-Type"]="application/json";
+o.body=JSON.stringify(body);
+}
+const r=await fetch(API,o);
+let d;
+try{d=await r.json();}
+catch{throw Error("The server returned an invalid response.");}
+if(r.status===401)throw Error("Your admin session has expired. Please log in again.");
+if(!r.ok)throw Error(d.error||"Request failed.");
+return d;
+}
+
+function validImageURL(value){
+if(typeof value!=="string"||!value.trim())return"";
+try{
+const u=new URL(value.trim());
+return u.protocol==="https:"||u.protocol==="http:"?u.href:"";
+}catch{return"";}
+}
+
+function updateCoverPreview(){
+const url=validImageURL($("cover").value);
+if(!url){
+$("coverPreview").style.display="none";
+$("coverPreviewImage").removeAttribute("src");
+return;
+}
+$("coverPreviewImage").src=url;
+$("coverPreview").style.display="block";
+}
+
+function setCoverImage(url){
+const valid=validImageURL(url);
+if(!valid){
+$("mediaUploadStatus").textContent="Invalid cover image URL.";
+return;
+}
+$("cover").value=valid;
+updateCoverPreview();
+$("mediaUploadStatus").textContent="Cover image selected. Save or publish the entry to apply it.";
+$("cover").scrollIntoView({behavior:"smooth",block:"center"});
+}
+
+$("cover").addEventListener("input",updateCoverPreview);
+
+$("clearCover").addEventListener("click",()=>{
+$("cover").value="";
+updateCoverPreview();
+$("mediaUploadStatus").textContent="Cover image removed. Save the entry to apply this change.";
+});
+
+function destinationLabel(value){
+return DESTINATIONS[value]?.label||"News & Discoveries (legacy)";
+}
+
+async function loadArticles(){
+$("libraryStatus").textContent="Loading content library...";
+try{
+const d=await apiRequest("GET");
+articles=Array.isArray(d.articles)?d.articles:[];
+$("publishedCount").textContent=articles.filter(a=>a.status==="published").length;
+$("draftCount").textContent=articles.filter(a=>a.status==="draft").length;
+$("libraryStatus").textContent=articles.length+" total entries · "+articles.filter(a=>a.status==="published").length+" published · "+articles.filter(a=>a.status==="draft").length+" drafts";
+renderArticles();
+}catch(e){
+$("libraryStatus").textContent=e.message;
+$("articleList").textContent="Unable to load content.";
+}
+}
+
+function renderArticles(){
+const list=$("articleList");
+list.replaceChildren();
+const search=$("articleSearch").value.trim().toLowerCase();
+const filter=$("articleDestinationFilter").value;
+
+const filtered=articles.filter(a=>{
+const dest=a.destination||"news";
+const hay=[a.title,a.excerpt,a.category,a.slug,a.vehicle_type].join(" ").toLowerCase();
+return(!search||hay.includes(search))&&(filter==="all"||dest===filter);
+});
+
+if(!filtered.length){
+const p=document.createElement("p");
+p.className="muted";
+p.textContent=articles.length?"No entries match these filters.":"No content yet. Create your first entry above.";
+list.appendChild(p);
+return;
+}
+
+filtered.forEach(a=>{
+const item=document.createElement("div");
+item.className="article";
+
+const h=document.createElement("h3");
+h.textContent=a.title||"Untitled entry";
+
+const meta=document.createElement("p");
+meta.textContent=(a.category||"Uncategorised")+
+(a.vehicle_type?" · "+a.vehicle_type:"")+
+" · "+(a.status||"draft").toUpperCase()+
+(a.featured?" · FEATURED":"");
+
+const tags=document.createElement("div");
+const d=document.createElement("span");
+d.className="tag pink";
+d.textContent=destinationLabel(a.destination||"news");
+tags.appendChild(d);
+
+if(a.vehicle_type){
+const vehicleTag=document.createElement("span");
+vehicleTag.className="tag";
+vehicleTag.textContent=a.vehicle_type;
+tags.appendChild(vehicleTag);
+}
+
+const slug=document.createElement("span");
+slug.className="tag";
+slug.textContent="/"+(a.slug||"");
+tags.appendChild(slug);
+
+const actions=document.createElement("div");
+actions.className="actions";
+
+const edit=document.createElement("button");
+edit.textContent="EDIT";
+edit.className="secondary";
+edit.addEventListener("click",()=>editArticle(a.id));
+
+const del=document.createElement("button");
+del.textContent="DELETE";
+del.className="danger";
+del.addEventListener("click",()=>deleteArticle(a.id));
+
+actions.append(edit,del);
+item.append(h,meta,tags,actions);
+list.appendChild(item);
+});
+}
+
+$("articleSearch").addEventListener("input",renderArticles);
+$("articleDestinationFilter").addEventListener("change",renderArticles);
+
+function clearEditor(){
+editingId=null;
+$("articleForm").reset();
+$("editorHeading").textContent="CREATE NEW CONTENT";
+$("saveStatus").textContent="";
+$("mediaUploadStatus").textContent="";
+$("coverPreview").style.display="none";
+$("coverPreviewImage").removeAttribute("src");
+lastContentCursor=null;
+setDestination("news");
+$("vehicleType").value="";
+updateVehicleTypeUI();
+}
+
+function openEditor(){
+clearEditor();
+$("editorPanel").hidden=false;
+$("editorPanel").scrollIntoView({behavior:"smooth"});
+$("title").focus();
+}
+
+function editArticle(id){
+const a=articles.find(x=>Number(x.id)===Number(id));
+if(!a)return;
+
+editingId=a.id;
+$("editorHeading").textContent="EDIT CONTENT · #"+a.id;
+
+setDestination(a.destination||"news",a.category||"");
+
+$("title").value=a.title||"";
+$("slug").value=a.slug||"";
+$("excerpt").value=a.excerpt||"";
+$("cover").value=a.cover_image_url||"";
+$("content").value=a.content_markdown||"";
+$("featured").checked=Boolean(a.featured);
+
+$("vehicleType").value=VEHICLE_TYPES.includes(a.vehicle_type)?a.vehicle_type:"";
+updateVehicleTypeUI();
+updateCoverPreview();
+
+$("saveStatus").textContent="Editing "+destinationLabel(a.destination||"news")+" entry #"+a.id;
+$("editorPanel").hidden=false;
+$("editorPanel").scrollIntoView({behavior:"smooth"});
+}
+
+function insertFormatting(before,after){
+const f=$("content");
+const s=f.selectionStart;
+const e=f.selectionEnd;
+const selected=f.value.substring(s,e);
+f.setRangeText(before+selected+after,s,e,"end");
+f.focus();
+}
+
+document.querySelectorAll(".toolbar button:not(#insertGallery)").forEach(b=>{
+b.addEventListener("click",()=>insertFormatting(b.dataset.before,b.dataset.after));
+});
+
+$("insertGallery").addEventListener("click",()=>{
+const c=$("content");
+const block=":::gallery\n\n:::\n";
+const start=c.selectionStart??c.value.length;
+const end=c.selectionEnd??c.value.length;
+c.setRangeText(block,start,end,"end");
+const cursor=start+":::gallery\n".length;
+c.focus();
+c.setSelectionRange(cursor,cursor);
+lastContentCursor=cursor;
+$("saveStatus").textContent="Gallery block inserted. Place the cursor inside it and insert images from Media Studio.";
+});
+
+function escapeHTML(v){
+return String(v).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[c]);
+}
+
+function renderMarkdown(markdown){
+function inline(t){
+let h=escapeHTML(t);
+h=h.replace(/!\[([^\]]*)\]\((https?:\/\/[^\s)]+)\)/g,(m,alt,url)=>
+'<figure class="story-image-wrap"><img class="story-image" alt="'+escapeHTML(alt)+'" src="'+escapeHTML(url)+'" loading="lazy">'+(alt.trim()?'<figcaption>'+escapeHTML(alt)+'</figcaption>':"")+"</figure>");
+h=h.replace(/\[Watch gameplay: ([^\]]*)\]\((https?:\/\/[^\s)]+)\)/gi,'<video class="story-video" controls playsinline preload="metadata"><source src="$2"></video>');
+h=h.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,'<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+h=h.replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>").replace(/(?<!\*)\*([^*]+)\*(?!\*)/g,"<em>$1</em>").replace(/`([^`]+)`/g,"<code>$1</code>");
+return h;
+}
+
+const lines=String(markdown||"").split(/\r?\n/);
+const out=[];
+let p=[],list=false;
+
+function cp(){
+if(p.length){
+out.push("<p>"+inline(p.join(" "))+"</p>");
+p=[];
+}
+}
+
+function cl(){
+if(list){
+out.push("</ul>");
+list=false;
+}
+}
+
+for(let i=0;i<lines.length;i++){
+const t=lines[i].trim();
+
+if(t===":::gallery"){
+cp();
+cl();
+const items=[];
+for(i++;i<lines.length&&lines[i].trim()!==":::";i++){
+if(/^!\[[^\]]*\]\(https?:\/\/[^\s)]+\)$/.test(lines[i].trim())){
+items.push(inline(lines[i].trim()));
+}
+}
+if(items.length)out.push('<div class="story-gallery">'+items.map(x=>'<div class="story-gallery-item">'+x+'</div>').join("")+"</div>");
+continue;
+}
+
+if(!t){cp();cl();continue;}
+
+const m=t.match(/^(#{1,3})\s+(.+)$/);
+if(m){
+cp();cl();
+const n=m[1].length;
+out.push(`<h${n}>${inline(m[2])}</h${n}>`);
+continue;
+}
+
+if(t.startsWith("- ")||t.startsWith("* ")){
+cp();
+if(!list){out.push("<ul>");list=true;}
+out.push("<li>"+inline(t.slice(2))+"</li>");
+continue;
+}
+
+if(t.startsWith("> ")){
+cp();cl();
+out.push("<blockquote>"+inline(t.slice(2))+"</blockquote>");
+continue;
+}
+
+cl();
+p.push(t);
+}
+
+cp();
+cl();
+return out.join("\n");
+}
+
+function previewArticle(){
+const title=$("title").value.trim();
+const excerpt=$("excerpt").value.trim();
+const category=$("category").value;
+const content=$("content").value;
+const cover=validImageURL($("cover").value);
+const dest=destinationLabel(selectedDestination());
+const vehicleType=$("vehicleType").value;
+
+if(!title||!content.trim()){
+$("saveStatus").textContent="Enter a title and content before previewing.";
+return;
+}
+
+const w=window.open("","_blank");
+if(!w){
+$("saveStatus").textContent="Please allow pop-ups to preview your content.";
+return;
+}
+
+w.document.write(`<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHTML(title)} | Preview</title><style>*{box-sizing:border-box}body{margin:0;padding:30px 18px;background:#090713;color:#fff;font-family:Arial,sans-serif}main{max-width:850px;margin:auto}.tag{color:#65e7f5;letter-spacing:2px;font-size:12px}h1{font-size:clamp(30px,6vw,52px);line-height:1.2}.excerpt{color:#c2b9d3;font-size:18px;line-height:1.7}.content{overflow-wrap:anywhere;line-height:1.9;color:#e6e0ef;font-size:17px}.content a{color:#65e7f5}.content blockquote{border-left:3px solid #ff55bd;padding-left:15px;color:#c2b9d3}img{max-width:100%;height:auto;border-radius:12px;margin:20px 0}.story-image-wrap{margin:22px 0;padding:12px;background:#111020;border:1px solid #39304f;border-radius:12px}.story-image-wrap .story-image{display:block;width:100%;margin:0}.story-gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}.story-video{display:block;width:100%;max-height:520px;margin:22px 0}button{padding:13px 20px;background:#a52c86;color:white;border:0;border-radius:7px;margin-top:25px}</style></head><body><main><p class="tag">LEONIDA WHISPERS / PREVIEW</p><p class="tag">${escapeHTML(dest)} · ${escapeHTML(category)}${vehicleType&&selectedDestination()==="database"&&category==="Vehicles"?" · "+escapeHTML(vehicleType):""}</p><h1>${escapeHTML(title)}</h1><p class="excerpt">${escapeHTML(excerpt)}</p>${cover?`<img src="${escapeHTML(cover)}" alt="">`:""}<div class="content">${renderMarkdown(content)}</div><button onclick="window.close()">CLOSE PREVIEW</button></main></body></html>`);
+
+w.document.close();
+}
+
 $("previewArticle").addEventListener("click",previewArticle);
-async function saveArticle(status){if(!authenticated){$("saveStatus").textContent="Please log in again.";return;}const title=$("title").value.trim(),content=$("content").value,destination=selectedDestination(),category=$("category").value;if(!title||!content.trim()){$("saveStatus").textContent="Please enter a title and content.";return;}if(!DESTINATIONS[destination]||!DESTINATIONS[destination].categories.includes(category)){$("saveStatus").textContent="Choose a valid category for this destination.";return;}const payload={title,slug:$("slug").value.trim(),excerpt:$("excerpt").value.trim(),category,destination,cover_image_url:validImageURL($("cover").value),content_markdown:content,featured:$("featured").checked,status};const buttons=[$("saveDraft"),$("publish")];buttons.forEach(b=>b.disabled=true);$("saveStatus").textContent="Saving "+destinationLabel(destination)+" content...";try{const result=editingId?await apiRequest("PUT",{...payload,id:editingId}):await apiRequest("POST",payload);let message=result.message||"Content saved successfully.";if(status==="published"){const info=result.indexNow;if(!info)message+=" IndexNow result was not returned.";else if(info.accepted&&info.pending)message+=" IndexNow accepted; validation is pending.";else if(info.accepted)message+=" IndexNow accepted the URL.";else message+=" IndexNow not confirmed: "+(info.message||"unknown response");}clearEditor();$("saveStatus").textContent=message;await loadArticles();$("editorPanel").scrollIntoView({behavior:"smooth"});}catch(e){$("saveStatus").textContent=e.message;}finally{buttons.forEach(b=>b.disabled=false);}}
-async function deleteArticle(id){const a=articles.find(x=>Number(x.id)===Number(id));if(!a||!confirm("Permanently delete this content?\n\n"+a.title))return;try{await apiRequest("DELETE",{id});await loadArticles();alert("Content deleted.");}catch(e){alert(e.message);}}
-$("newArticle").addEventListener("click",openEditor);$("cancelEdit").addEventListener("click",()=>{clearEditor();$("editorPanel").scrollIntoView({behavior:"smooth"});});$("saveDraft").addEventListener("click",()=>saveArticle("draft"));$("publish").addEventListener("click",()=>{if(confirm("Publish this content to the selected destination: "+destinationLabel(selectedDestination())+"?"))saveArticle("published");});
-$("logout").addEventListener("click",async()=>{try{await fetch("/admin/logout",{method:"POST",credentials:"same-origin"});}finally{window.location.href="/admin.html";}});
-function identifyMedia(f){const t=String(f.type||"").toLowerCase(),n=String(f.filename||"").toLowerCase(),v=t.startsWith("video/")||/\.(mp4|webm|mov)$/i.test(n),i=t.startsWith("image/")||/\.(jpg|jpeg|png|webp|gif|avif)$/i.test(n);return{type:v?"video":i?"image":"other"};}
-function formatFileSize(b){const n=Number(b);if(!Number.isFinite(n)||n<0)return"Unknown size";if(n<1024)return n+" bytes";if(n<1048576)return(n/1024).toFixed(1)+" KB";if(n<1073741824)return(n/1048576).toFixed(1)+" MB";return(n/1073741824).toFixed(2)+" GB";}
-$("content").addEventListener("click",()=>lastContentCursor=$("content").selectionStart);$("content").addEventListener("keyup",()=>lastContentCursor=$("content").selectionStart);$("content").addEventListener("select",()=>lastContentCursor=$("content").selectionStart);
-function insertAtContentCursor(text){const c=$("content"),start=lastContentCursor===null?c.value.length:lastContentCursor;c.setRangeText(text,start,start,"end");lastContentCursor=c.selectionStart;c.focus();}
-function addMediaToStory(f){const m=identifyMedia(f),caption=$("imageCaption").value.trim(),md=m.type==="video"?`[Watch gameplay: ${f.filename}](${f.url})`:`![${caption}](${f.url})`,c=$("content");if(lastContentCursor!==null){const before=c.value.slice(0,lastContentCursor),sep=before&&!before.endsWith("\n")?"\n":"";insertAtContentCursor(sep+md+"\n");}else{c.value+=(c.value&&!c.value.endsWith("\n")?"\n\n":"")+md+"\n";c.focus();lastContentCursor=c.selectionStart;}if(m.type==="image")$("imageCaption").value="";$("mediaUploadStatus").textContent=m.type==="image"?"Image inserted into your content.":"Video inserted into your content.";}
-function createMediaCard(f){const item=document.createElement("div");item.className="media-card";const filename=String(f.filename||"Unnamed file"),url=String(f.url||""),key=String(f.key||""),m=identifyMedia(f);item.dataset.filename=filename.toLowerCase();item.dataset.mediaType=m.type;const link=document.createElement("a");link.href=url;link.target="_blank";link.rel="noopener noreferrer";link.textContent=filename;item.appendChild(link);if(m.type==="video"){const v=document.createElement("video");v.src=url;v.controls=true;v.playsInline=true;v.preload="metadata";item.appendChild(v);}else if(m.type==="image"){const img=document.createElement("img");img.src=url;img.alt=filename;img.loading="lazy";item.appendChild(img);}const d=document.createElement("div");d.className="media-details";d.textContent=formatFileSize(f.size)+" · "+String(f.type||"Unknown type")+" · "+(f.uploaded?new Date(f.uploaded).toLocaleString():"Unknown upload date");item.appendChild(d);const actions=document.createElement("div");actions.className="actions";const insert=document.createElement("button");insert.type="button";insert.textContent="INSERT INTO CONTENT";insert.addEventListener("click",()=>addMediaToStory(f));actions.appendChild(insert);if(m.type==="image"){const cover=document.createElement("button");cover.type="button";cover.textContent="SET AS COVER IMAGE";cover.className="cover-button";cover.addEventListener("click",()=>setCoverImage(url));actions.appendChild(cover);}const remove=document.createElement("button");remove.type="button";remove.textContent="DELETE MEDIA";remove.className="danger";remove.addEventListener("click",async()=>{if(!key){$("mediaUploadStatus").textContent="This media file has no valid storage key.";return;}if(!confirm("Permanently delete this media file?\n\n"+filename))return;remove.disabled=true;try{const r=await fetch(MEDIA_API,{method:"DELETE",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify({key})});const d=await r.json();if(!r.ok)throw Error(d.error||"Deletion failed.");$("mediaUploadStatus").textContent="Media deleted.";await loadMediaLibrary();}catch(e){$("mediaUploadStatus").textContent=e.message;remove.disabled=false;}});actions.appendChild(remove);item.appendChild(actions);return item;}
-async function loadMediaLibrary(){const library=$("uploadedMedia"),status=$("mediaUploadStatus");library.replaceChildren();status.textContent="Loading saved media...";try{let all=[],cursor=null,pages=0;do{const u=new URL(MEDIA_API,window.location.origin);if(cursor)u.searchParams.set("cursor",cursor);const r=await fetch(u.pathname+u.search,{method:"GET",credentials:"same-origin",cache:"no-store"});let d;try{d=await r.json();}catch{throw Error("Invalid media library response.");}if(!r.ok)throw Error(d.error||"Unable to load media.");all=all.concat(Array.isArray(d.media)?d.media:[]);cursor=d.truncated?d.cursor:null;if(++pages>100)throw Error("Media library pagination limit reached.");}while(cursor);if(!all.length){status.textContent="Your media library is currently empty.";return;}all.forEach(f=>library.appendChild(createMediaCard(f)));filterMediaLibrary();status.textContent=all.length+" saved media files loaded.";}catch(e){status.textContent=e.message;}}
-function filterMediaLibrary(){const s=$("mediaSearch").value.trim().toLowerCase(),f=$("mediaFilter").value;document.querySelectorAll("#uploadedMedia > .media-card").forEach(item=>{item.hidden=!((item.dataset.filename||"").includes(s)&&(f==="all"||item.dataset.mediaType===f));});}
-$("mediaSearch").addEventListener("input",filterMediaLibrary);$("mediaFilter").addEventListener("change",filterMediaLibrary);
-$("uploadMedia").addEventListener("click",async()=>{const input=$("mediaFile"),status=$("mediaUploadStatus"),button=$("uploadMedia"),file=input.files[0];if(!file){status.textContent="Please select a photo or video first.";return;}const video=file.type.startsWith("video/"),max=video?750*1024*1024:15*1024*1024;if(file.size>max){status.textContent=video?"Video exceeds the 750MB limit.":"Image exceeds the 15MB limit.";return;}if(!video&&!file.type.startsWith("image/")){status.textContent="Unsupported file type.";return;}button.disabled=true;let key=null,uploadId=null,completed=false,progress=$("mediaUploadProgress");if(!progress){progress=document.createElement("progress");progress.id="mediaUploadProgress";progress.max=100;progress.value=0;status.after(progress);}progress.hidden=false;progress.value=0;async function readResponse(r){let d;try{d=await r.json();}catch{throw Error("Invalid server response.");}if(r.status===401)throw Error("Your admin session has expired. Please log in again.");if(!r.ok)throw Error(d.error||"Upload failed.");return d;}try{let data;if(video){const CHUNK=10*1024*1024,total=Math.ceil(file.size/CHUNK);if(total>75)throw Error("Video exceeds the maximum upload size.");status.textContent="Starting secure video upload...";const start=await fetch("/admin/api/upload/multipart?action=initiate",{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify({type:file.type,size:file.size})});const sd=await readResponse(start);key=sd.key;uploadId=sd.uploadId;if(!key||!uploadId)throw Error("Unable to start video upload.");const parts=[];for(let i=0;i<total;i++){const partNumber=i+1,chunk=file.slice(i*CHUNK,Math.min((i+1)*CHUNK,file.size));status.textContent=`Uploading video: part ${partNumber} of ${total}`;const partURL="/admin/api/upload/multipart?action=part&key="+encodeURIComponent(key)+"&uploadId="+encodeURIComponent(uploadId)+"&partNumber="+partNumber;const pr=await fetch(partURL,{method:"PUT",credentials:"same-origin",body:chunk});const pd=await readResponse(pr);if(!pd.etag)throw Error("Video upload part was not confirmed.");parts.push({partNumber,etag:pd.etag});progress.value=Math.round(partNumber/total*95);}status.textContent="Finalising video in media storage...";const cr=await fetch("/admin/api/upload/multipart?action=complete",{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify({key,uploadId,parts})});data=await readResponse(cr);completed=true;progress.value=100;}else{status.textContent="Uploading image...";const fd=new FormData();fd.append("file",file);const r=await fetch("/admin/api/upload",{method:"POST",credentials:"same-origin",body:fd});data=await readResponse(r);progress.value=100;}if(!data.url)throw Error("Upload completed without a media URL.");const mediaURL=new URL(data.url);if(mediaURL.protocol!=="https:"||mediaURL.hostname!==MEDIA_HOST)throw Error("Unexpected media address.");if(!video)setCoverImage(data.url);const caption=$("imageCaption").value.trim(),md=video?`[Watch gameplay: ${file.name}](${data.url})`:`![${caption}](${data.url})`,content=$("content"),separator=content.value&&!content.value.endsWith("\n")?"\n\n":"";content.value+=separator+md+"\n";if(!video)$("imageCaption").value="";await loadMediaLibrary();input.value="";status.textContent=video?"Video uploaded and inserted into your content.":"Photo uploaded, assigned as cover image and inserted into your content.";}catch(e){if(key&&uploadId&&!completed){try{await fetch("/admin/api/upload/multipart?action=abort",{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify({key,uploadId})});}catch{}}progress.value=0;status.textContent=e.message;}finally{button.disabled=false;}});
-async function start(){updateDestinationUI();const valid=await checkSession();if(valid){await loadArticles();await loadMediaLibrary();}else{$("libraryStatus").textContent="Log in to access the newsroom.";$("articleList").textContent="";}}
+
+async function saveArticle(status){
+if(!authenticated){
+$("saveStatus").textContent="Please log in again.";
+return;
+}
+
+const title=$("title").value.trim();
+const content=$("content").value;
+const destination=selectedDestination();
+const category=$("category").value;
+const isVehicleEntry=destination==="database"&&category==="Vehicles";
+const vehicleType=isVehicleEntry?$("vehicleType").value:null;
+
+if(!title||!content.trim()){
+$("saveStatus").textContent="Please enter a title and content.";
+return;
+}
+
+if(!DESTINATIONS[destination]||!DESTINATIONS[destination].categories.includes(category)){
+$("saveStatus").textContent="Choose a valid category for this destination.";
+return;
+}
+
+if(isVehicleEntry&&!VEHICLE_TYPES.includes(vehicleType)){
+$("saveStatus").textContent="Please select a vehicle type before saving or publishing.";
+$("vehicleType").focus();
+return;
+}
+
+const payload={
+title,
+slug:$("slug").value.trim(),
+excerpt:$("excerpt").value.trim(),
+category,
+destination,
+vehicle_type:vehicleType,
+cover_image_url:validImageURL($("cover").value),
+content_markdown:content,
+featured:$("featured").checked,
+status
+};
+
+const buttons=[$("saveDraft"),$("publish")];
+buttons.forEach(b=>b.disabled=true);
+$("saveStatus").textContent="Saving "+destinationLabel(destination)+" content...";
+
+try{
+const result=editingId
+?await apiRequest("PUT",{...payload,id:editingId})
+:await apiRequest("POST",payload);
+
+let message=result.message||"Content saved successfully.";
+
+if(status==="published"){
+const info=result.indexNow;
+if(!info)message+=" IndexNow result was not returned.";
+else if(info.accepted&&info.pending)message+=" IndexNow accepted; validation is pending.";
+else if(info.accepted)message+=" IndexNow accepted the URL.";
+else message+=" IndexNow not confirmed: "+(info.message||"unknown response");
+}
+
+clearEditor();
+$("saveStatus").textContent=message;
+await loadArticles();
+$("editorPanel").scrollIntoView({behavior:"smooth"});
+
+}catch(e){
+$("saveStatus").textContent=e.message;
+}finally{
+buttons.forEach(b=>b.disabled=false);
+}
+}
+
+async function deleteArticle(id){
+const a=articles.find(x=>Number(x.id)===Number(id));
+if(!a||!confirm("Permanently delete this content?\n\n"+a.title))return;
+try{
+await apiRequest("DELETE",{id});
+await loadArticles();
+alert("Content deleted.");
+}catch(e){
+alert(e.message);
+}
+}
+
+$("newArticle").addEventListener("click",openEditor);
+
+$("cancelEdit").addEventListener("click",()=>{
+clearEditor();
+$("editorPanel").scrollIntoView({behavior:"smooth"});
+});
+
+$("saveDraft").addEventListener("click",()=>saveArticle("draft"));
+
+$("publish").addEventListener("click",()=>{
+if(confirm("Publish this content to the selected destination: "+destinationLabel(selectedDestination())+"?")){
+saveArticle("published");
+}
+});
+
+$("logout").addEventListener("click",async()=>{
+try{
+await fetch("/admin/logout",{method:"POST",credentials:"same-origin"});
+}finally{
+window.location.href="/admin.html";
+}
+});
+
+function identifyMedia(f){
+const t=String(f.type||"").toLowerCase();
+const n=String(f.filename||"").toLowerCase();
+const v=t.startsWith("video/")||/\.(mp4|webm|mov)$/i.test(n);
+const i=t.startsWith("image/")||/\.(jpg|jpeg|png|webp|gif|avif)$/i.test(n);
+return{type:v?"video":i?"image":"other"};
+}
+
+function formatFileSize(b){
+const n=Number(b);
+if(!Number.isFinite(n)||n<0)return"Unknown size";
+if(n<1024)return n+" bytes";
+if(n<1048576)return(n/1024).toFixed(1)+" KB";
+if(n<1073741824)return(n/1048576).toFixed(1)+" MB";
+return(n/1073741824).toFixed(2)+" GB";
+}
+
+$("content").addEventListener("click",()=>lastContentCursor=$("content").selectionStart);
+$("content").addEventListener("keyup",()=>lastContentCursor=$("content").selectionStart);
+$("content").addEventListener("select",()=>lastContentCursor=$("content").selectionStart);
+
+function insertAtContentCursor(text){
+const c=$("content");
+const start=lastContentCursor===null?c.value.length:lastContentCursor;
+c.setRangeText(text,start,start,"end");
+lastContentCursor=c.selectionStart;
+c.focus();
+}
+
+function addMediaToStory(f){
+const m=identifyMedia(f);
+const caption=$("imageCaption").value.trim();
+const md=m.type==="video"?`[Watch gameplay: ${f.filename}](${f.url})`:`![${caption}](${f.url})`;
+const c=$("content");
+
+if(lastContentCursor!==null){
+const before=c.value.slice(0,lastContentCursor);
+const sep=before&&!before.endsWith("\n")?"\n":"";
+insertAtContentCursor(sep+md+"\n");
+}else{
+c.value+=(c.value&&!c.value.endsWith("\n")?"\n\n":"")+md+"\n";
+c.focus();
+lastContentCursor=c.selectionStart;
+}
+
+if(m.type==="image")$("imageCaption").value="";
+$("mediaUploadStatus").textContent=m.type==="image"?"Image inserted into your content.":"Video inserted into your content.";
+}
+
+function createMediaCard(f){
+const item=document.createElement("div");
+item.className="media-card";
+
+const filename=String(f.filename||"Unnamed file");
+const url=String(f.url||"");
+const key=String(f.key||"");
+const m=identifyMedia(f);
+
+item.dataset.filename=filename.toLowerCase();
+item.dataset.mediaType=m.type;
+
+const link=document.createElement("a");
+link.href=url;
+link.target="_blank";
+link.rel="noopener noreferrer";
+link.textContent=filename;
+item.appendChild(link);
+
+if(m.type==="video"){
+const v=document.createElement("video");
+v.src=url;
+v.controls=true;
+v.playsInline=true;
+v.preload="metadata";
+item.appendChild(v);
+}else if(m.type==="image"){
+const img=document.createElement("img");
+img.src=url;
+img.alt=filename;
+img.loading="lazy";
+item.appendChild(img);
+}
+
+const d=document.createElement("div");
+d.className="media-details";
+d.textContent=formatFileSize(f.size)+" · "+String(f.type||"Unknown type")+" · "+(f.uploaded?new Date(f.uploaded).toLocaleString():"Unknown upload date");
+item.appendChild(d);
+
+const actions=document.createElement("div");
+actions.className="actions";
+
+const insert=document.createElement("button");
+insert.type="button";
+insert.textContent="INSERT INTO CONTENT";
+insert.addEventListener("click",()=>addMediaToStory(f));
+actions.appendChild(insert);
+
+if(m.type==="image"){
+const cover=document.createElement("button");
+cover.type="button";
+cover.textContent="SET AS COVER IMAGE";
+cover.className="cover-button";
+cover.addEventListener("click",()=>setCoverImage(url));
+actions.appendChild(cover);
+}
+
+const remove=document.createElement("button");
+remove.type="button";
+remove.textContent="DELETE MEDIA";
+remove.className="danger";
+
+remove.addEventListener("click",async()=>{
+if(!key){
+$("mediaUploadStatus").textContent="This media file has no valid storage key.";
+return;
+}
+if(!confirm("Permanently delete this media file?\n\n"+filename))return;
+
+remove.disabled=true;
+
+try{
+const r=await fetch(MEDIA_API,{
+method:"DELETE",
+credentials:"same-origin",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({key})
+});
+const d=await r.json();
+if(!r.ok)throw Error(d.error||"Deletion failed.");
+$("mediaUploadStatus").textContent="Media deleted.";
+await loadMediaLibrary();
+}catch(e){
+$("mediaUploadStatus").textContent=e.message;
+remove.disabled=false;
+}
+});
+
+actions.appendChild(remove);
+item.appendChild(actions);
+return item;
+}
+
+async function loadMediaLibrary(){
+const library=$("uploadedMedia");
+const status=$("mediaUploadStatus");
+library.replaceChildren();
+status.textContent="Loading saved media...";
+
+try{
+let all=[],cursor=null,pages=0;
+
+do{
+const u=new URL(MEDIA_API,window.location.origin);
+if(cursor)u.searchParams.set("cursor",cursor);
+
+const r=await fetch(u.pathname+u.search,{
+method:"GET",
+credentials:"same-origin",
+cache:"no-store"
+});
+
+let d;
+try{d=await r.json();}
+catch{throw Error("Invalid media library response.");}
+
+if(!r.ok)throw Error(d.error||"Unable to load media.");
+
+all=all.concat(Array.isArray(d.media)?d.media:[]);
+cursor=d.truncated?d.cursor:null;
+
+if(++pages>100)throw Error("Media library pagination limit reached.");
+}while(cursor);
+
+if(!all.length){
+status.textContent="Your media library is currently empty.";
+return;
+}
+
+all.forEach(f=>library.appendChild(createMediaCard(f)));
+filterMediaLibrary();
+status.textContent=all.length+" saved media files loaded.";
+
+}catch(e){
+status.textContent=e.message;
+}
+}
+
+function filterMediaLibrary(){
+const s=$("mediaSearch").value.trim().toLowerCase();
+const f=$("mediaFilter").value;
+
+document.querySelectorAll("#uploadedMedia > .media-card").forEach(item=>{
+item.hidden=!((item.dataset.filename||"").includes(s)&&(f==="all"||item.dataset.mediaType===f));
+});
+}
+
+$("mediaSearch").addEventListener("input",filterMediaLibrary);
+$("mediaFilter").addEventListener("change",filterMediaLibrary);
+
+$("uploadMedia").addEventListener("click",async()=>{
+const input=$("mediaFile");
+const status=$("mediaUploadStatus");
+const button=$("uploadMedia");
+const file=input.files[0];
+
+if(!file){
+status.textContent="Please select a photo or video first.";
+return;
+}
+
+const video=file.type.startsWith("video/");
+const max=video?750*1024*1024:15*1024*1024;
+
+if(file.size>max){
+status.textContent=video?"Video exceeds the 750MB limit.":"Image exceeds the 15MB limit.";
+return;
+}
+
+if(!video&&!file.type.startsWith("image/")){
+status.textContent="Unsupported file type.";
+return;
+}
+
+button.disabled=true;
+
+let key=null,uploadId=null,completed=false;
+let progress=$("mediaUploadProgress");
+
+if(!progress){
+progress=document.createElement("progress");
+progress.id="mediaUploadProgress";
+progress.max=100;
+progress.value=0;
+status.after(progress);
+}
+
+progress.hidden=false;
+progress.value=0;
+
+async function readResponse(r){
+let d;
+try{d=await r.json();}
+catch{throw Error("Invalid server response.");}
+if(r.status===401)throw Error("Your admin session has expired. Please log in again.");
+if(!r.ok)throw Error(d.error||"Upload failed.");
+return d;
+}
+
+try{
+let data;
+
+if(video){
+const CHUNK=10*1024*1024;
+const total=Math.ceil(file.size/CHUNK);
+
+if(total>75)throw Error("Video exceeds the maximum upload size.");
+
+status.textContent="Starting secure video upload...";
+
+const start=await fetch("/admin/api/upload/multipart?action=initiate",{
+method:"POST",
+credentials:"same-origin",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({type:file.type,size:file.size})
+});
+
+const sd=await readResponse(start);
+key=sd.key;
+uploadId=sd.uploadId;
+
+if(!key||!uploadId)throw Error("Unable to start video upload.");
+
+const parts=[];
+
+for(let i=0;i<total;i++){
+const partNumber=i+1;
+const chunk=file.slice(i*CHUNK,Math.min((i+1)*CHUNK,file.size));
+
+status.textContent=`Uploading video: part ${partNumber} of ${total}`;
+
+const partURL="/admin/api/upload/multipart?action=part&key="+encodeURIComponent(key)+"&uploadId="+encodeURIComponent(uploadId)+"&partNumber="+partNumber;
+
+const pr=await fetch(partURL,{
+method:"PUT",
+credentials:"same-origin",
+body:chunk
+});
+
+const pd=await readResponse(pr);
+
+if(!pd.etag)throw Error("Video upload part was not confirmed.");
+
+parts.push({partNumber,etag:pd.etag});
+progress.value=Math.round(partNumber/total*95);
+}
+
+status.textContent="Finalising video in media storage...";
+
+const cr=await fetch("/admin/api/upload/multipart?action=complete",{
+method:"POST",
+credentials:"same-origin",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({key,uploadId,parts})
+});
+
+data=await readResponse(cr);
+completed=true;
+progress.value=100;
+
+}else{
+status.textContent="Uploading image...";
+
+const fd=new FormData();
+fd.append("file",file);
+
+const r=await fetch("/admin/api/upload",{
+method:"POST",
+credentials:"same-origin",
+body:fd
+});
+
+data=await readResponse(r);
+progress.value=100;
+}
+
+if(!data.url)throw Error("Upload completed without a media URL.");
+
+const mediaURL=new URL(data.url);
+
+if(mediaURL.protocol!=="https:"||mediaURL.hostname!==MEDIA_HOST){
+throw Error("Unexpected media address.");
+}
+
+if(!video)setCoverImage(data.url);
+
+const caption=$("imageCaption").value.trim();
+const md=video?`[Watch gameplay: ${file.name}](${data.url})`:`![${caption}](${data.url})`;
+const content=$("content");
+const separator=content.value&&!content.value.endsWith("\n")?"\n\n":"";
+
+content.value+=separator+md+"\n";
+
+if(!video)$("imageCaption").value="";
+
+await loadMediaLibrary();
+
+input.value="";
+status.textContent=video?"Video uploaded and inserted into your content.":"Photo uploaded, assigned as cover image and inserted into your content.";
+
+}catch(e){
+if(key&&uploadId&&!completed){
+try{
+await fetch("/admin/api/upload/multipart?action=abort",{
+method:"POST",
+credentials:"same-origin",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({key,uploadId})
+});
+}catch{}
+}
+progress.value=0;
+status.textContent=e.message;
+}finally{
+button.disabled=false;
+}
+});
+
+async function start(){
+updateDestinationUI();
+const valid=await checkSession();
+
+if(valid){
+await loadArticles();
+await loadMediaLibrary();
+}else{
+$("libraryStatus").textContent="Log in to access the newsroom.";
+$("articleList").textContent="";
+}
+}
+
 start();
 </script>
 </body>
