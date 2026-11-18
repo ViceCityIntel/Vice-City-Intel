@@ -1,3 +1,4 @@
+
 export async function onRequest({ request, env }) {
   if (request.method !== "GET") {
     return Response.json(
@@ -15,6 +16,7 @@ export async function onRequest({ request, env }) {
         excerpt,
         content_markdown,
         category,
+        destination,
         featured,
         cover_image_url,
         published_at,
@@ -41,6 +43,8 @@ export async function onRequest({ request, env }) {
     );
 
   } catch (error) {
+    console.error("Public articles API error:", error);
+
     return Response.json(
       {
         status: "error",
