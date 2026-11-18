@@ -17,6 +17,7 @@ export async function onRequest({ request, env }) {
         content_markdown,
         category,
         destination,
+        vehicle_type,
         featured,
         cover_image_url,
         published_at,
