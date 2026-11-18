@@ -25,9 +25,7 @@ const VEHICLE_TYPES = [
 function json(data, status = 200) {
   return Response.json(data, {
     status,
-    headers: {
-      "Cache-Control": "no-store"
-    }
+    headers: { "Cache-Control": "no-store" }
   });
 }
 
@@ -42,7 +40,6 @@ function makeSlug(value) {
 
 function getRetryAfterSeconds(response) {
   const header = response.headers.get("Retry-After");
-
   if (!header) return null;
 
   const seconds = Number(header);
@@ -53,11 +50,9 @@ function getRetryAfterSeconds(response) {
 
   const retryDate = Date.parse(header);
 
-  if (Number.isFinite(retryDate)) {
-    return Math.max(0, Math.ceil((retryDate - Date.now()) / 1000));
-  }
-
-  return null;
+  return Number.isFinite(retryDate)
+    ? Math.max(0, Math.ceil((retryDate - Date.now()) / 1000))
+    : null;
 }
 
 async function notifyIndexNow(env, slug) {
@@ -66,10 +61,6 @@ async function notifyIndexNow(env, slug) {
     : "";
 
   if (!key) {
-    console.warn(
-      "IndexNow notification skipped: INDEXNOW_KEY is not configured."
-    );
-
     return {
       accepted: false,
       pending: false,
@@ -99,7 +90,6 @@ async function notifyIndexNow(env, slug) {
 
     const status = response.status;
     const accepted = status === 200 || status === 202;
-
     const retryAfterSeconds = status === 429
       ? getRetryAfterSeconds(response)
       : null;
@@ -112,10 +102,9 @@ async function notifyIndexNow(env, slug) {
       message = "Request accepted; key validation is pending.";
     } else if (status === 429) {
       message = retryAfterSeconds !== null
-        ? "IndexNow rate-limited this request (HTTP 429). Wait at least " +
-          retryAfterSeconds +
-          " seconds before trying again. No automatic retry was sent."
-        : "IndexNow rate-limited this request (HTTP 429). Wait before trying again. No automatic retry was sent.";
+        ? "IndexNow rate-limited this request. Wait at least " +
+          retryAfterSeconds + " seconds. No automatic retry was sent."
+        : "IndexNow rate-limited this request. No automatic retry was sent.";
     } else {
       message = "IndexNow returned HTTP " + status + ".";
     }
@@ -131,7 +120,6 @@ async function notifyIndexNow(env, slug) {
       retryAfterSeconds,
       message
     };
-
   } catch (error) {
     console.warn("IndexNow notification failed:", error);
 
@@ -140,8 +128,7 @@ async function notifyIndexNow(env, slug) {
       pending: false,
       httpStatus: null,
       retryAfterSeconds: null,
-      message:
-        "IndexNow request failed: " +
+      message: "IndexNow request failed: " +
         (error?.message || "network error")
     };
   }
@@ -199,8 +186,7 @@ function validateArticle(body) {
       return "Invalid publishing destination";
     }
 
-    const allowedCategories =
-      DESTINATION_CATEGORIES[body.destination];
+    const allowedCategories = DESTINATION_CATEGORIES[body.destination];
 
     if (!allowedCategories.includes(body.category)) {
       return "That category is not available for the selected destination";
@@ -208,10 +194,7 @@ function validateArticle(body) {
   }
 
   if (body.vehicle_type !== undefined && body.vehicle_type !== null) {
-    if (
-      typeof body.vehicle_type !== "string" ||
-      !VEHICLE_TYPES.includes(body.vehicle_type)
-    ) {
+    if (!VEHICLE_TYPES.includes(body.vehicle_type)) {
       return "Invalid vehicle type";
     }
   }
@@ -219,9 +202,17 @@ function validateArticle(body) {
   if (
     body.destination === "database" &&
     body.category === "Vehicles" &&
-    !VEHICLE_TYPES.includes(body.vehicle_type)
+    body.vehicle_type === undefined
   ) {
-    return "Choose a valid vehicle type";
+    return "Please select a vehicle type";
+  }
+
+  if (
+    body.destination === "database" &&
+    body.category === "Locations" &&
+    body.vehicle_type
+  ) {
+    return "Location entries cannot have a vehicle type";
   }
 
   return null;
@@ -229,7 +220,6 @@ function validateArticle(body) {
 
 export async function onRequest({ request, env }) {
   const authError = await requireAdmin(request, env);
-
   if (authError) return authError;
 
   try {
@@ -262,7 +252,7 @@ export async function onRequest({ request, env }) {
       });
     }
 
-    // POST: Create a new article
+    // POST: Create an article
     if (request.method === "POST") {
       const body = await readBody(request);
 
@@ -271,7 +261,6 @@ export async function onRequest({ request, env }) {
       }
 
       const validationError = validateArticle(body);
-
       if (validationError) {
         return json({ error: validationError }, 400);
       }
@@ -294,9 +283,8 @@ export async function onRequest({ request, env }) {
       const now = new Date().toISOString();
       const status = body.status || "draft";
       const destination = body.destination || "news";
-
-      const vehicleType =
-        destination === "database" && body.category === "Vehicles"
+      const vehicleType = destination === "database" &&
+        body.category === "Vehicles"
           ? body.vehicle_type
           : null;
 
@@ -354,7 +342,7 @@ export async function onRequest({ request, env }) {
       }, 201);
     }
 
-    // PUT: Edit an existing article
+    // PUT: Edit an article
     if (request.method === "PUT") {
       const body = await readBody(request);
 
@@ -390,18 +378,18 @@ export async function onRequest({ request, env }) {
         return json({ error: "Article not found" }, 404);
       }
 
-      const destination =
+      const effectiveDestination =
         body.destination || existing.destination || "news";
 
-      const category =
+      const effectiveCategory =
         typeof body.category === "string"
           ? body.category.trim()
-          : existing.category || "General";
+          : existing.category;
 
       const validationError = validateArticle({
         ...body,
-        destination,
-        category,
+        destination: effectiveDestination,
+        category: effectiveCategory,
         vehicle_type:
           body.vehicle_type !== undefined
             ? body.vehicle_type
@@ -427,13 +415,15 @@ export async function onRequest({ request, env }) {
         return json({ error: "That article slug already exists" }, 409);
       }
 
-      const status = body.status || "draft";
+      const status = body.status || existing.status || "draft";
       const now = new Date().toISOString();
 
-      const excerpt =
-        typeof body.excerpt === "string"
-          ? body.excerpt.trim()
-          : "";
+      const excerpt = typeof body.excerpt === "string"
+        ? body.excerpt.trim()
+        : "";
+
+      const category = effectiveCategory;
+      const destination = effectiveDestination;
 
       const vehicleType =
         destination === "database" && category === "Vehicles"
@@ -539,9 +529,7 @@ export async function onRequest({ request, env }) {
       });
     }
 
-    return json({
-      error: "Method not allowed"
-    }, 405);
+    return json({ error: "Method not allowed" }, 405);
 
   } catch (error) {
     console.error("Articles API error:", error);
