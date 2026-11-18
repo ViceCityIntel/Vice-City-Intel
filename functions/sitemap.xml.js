@@ -1,7 +1,14 @@
 
 const STATIC_PAGES = [
   ["", "1.0"],
+
+  // MAIN WEBSITE SECTIONS
   ["Locations.html", "0.8"],
+  ["guides.html", "0.9"],
+  ["vehicles.html", "0.8"],
+  ["classified.html", "0.9"],
+
+  // LEONIDA LOCATIONS
   ["vice-city.html", "0.8"],
   ["leonida-keys.html", "0.8"],
   ["leonida-secrets.html", "0.8"],
@@ -25,7 +32,9 @@ function escapeXml(value) {
 
 function validDate(value) {
   if (!value) return "";
+
   const date = new Date(value);
+
   return Number.isNaN(date.getTime())
     ? ""
     : date.toISOString();
@@ -33,6 +42,7 @@ function validDate(value) {
 
 export async function onRequest({ env }) {
   try {
+
     const result = await env.DB.prepare(`
       SELECT
         slug,
@@ -50,7 +60,10 @@ export async function onRequest({ env }) {
     <priority>${priority}</priority>
   </url>`);
 
+    // AUTOMATICALLY INCLUDE PUBLISHED ARTICLES
+
     for (const article of result.results || []) {
+
       if (!article.slug) continue;
 
       const slug = encodeURIComponent(article.slug);
@@ -82,6 +95,9 @@ ${urls.join("\n")}
     });
 
   } catch (error) {
+
+    console.error("Sitemap generation failed:", error);
+
     return new Response("Unable to generate sitemap", {
       status: 500,
       headers: {
