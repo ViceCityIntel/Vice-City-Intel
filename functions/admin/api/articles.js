@@ -1,6 +1,19 @@
 
 import { requireAdmin } from "../_auth.js";
 
+const DESTINATIONS = ["news", "guides", "classifieds", "database"];
+
+const DESTINATION_CATEGORIES = {
+  news: ["GTA News", "Updates"],
+  guides: [
+    "Beginner Guides",
+    "Tips & Tricks",
+    "Secrets & Discoveries"
+  ],
+  classifieds: ["Secrets & Discoveries"],
+  database: ["Locations", "Vehicles"]
+};
+
 function json(data, status = 200) {
   return Response.json(data, {
     status,
@@ -19,7 +32,6 @@ function makeSlug(value) {
     .slice(0, 180);
 }
 
-// Convert the Retry-After header into seconds.
 function getRetryAfterSeconds(response) {
   const header = response.headers.get("Retry-After");
 
@@ -40,9 +52,6 @@ function getRetryAfterSeconds(response) {
   return null;
 }
 
-// Notify IndexNow when a published article is created or genuinely updated.
-// Notification failures never undo a successful database save.
-// Never automatically retry a rate-limited request.
 async function notifyIndexNow(env, slug) {
   const key = typeof env.INDEXNOW_KEY === "string"
     ? env.INDEXNOW_KEY.trim()
@@ -177,6 +186,21 @@ function validateArticle(body) {
     return "Featured must be true or false";
   }
 
+  // Validate destination and category when the new editor supplies them.
+  // Older editor requests without destination remain temporarily supported.
+  if (body.destination !== undefined) {
+    if (!DESTINATIONS.includes(body.destination)) {
+      return "Invalid publishing destination";
+    }
+
+    const allowedCategories =
+      DESTINATION_CATEGORIES[body.destination];
+
+    if (!allowedCategories.includes(body.category)) {
+      return "That category is not available for the selected destination";
+    }
+  }
+
   return null;
 }
 
@@ -191,7 +215,7 @@ export async function onRequest({ request, env }) {
       const result = await env.DB.prepare(`
         SELECT
           id, title, slug, excerpt, content_markdown,
-          category, status, featured, cover_image_url,
+          category, destination, status, featured, cover_image_url,
           published_at, created_at, updated_at
         FROM articles
         ORDER BY updated_at DESC
@@ -235,21 +259,23 @@ export async function onRequest({ request, env }) {
 
       const now = new Date().toISOString();
       const status = body.status || "draft";
+      const destination = body.destination || "news";
       const publishedAt = status === "published" ? now : null;
 
       const result = await env.DB.prepare(`
         INSERT INTO articles (
           title, slug, excerpt, content_markdown,
-          category, status, featured, cover_image_url,
+          category, destination, status, featured, cover_image_url,
           published_at, created_at, updated_at
         )
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
       `).bind(
         title,
         slug,
         typeof body.excerpt === "string" ? body.excerpt.trim() : "",
         body.content_markdown,
         typeof body.category === "string" ? body.category.trim() : "General",
+        destination,
         status,
         body.featured ? 1 : 0,
         typeof body.cover_image_url === "string" ? body.cover_image_url.trim() : "",
@@ -269,6 +295,7 @@ export async function onRequest({ request, env }) {
           : "Draft saved",
         id: result.meta.last_row_id,
         slug,
+        destination,
         indexNow
       }, 201);
     }
@@ -293,14 +320,14 @@ export async function onRequest({ request, env }) {
         return json({ error: validationError }, 400);
       }
 
-      const existing = await env.DB.prepare(
-        `SELECT
+      const existing = await env.DB.prepare(`
+        SELECT
           id, title, slug, excerpt, content_markdown,
-          category, status, featured, cover_image_url,
+          category, destination, status, featured, cover_image_url,
           published_at
-         FROM articles
-         WHERE id = ?`
-      ).bind(id).first();
+        FROM articles
+        WHERE id = ?
+      `).bind(id).first();
 
       if (!existing) {
         return json({ error: "Article not found" }, 404);
@@ -330,22 +357,23 @@ export async function onRequest({ request, env }) {
       const category =
         typeof body.category === "string" ? body.category.trim() : "General";
 
+      const destination =
+        body.destination || existing.destination || "news";
+
       const coverImageUrl =
         typeof body.cover_image_url === "string"
           ? body.cover_image_url.trim()
           : "";
 
-      // Detect genuine changes to the indexed article.
-      // Featured status alone does not change the article URL's content.
       const articleChanged =
         existing.title !== title ||
         existing.slug !== slug ||
         existing.excerpt !== excerpt ||
         existing.content_markdown !== body.content_markdown ||
         existing.category !== category ||
+        existing.destination !== destination ||
         existing.cover_image_url !== coverImageUrl;
 
-      // Notify when publishing for the first time or changing published content.
       const shouldNotifyIndexNow =
         status === "published" &&
         (!existing.published_at || articleChanged);
@@ -361,6 +389,7 @@ export async function onRequest({ request, env }) {
           excerpt = ?,
           content_markdown = ?,
           category = ?,
+          destination = ?,
           status = ?,
           featured = ?,
           cover_image_url = ?,
@@ -373,6 +402,7 @@ export async function onRequest({ request, env }) {
         excerpt,
         body.content_markdown,
         category,
+        destination,
         status,
         body.featured ? 1 : 0,
         coverImageUrl,
@@ -392,6 +422,7 @@ export async function onRequest({ request, env }) {
           : "Draft updated",
         id,
         slug,
+        destination,
         indexNow
       });
     }
