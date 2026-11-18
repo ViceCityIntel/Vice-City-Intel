@@ -4,407 +4,65 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#090612">
-
 <title>Location Intelligence | Leonida Whispers</title>
-<meta name="description" content="Explore the Leonida Whispers GTA VI location intelligence database. Discover Vice City, Leonida Keys, Port Gellhorn and more.">
+<meta name="description" content="Explore the Leonida Whispers GTA VI location archive. Discover Vice City, Leonida Keys, Port Gellhorn and more.">
 <link rel="canonical" href="https://leonidawhispers.com/Locations.html">
-
 <meta property="og:title" content="Location Intelligence | Leonida Whispers">
 <meta property="og:description" content="Explore the world of Leonida through our growing GTA VI location archive.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://leonidawhispers.com/Locations.html">
-
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
 <style>
-:root {
-  --bg:#090612;
-  --panel:#151024;
-  --pink:#ff36bd;
-  --cyan:#35eaff;
-  --muted:#aaa2ba;
-  --line:rgba(255,79,200,.2);
-}
-* { box-sizing:border-box; }
-html { scroll-behavior:smooth; scroll-padding-top:100px; }
-body { margin:0; background:var(--bg); color:#fff; font-family:Inter,sans-serif; }
-a { color:inherit; text-decoration:none; }
-
-/* MAIN SITE HEADER */
-.site-header {
-  min-height:82px; padding:10px 5%; display:flex; align-items:center;
-  justify-content:space-between; gap:25px; position:sticky; top:0; z-index:1000;
-  border-bottom:1px solid var(--line); background:rgba(9,6,18,.98);
-  backdrop-filter:blur(14px);
-}
-.brand {
-  display:flex; align-items:center; gap:12px; flex-shrink:0;
-  font-family:Orbitron,sans-serif; font-weight:800; letter-spacing:1px; font-size:15px;
-}
-.brand img { width:76px; height:76px; object-fit:contain; border-radius:50%; }
-.brand-name { color:#fff; line-height:1.5; }
-.brand-name span { color:var(--pink); }
-.brand-name small { display:block; color:#aaa2ba; font-size:9px; font-weight:500; letter-spacing:3px; }
-.main-nav {
-  display:flex; align-items:center; justify-content:flex-end;
-  gap:clamp(14px,2.1vw,28px); margin-left:auto; font-family:Orbitron,sans-serif; font-size:10px;
-}
-.main-nav a { position:relative; padding:12px 0; color:#c9c2d2; white-space:nowrap; transition:color .2s ease; }
-.main-nav a:hover, .main-nav a.active { color:var(--pink); }
-.main-nav a.active::after {
-  content:""; position:absolute; left:0; right:0; bottom:3px; height:2px;
-  background:var(--pink); box-shadow:0 0 10px var(--pink);
-}
-.menu-toggle {
-  display:none; width:58px; height:54px; align-items:center; justify-content:center;
-  background:rgba(255,54,189,.12); border:1px solid rgba(255,54,189,.7);
-  border-radius:12px; color:var(--pink); font-size:29px; cursor:pointer; flex-shrink:0;
-}
-.menu-toggle:focus-visible, .main-nav a:focus-visible { outline:2px solid var(--cyan); outline-offset:5px; }
-
-/* HERO */
-.hero {
-  min-height:330px; padding:75px 8%; position:relative; overflow:hidden;
-  background:
-    radial-gradient(ellipse at 80% 50%,rgba(255,54,189,.3),transparent 45%),
-    linear-gradient(120deg,#100b24,#17102d 55%,#290b38);
-  border-bottom:1px solid var(--line);
-}
-.hero:before {
-  content:""; position:absolute; inset:0; opacity:.22;
-  background-image:linear-gradient(rgba(53,234,255,.3) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(53,234,255,.3) 1px,transparent 1px);
-  background-size:45px 45px; transform:perspective(400px) rotateX(35deg) scale(1.5);
-}
-.hero-content { position:relative; z-index:1; max-width:750px; }
-.eyebrow { color:var(--cyan); font:600 10px Orbitron,sans-serif; letter-spacing:3px; }
-h1 { font:800 clamp(32px,6vw,64px) Orbitron,sans-serif; line-height:1.12; margin:18px 0; }
-h1 span { color:var(--pink); }
-.hero p { max-width:570px; color:#c0b8ce; line-height:1.8; font-size:14px; }
-.hero-stamp { position:absolute; right:10%; top:35%; font:800 clamp(55px,10vw,110px) Orbitron,sans-serif; color:rgba(255,79,200,.12); }
-
-/* MAIN CONTENT */
-main { max-width:1200px; margin:auto; padding:65px 6%; }
-.section-heading { display:flex; justify-content:space-between; align-items:end; gap:15px; margin-bottom:30px; }
-h2 { font:700 clamp(23px,4vw,35px) Orbitron,sans-serif; margin:10px 0; }
-h2 span { color:var(--pink); }
-.file-count { font:10px Orbitron,sans-serif; color:var(--muted); white-space:nowrap; }
-.toolbar { display:flex; gap:12px; flex-wrap:wrap; margin-bottom:25px; }
-.search {
-  flex:1; min-width:220px; background:#120d20; border:1px solid var(--line);
-  padding:15px; color:#fff; outline:none; font:14px Inter,sans-serif;
-}
-.search:focus { border-color:var(--cyan); }
-.search::placeholder { color:#817990; }
-.filters { display:flex; gap:8px; flex-wrap:wrap; }
-.filter {
-  background:#151024; color:#bbb2c9; border:1px solid var(--line);
-  padding:12px 15px; font:600 10px Orbitron,sans-serif; cursor:pointer; transition:.2s ease;
-}
-.filter.active, .filter:hover { background:var(--pink); color:#100719; border-color:var(--pink); }
-
-/* LOCATION CARDS */
-.location-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; }
-.location-card {
-  background:var(--panel); border:1px solid rgba(255,79,200,.35); border-radius:16px;
-  overflow:hidden; box-shadow:0 0 12px rgba(255,79,200,.08),inset 0 0 15px rgba(77,234,255,.04);
-  transition:transform .35s ease,border-color .35s ease,box-shadow .35s ease;
-}
-.location-card:hover {
-  transform:translateY(-7px); border-color:var(--pink);
-  box-shadow:0 0 12px rgba(255,79,200,.45),0 0 28px rgba(77,234,255,.2),inset 0 0 18px rgba(255,79,200,.08);
-}
-.card-art {
-  height:180px; position:relative; overflow:hidden; isolation:isolate;
-  background:linear-gradient(135deg,#171047,#35104e,#091c38);
-}
-.card-art::after {
-  content:""; position:absolute; inset:0; z-index:1; pointer-events:none;
-  background:linear-gradient(180deg,rgba(9,6,18,.12),transparent 45%,rgba(9,6,18,.12));
-}
-.card-art img {
-  display:block; width:100%; height:100%; object-fit:cover; object-position:center;
-  transition:transform .65s ease,filter .65s ease;
-}
-.location-card:hover .card-art img { transform:scale(1.07); filter:brightness(1.08) saturate(1.15); }
-.card-index {
-  position:absolute; top:14px; left:15px; z-index:2;
-  padding:7px 9px; border:1px solid rgba(255,255,255,.22); border-radius:5px;
-  background:rgba(9,6,18,.72); backdrop-filter:blur(8px);
-  font:10px Orbitron,sans-serif; color:#fff;
-}
-.card-info { padding:22px; }
-.tag { font:600 9px Orbitron,sans-serif; letter-spacing:1px; color:var(--pink); }
-.card-info h3 { font:700 17px Orbitron,sans-serif; margin:12px 0; }
-.card-info p { font-size:12px; color:var(--muted); line-height:1.8; min-height:43px; }
-.card-footer {
-  display:flex; justify-content:space-between; align-items:center;
-  border-top:1px solid var(--line); padding-top:15px; margin-top:17px;
-  font:10px Orbitron,sans-serif; color:var(--cyan);
-}
-.card-footer a:hover { color:var(--pink); }
-.status { color:#aaa2ba; }
-.empty { display:none; padding:35px; text-align:center; color:var(--muted); }
-
-/* FOOTER */
-footer { padding:30px 6%; text-align:center; border-top:1px solid var(--line); color:var(--muted); font-size:11px; line-height:2; }
-footer span { color:var(--pink); }
-
-/* TABLET */
-@media(max-width:1050px) and (min-width:761px) {
-  .site-header { padding-left:3%; padding-right:3%; gap:16px; }
-  .brand { font-size:12px; gap:8px; }
-  .brand img { width:60px; height:60px; }
-  .brand-name small { font-size:8px; letter-spacing:2px; }
-  .main-nav { gap:13px; font-size:9px; }
-  .location-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
-}
-
-/* MOBILE NAVIGATION */
-@media(max-width:760px) {
-  html { scroll-padding-top:90px; }
-  .site-header { min-height:76px; height:76px; padding:7px 5%; gap:12px; }
-  .brand { font-size:13px; gap:9px; }
-  .brand img { width:60px; height:60px; }
-  .brand-name small { font-size:8px; letter-spacing:2px; }
-  .menu-toggle { display:flex; }
-  .main-nav {
-    display:none; position:absolute; top:76px; left:0; right:0; width:100%;
-    margin:0; padding:12px 6% 18px; flex-direction:column; align-items:stretch; gap:0;
-    background:#090612; border-bottom:1px solid rgba(255,54,189,.45);
-    box-shadow:0 18px 30px rgba(0,0,0,.65); z-index:1001;
-  }
-  .main-nav.open { display:flex; animation:menuDrop .2s ease-out; }
-  .main-nav a {
-    display:flex; align-items:center; min-height:58px; padding:12px 8px;
-    border-bottom:1px solid rgba(255,255,255,.09); font-size:13px;
-  }
-  .main-nav a:last-child { border-bottom:0; }
-  .main-nav a.active::after { left:8px; right:auto; bottom:7px; width:38px; }
-  @keyframes menuDrop {
-    from { opacity:0; transform:translateY(-8px); }
-    to { opacity:1; transform:translateY(0); }
-  }
-  .hero { padding:65px 6%; min-height:310px; }
-  .hero-stamp { right:3%; top:55%; font-size:65px; }
-  main { padding:45px 4%; }
-  .location-grid { grid-template-columns:1fr; }
-  .card-art { height:190px; }
-  .section-heading { align-items:start; }
-  .toolbar { flex-direction:column; }
-  .search { width:100%; min-width:0; }
-}
-@media(max-width:380px) {
-  .brand { font-size:11px; gap:7px; }
-  .brand img { width:52px; height:52px; }
-  .brand-name small { font-size:7px; letter-spacing:1.5px; }
-  .menu-toggle { width:50px; height:48px; }
-}
-@media(prefers-reduced-motion:reduce) {
-  *,*::before,*::after { scroll-behavior:auto !important; animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; }
-}
+:root{--bg:#090612;--panel:#151024;--pink:#ff36bd;--cyan:#35eaff;--muted:#aaa2ba;--line:rgba(255,79,200,.2)}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:100px}body{margin:0;background:var(--bg);color:#fff;font-family:Inter,sans-serif}a{color:inherit;text-decoration:none}
+.site-header{min-height:82px;padding:10px 5%;display:flex;align-items:center;justify-content:space-between;gap:25px;position:sticky;top:0;z-index:1000;border-bottom:1px solid var(--line);background:rgba(9,6,18,.98);backdrop-filter:blur(14px)}
+.brand{display:flex;align-items:center;gap:12px;flex-shrink:0;font-family:Orbitron,sans-serif;font-weight:800;letter-spacing:1px;font-size:15px}.brand img{width:76px;height:76px;object-fit:contain;border-radius:50%}.brand-name{color:#fff;line-height:1.5}.brand-name span{color:var(--pink)}.brand-name small{display:block;color:#aaa2ba;font-size:9px;font-weight:500;letter-spacing:3px}
+.main-nav{display:flex;align-items:center;justify-content:flex-end;gap:clamp(14px,2.1vw,28px);margin-left:auto;font-family:Orbitron,sans-serif;font-size:10px}.main-nav a{position:relative;padding:12px 0;color:#c9c2d2;white-space:nowrap;transition:color .2s}.main-nav a:hover,.main-nav a.active{color:var(--pink)}.main-nav a.active:after{content:"";position:absolute;left:0;right:0;bottom:3px;height:2px;background:var(--pink);box-shadow:0 0 10px var(--pink)}
+.menu-toggle{display:none;width:58px;height:54px;align-items:center;justify-content:center;background:rgba(255,54,189,.12);border:1px solid rgba(255,54,189,.7);border-radius:12px;color:var(--pink);font-size:29px;cursor:pointer;flex-shrink:0}
+.hero{min-height:330px;padding:75px 8%;position:relative;overflow:hidden;background:radial-gradient(ellipse at 80% 50%,rgba(255,54,189,.3),transparent 45%),linear-gradient(120deg,#100b24,#17102d 55%,#290b38);border-bottom:1px solid var(--line)}.hero:before{content:"";position:absolute;inset:0;opacity:.22;background-image:linear-gradient(rgba(53,234,255,.3) 1px,transparent 1px),linear-gradient(90deg,rgba(53,234,255,.3) 1px,transparent 1px);background-size:45px 45px;transform:perspective(400px) rotateX(35deg) scale(1.5)}.hero-content{position:relative;z-index:1;max-width:750px}.eyebrow{color:var(--cyan);font:600 10px Orbitron,sans-serif;letter-spacing:3px}h1{font:800 clamp(32px,6vw,64px) Orbitron,sans-serif;line-height:1.12;margin:18px 0}h1 span,h2 span{color:var(--pink)}.hero p{max-width:570px;color:#c0b8ce;line-height:1.8;font-size:14px}.hero-stamp{position:absolute;right:10%;top:35%;font:800 clamp(55px,10vw,110px) Orbitron,sans-serif;color:rgba(255,79,200,.12)}
+main{max-width:1200px;margin:auto;padding:65px 6%}.section-heading{display:flex;justify-content:space-between;align-items:end;gap:15px;margin-bottom:30px}h2{font:700 clamp(23px,4vw,35px) Orbitron,sans-serif;margin:10px 0}.file-count{font:10px Orbitron,sans-serif;color:var(--muted);white-space:nowrap}
+.toolbar{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:25px}.search{flex:1;min-width:220px;background:#120d20;border:1px solid var(--line);padding:15px;color:#fff;outline:none;font:14px Inter,sans-serif}.search:focus{border-color:var(--cyan)}.search::placeholder{color:#817990}.filters{display:flex;gap:8px;flex-wrap:wrap}.filter{background:#151024;color:#bbb2c9;border:1px solid var(--line);padding:12px 15px;font:600 10px Orbitron,sans-serif;cursor:pointer;transition:.2s}.filter.active,.filter:hover{background:var(--pink);color:#100719;border-color:var(--pink)}
+.location-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.location-card{background:var(--panel);border:1px solid rgba(255,79,200,.35);border-radius:16px;overflow:hidden;box-shadow:0 0 12px rgba(255,79,200,.08),inset 0 0 15px rgba(77,234,255,.04);transition:transform .35s,border-color .35s,box-shadow .35s}.location-card:hover{transform:translateY(-7px);border-color:var(--pink);box-shadow:0 0 12px rgba(255,79,200,.45),0 0 28px rgba(77,234,255,.2),inset 0 0 18px rgba(255,79,200,.08)}
+.card-art{height:180px;position:relative;overflow:hidden;isolation:isolate;background:linear-gradient(135deg,#171047,#35104e,#091c38)}.card-art:after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,rgba(9,6,18,.12),transparent 45%,rgba(9,6,18,.12))}.card-art img{display:block;width:100%;height:100%;object-fit:cover;object-position:center;transition:transform .65s,filter .65s}.location-card:hover .card-art img{transform:scale(1.07);filter:brightness(1.08) saturate(1.15)}
+.card-index{position:absolute;top:14px;left:15px;z-index:2;padding:7px 9px;border:1px solid rgba(255,255,255,.22);border-radius:5px;background:rgba(9,6,18,.72);backdrop-filter:blur(8px);font:10px Orbitron,sans-serif;color:#fff}.card-info{padding:22px}.tag{font:600 9px Orbitron,sans-serif;letter-spacing:1px;color:var(--pink)}.card-info h3{font:700 17px Orbitron,sans-serif;margin:12px 0}.card-info p{font-size:12px;color:var(--muted);line-height:1.8;min-height:43px}.card-footer{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);padding-top:15px;margin-top:17px;font:10px Orbitron,sans-serif;color:var(--cyan)}.card-footer a:hover{color:var(--pink)}.status{color:#aaa2ba}.empty{display:none;padding:35px;text-align:center;color:var(--muted)}.load-status{display:none;margin:0 0 18px;padding:12px 15px;border:1px solid var(--line);border-radius:8px;color:var(--muted);font-size:12px;line-height:1.6}.load-status.error{color:#ff9bcf;border-color:rgba(255,54,189,.5)}
+footer{padding:30px 6%;text-align:center;border-top:1px solid var(--line);color:var(--muted);font-size:11px;line-height:2}footer span{color:var(--pink)}
+@media(max-width:1050px) and (min-width:761px){.site-header{padding-left:3%;padding-right:3%;gap:16px}.brand{font-size:12px;gap:8px}.brand img{width:60px;height:60px}.brand-name small{font-size:8px;letter-spacing:2px}.main-nav{gap:13px;font-size:9px}.location-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:760px){html{scroll-padding-top:90px}.site-header{min-height:76px;height:76px;padding:7px 5%;gap:12px}.brand{font-size:13px;gap:9px}.brand img{width:60px;height:60px}.brand-name small{font-size:8px;letter-spacing:2px}.menu-toggle{display:flex}.main-nav{display:none;position:absolute;top:76px;left:0;right:0;width:100%;margin:0;padding:12px 6% 18px;flex-direction:column;align-items:stretch;gap:0;background:#090612;border-bottom:1px solid rgba(255,54,189,.45);box-shadow:0 18px 30px rgba(0,0,0,.65);z-index:1001}.main-nav.open{display:flex}.main-nav a{display:flex;align-items:center;min-height:58px;padding:12px 8px;border-bottom:1px solid rgba(255,255,255,.09);font-size:13px}.main-nav a:last-child{border-bottom:0}.main-nav a.active:after{left:8px;right:auto;bottom:7px;width:38px}.hero{padding:65px 6%;min-height:310px}.hero-stamp{right:3%;top:55%;font-size:65px}main{padding:45px 4%}.location-grid{grid-template-columns:1fr}.card-art{height:190px}.section-heading{align-items:start}.toolbar{flex-direction:column}.search{width:100%;min-width:0}}
+@media(max-width:380px){.brand{font-size:11px;gap:7px}.brand img{width:52px;height:52px}.brand-name small{font-size:7px;letter-spacing:1.5px}.menu-toggle{width:50px;height:48px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 </style>
 </head>
-
 <body>
 <header class="site-header">
-  <a class="brand" href="index.html" aria-label="Leonida Whispers home">
-    <img src="assets/Leonida-logo.png" alt="Leonida Whispers">
-    <span class="brand-name">LEONIDA <span>WHISPERS</span><small>THE HOME OF GTA VI</small></span>
-  </a>
-
-  <button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="mainNavigation">☰</button>
-
-  <nav class="main-nav" id="mainNavigation" aria-label="Main navigation">
-    <a href="index.html">HOME</a>
-    <a href="Locations.html" class="active" aria-current="page">EXPLORE LEONIDA</a>
-    <a href="index.html#latest">NEWS</a>
-    <a href="index.html#guides">GUIDES</a>
-    <a href="index.html#database">DATABASE</a>
-  </nav>
+<a class="brand" href="index.html" aria-label="Leonida Whispers home"><img src="assets/Leonida-logo.png" alt="Leonida Whispers"><span class="brand-name">LEONIDA <span>WHISPERS</span><small>THE HOME OF GTA VI</small></span></a>
+<button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="mainNavigation">☰</button>
+<nav class="main-nav" id="mainNavigation" aria-label="Main navigation"><a href="index.html">HOME</a><a href="Locations.html" class="active" aria-current="page">EXPLORE LEONIDA</a><a href="index.html#latest">NEWS</a><a href="index.html#guides">GUIDES</a><a href="index.html#database">DATABASE</a></nav>
 </header>
-
-<section class="hero">
-  <div class="hero-content">
-    <div class="eyebrow">LEONIDA INTELLIGENCE NETWORK / 001</div>
-    <h1>LOCATION <span>INTELLIGENCE.</span></h1>
-    <p>Explore the world of Leonida. Discover cities, coastal regions, landmarks and places of interest through our growing independent GTA VI research archive.</p>
-  </div>
-  <div class="hero-stamp">LW+</div>
-</section>
-
+<section class="hero"><div class="hero-content"><div class="eyebrow">LEONIDA INTELLIGENCE NETWORK / 001</div><h1>LOCATION <span>INTELLIGENCE.</span></h1><p>Explore the world of Leonida. Discover cities, coastal regions, landmarks and places of interest through our growing independent GTA VI research archive.</p></div><div class="hero-stamp">LW+</div></section>
 <main>
-  <div class="section-heading">
-    <div>
-      <div class="eyebrow">THE GEOGRAPHIC ARCHIVE</div>
-      <h2>THE <span>LOCATIONS.</span></h2>
-    </div>
-    <div class="file-count" id="fileCount">06 FIELD FILES</div>
-  </div>
-
-  <div class="toolbar">
-    <input class="search" id="search" type="search" placeholder="⌕ Search locations..." aria-label="Search locations">
-    <div class="filters" aria-label="Filter locations">
-      <button class="filter active" type="button" data-filter="all" aria-pressed="true">ALL</button>
-      <button class="filter" type="button" data-filter="city" aria-pressed="false">CITIES</button>
-      <button class="filter" type="button" data-filter="coast" aria-pressed="false">COAST</button>
-      <button class="filter" type="button" data-filter="nature" aria-pressed="false">NATURE</button>
-    </div>
-  </div>
-
-  <div class="location-grid" id="locationGrid">
-    <article class="location-card" data-category="city">
-      <div class="card-art">
-        <img src="assets/vice-city.jpg" alt="Neon-lit Vice City beachfront boulevard at sunset" loading="lazy" decoding="async">
-        <span class="card-index">FILE 001</span>
-      </div>
-      <div class="card-info">
-        <div class="tag">URBAN / METROPOLIS</div>
-        <h3>Vice City</h3>
-        <p>The iconic urban centre of Leonida. Explore the city and its districts.</p>
-        <div class="card-footer"><a href="vice-city.html">OPEN FILE →</a><span class="status">RESEARCH</span></div>
-      </div>
-    </article>
-
-    <article class="location-card" data-category="coast">
-      <div class="card-art">
-        <img src="assets/leonida-keys.jpg" alt="Aerial view of tropical islands and turquoise water in the Leonida Keys" loading="lazy" decoding="async">
-        <span class="card-index">FILE 002</span>
-      </div>
-      <div class="card-info">
-        <div class="tag">COASTAL / ISLANDS</div>
-        <h3>Leonida Keys</h3>
-        <p>A tropical island region. A location file awaiting detailed research.</p>
-        <div class="card-footer"><a href="leonida-keys.html">OPEN FILE →</a><span class="status">RESEARCH</span></div>
-      </div>
-    </article>
-
-    <article class="location-card" data-category="city">
-      <div class="card-art">
-        <img src="assets/port-gellhorn.jpg" alt="Industrial harbour with cargo cranes and a ship at sunset" loading="lazy" decoding="async">
-        <span class="card-index">FILE 003</span>
-      </div>
-      <div class="card-info">
-        <div class="tag">URBAN / INDUSTRIAL</div>
-        <h3>Port Gellhorn</h3>
-        <p>A Leonida location with plenty more to investigate and document.</p>
-        <div class="card-footer"><a href="port-gellhorn.html">OPEN FILE →</a><span class="status">RESEARCH</span></div>
-      </div>
-    </article>
-
-    <article class="location-card" data-category="nature">
-      <div class="card-art">
-        <img src="assets/grassrivers.jpg" alt="Florida-style wetlands with an airboat and wildlife at sunset" loading="lazy" decoding="async">
-        <span class="card-index">FILE 004</span>
-      </div>
-      <div class="card-info">
-        <div class="tag">WETLANDS / WILDLIFE</div>
-        <h3>Grassrivers</h3>
-        <p>A natural region of Leonida. Field notes and points of interest to follow.</p>
-        <div class="card-footer"><a href="grassrivers.html">OPEN FILE →</a><span class="status">RESEARCH</span></div>
-      </div>
-    </article>
-
-    <article class="location-card" data-category="city">
-      <div class="card-art">
-        <img src="assets/ambrosia.jpg" alt="Small rural industrial town with a water tower at sunset" loading="lazy" decoding="async">
-        <span class="card-index">FILE 005</span>
-      </div>
-      <div class="card-info">
-        <div class="tag">REGION / COMMUNITY</div>
-        <h3>Ambrosia</h3>
-        <p>A regional intelligence file for discoveries, landmarks and local details.</p>
-        <div class="card-footer"><a href="ambrosia.html">OPEN FILE →</a><span class="status">RESEARCH</span></div>
-      </div>
-    </article>
-
-    <article class="location-card" data-category="nature">
-      <div class="card-art">
-        <img src="assets/mount-kalaga.jpg" alt="Mountain wilderness with pine forest, waterfall and clear river" loading="lazy" decoding="async">
-        <span class="card-index">FILE 006</span>
-      </div>
-      <div class="card-info">
-        <div class="tag">WILDERNESS / PARK</div>
-        <h3>Mount Kalaga National Park</h3>
-        <p>A wilderness location to investigate for landmarks and discoveries.</p>
-        <div class="card-footer"><a href="mount-kalaga.html">OPEN FILE →</a><span class="status">RESEARCH</span></div>
-      </div>
-    </article>
-  </div>
-
-  <div class="empty" id="empty">NO MATCHING LOCATION FILES FOUND.</div>
+<div class="section-heading"><div><div class="eyebrow">THE GEOGRAPHIC ARCHIVE</div><h2>THE <span>LOCATIONS.</span></h2></div><div class="file-count" id="fileCount">06 FIELD FILES</div></div>
+<div class="toolbar"><input class="search" id="search" type="search" placeholder="⌕ Search locations..." aria-label="Search locations"><div class="filters" aria-label="Filter locations"><button class="filter active" type="button" data-filter="all" aria-pressed="true">ALL</button><button class="filter" type="button" data-filter="city" aria-pressed="false">CITIES</button><button class="filter" type="button" data-filter="coast" aria-pressed="false">COAST</button><button class="filter" type="button" data-filter="nature" aria-pressed="false">NATURE</button></div></div>
+<div class="load-status" id="loadStatus" role="status" aria-live="polite"></div>
+<div class="location-grid" id="locationGrid">
+<article class="location-card" data-category="city"><div class="card-art"><img src="assets/vice-city.jpg" alt="Neon-lit Vice City beachfront boulevard at sunset" loading="lazy" decoding="async"><span class="card-index">FILE 001</span></div><div class="card-info"><div class="tag">URBAN / METROPOLIS</div><h3>Vice City</h3><p>The iconic urban centre of Leonida. Explore the city and its districts.</p><div class="card-footer"><a href="vice-city.html">OPEN FILE →</a><span class="status">RESEARCH</span></div></div></article>
+<article class="location-card" data-category="coast"><div class="card-art"><img src="assets/leonida-keys.jpg" alt="Aerial view of tropical islands and turquoise water in the Leonida Keys" loading="lazy" decoding="async"><span class="card-index">FILE 002</span></div><div class="card-info"><div class="tag">COASTAL / ISLANDS</div><h3>Leonida Keys</h3><p>A tropical island region. A location file awaiting detailed research.</p><div class="card-footer"><a href="leonida-keys.html">OPEN FILE →</a><span class="status">RESEARCH</span></div></div></article>
+<article class="location-card" data-category="city"><div class="card-art"><img src="assets/port-gellhorn.jpg" alt="Industrial harbour with cargo cranes and a ship at sunset" loading="lazy" decoding="async"><span class="card-index">FILE 003</span></div><div class="card-info"><div class="tag">URBAN / INDUSTRIAL</div><h3>Port Gellhorn</h3><p>A Leonida location with plenty more to investigate and document.</p><div class="card-footer"><a href="port-gellhorn.html">OPEN FILE →</a><span class="status">RESEARCH</span></div></div></article>
+<article class="location-card" data-category="nature"><div class="card-art"><img src="assets/grassrivers.jpg" alt="Florida-style wetlands with an airboat and wildlife at sunset" loading="lazy" decoding="async"><span class="card-index">FILE 004</span></div><div class="card-info"><div class="tag">WETLANDS / WILDLIFE</div><h3>Grassrivers</h3><p>A natural region of Leonida. Field notes and points of interest to follow.</p><div class="card-footer"><a href="grassrivers.html">OPEN FILE →</a><span class="status">RESEARCH</span></div></div></article>
+<article class="location-card" data-category="city"><div class="card-art"><img src="assets/ambrosia.jpg" alt="Small rural industrial town with a water tower at sunset" loading="lazy" decoding="async"><span class="card-index">FILE 005</span></div><div class="card-info"><div class="tag">REGION / COMMUNITY</div><h3>Ambrosia</h3><p>A regional intelligence file for discoveries, landmarks and local details.</p><div class="card-footer"><a href="ambrosia.html">OPEN FILE →</a><span class="status">RESEARCH</span></div></div></article>
+<article class="location-card" data-category="nature"><div class="card-art"><img src="assets/mount-kalaga.jpg" alt="Mountain wilderness with pine forest, waterfall and clear river" loading="lazy" decoding="async"><span class="card-index">FILE 006</span></div><div class="card-info"><div class="tag">WILDERNESS / PARK</div><h3>Mount Kalaga National Park</h3><p>A wilderness location to investigate for landmarks and discoveries.</p><div class="card-footer"><a href="mount-kalaga.html">OPEN FILE →</a><span class="status">RESEARCH</span></div></div></article>
+</div><div class="empty" id="empty">NO MATCHING LOCATION FILES FOUND.</div>
 </main>
-
-<footer>
-  LEONIDA <span>WHISPERS</span><br>
-  THE GTA INTELLIGENCE NETWORK<br>
-  Independent fan publication. Not affiliated with Rockstar Games.
-</footer>
-
+<footer>LEONIDA <span>WHISPERS</span><br>THE GTA INTELLIGENCE NETWORK<br>Independent fan publication. Not affiliated with Rockstar Games.</footer>
 <script>
-/* MOBILE NAVIGATION */
-const menuToggle = document.querySelector(".menu-toggle");
-const mainNavigation = document.querySelector(".main-nav");
-
-if (menuToggle && mainNavigation) {
-  const closeMenu = () => {
-    mainNavigation.classList.remove("open");
-    menuToggle.setAttribute("aria-expanded", "false");
-    menuToggle.setAttribute("aria-label", "Open navigation");
-    menuToggle.textContent = "☰";
-  };
-
-  menuToggle.addEventListener("click", () => {
-    const isOpen = mainNavigation.classList.toggle("open");
-    menuToggle.setAttribute("aria-expanded", String(isOpen));
-    menuToggle.setAttribute("aria-label", isOpen ? "Close navigation" : "Open navigation");
-    menuToggle.textContent = isOpen ? "✕" : "☰";
-  });
-
-  mainNavigation.querySelectorAll("a").forEach(link => link.addEventListener("click", closeMenu));
-  document.addEventListener("keydown", event => {
-    if (event.key === "Escape") closeMenu();
-  });
-}
-
-/* LOCATION SEARCH AND FILTERS */
-const search = document.getElementById("search");
-const cards = [...document.querySelectorAll(".location-card")];
-const filters = [...document.querySelectorAll(".filter")];
-const count = document.getElementById("fileCount");
-const empty = document.getElementById("empty");
-let category = "all";
-
-function updateCards() {
-  const term = search.value.toLowerCase().trim();
-  let visible = 0;
-
-  cards.forEach(card => {
-    const matchesText = card.innerText.toLowerCase().includes(term);
-    const matchesCategory = category === "all" || card.dataset.category === category;
-    const show = matchesText && matchesCategory;
-    card.style.display = show ? "" : "none";
-    if (show) visible++;
-  });
-
-  count.textContent = String(visible).padStart(2, "0") + " FIELD FILES";
-  empty.style.display = visible ? "none" : "block";
-}
-
-filters.forEach(button => {
-  button.addEventListener("click", () => {
-    filters.forEach(item => {
-      item.classList.remove("active");
-      item.setAttribute("aria-pressed", "false");
-    });
-    button.classList.add("active");
-    button.setAttribute("aria-pressed", "true");
-    category = button.dataset.filter;
-    updateCards();
-  });
+document.addEventListener("DOMContentLoaded",()=>{
+const menuToggle=document.querySelector(".menu-toggle"),nav=document.querySelector(".main-nav");
+if(menuToggle&&nav){const close=()=>{nav.classList.remove("open");menuToggle.setAttribute("aria-expanded","false");menuToggle.setAttribute("aria-label","Open navigation");menuToggle.textContent="☰"};menuToggle.addEventListener("click",()=>{const open=nav.classList.toggle("open");menuToggle.setAttribute("aria-expanded",String(open));menuToggle.setAttribute("aria-label",open?"Close navigation":"Open navigation");menuToggle.textContent=open?"✕":"☰"});nav.querySelectorAll("a").forEach(a=>a.addEventListener("click",close));document.addEventListener("keydown",e=>{if(e.key==="Escape")close()})}
+const search=document.getElementById("search"),grid=document.getElementById("locationGrid"),filters=[...document.querySelectorAll(".filter")],count=document.getElementById("fileCount"),empty=document.getElementById("empty"),loadStatus=document.getElementById("loadStatus");let category="all";
+function updateCards(){const term=search.value.toLowerCase().trim();let visible=0;grid.querySelectorAll(".location-card").forEach(card=>{const textMatch=card.innerText.toLowerCase().includes(term),categoryMatch=category==="all"||card.dataset.category===category,show=textMatch&&categoryMatch;card.hidden=!show;if(show)visible++});count.textContent=String(visible).padStart(2,"0")+" FIELD FILES";empty.style.display=visible?"none":"block"}
+function dynamicCard(article,index){const card=document.createElement("article");card.className="location-card dynamic-location-card";card.dataset.category="all";const art=document.createElement("div");art.className="card-art";const imageURL=typeof article.cover_image_url==="string"?article.cover_image_url.trim():"";if(/^https?:\/\/[^\s]+$/i.test(imageURL)){const img=document.createElement("img");img.src=imageURL;img.alt=(article.title||"Location")+" image";img.loading="lazy";img.decoding="async";img.addEventListener("error",()=>img.remove());art.appendChild(img)}const badge=document.createElement("span");badge.className="card-index";badge.textContent="NEW FILE "+String(index).padStart(3,"0");art.appendChild(badge);const info=document.createElement("div");info.className="card-info";const tag=document.createElement("div");tag.className="tag";tag.textContent="LOCATION";const title=document.createElement("h3");title.textContent=article.title||"Untitled location";const excerpt=document.createElement("p");excerpt.textContent=article.excerpt||"Explore this location file from the Leonida Whispers archive.";const footer=document.createElement("div");footer.className="card-footer";const link=document.createElement("a");link.href="article.html?slug="+encodeURIComponent(article.slug);link.textContent="OPEN FILE →";const status=document.createElement("span");status.className="status";status.textContent="PUBLISHED";footer.append(link,status);info.append(tag,title,excerpt,footer);card.append(art,info);return card}
+async function loadLocations(){try{const response=await fetch("/api/articles",{method:"GET",cache:"no-store",credentials:"same-origin"});if(!response.ok)throw new Error("Feed request failed: "+response.status);const data=await response.json();if(!Array.isArray(data.articles))throw new Error("Unexpected article feed response");const entries=data.articles.filter(a=>a&&a.slug&&a.title&&String(a.destination||"").toLowerCase()==="database"&&String(a.category||"").toLowerCase().trim()==="locations");entries.reverse().forEach((article,i)=>grid.appendChild(dynamicCard(article,i+1)));if(entries.length){loadStatus.textContent=entries.length+" published location "+(entries.length===1?"entry has":"entries have")+" loaded from Newsroom.";loadStatus.style.display="block"}updateCards()}catch(error){console.error("Leonida Whispers location archive:",error);loadStatus.textContent="Additional Newsroom location entries could not be loaded. Your original location files are still available.";loadStatus.classList.add("error");loadStatus.style.display="block";updateCards()}}
+filters.forEach(button=>button.addEventListener("click",()=>{filters.forEach(item=>{item.classList.remove("active");item.setAttribute("aria-pressed","false")});button.classList.add("active");button.setAttribute("aria-pressed","true");category=button.dataset.filter;updateCards()}));search.addEventListener("input",updateCards);updateCards();loadLocations();
 });
-
-search.addEventListener("input", updateCards);
 </script>
 </body>
 </html>
