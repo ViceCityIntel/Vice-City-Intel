@@ -3,7 +3,8 @@
    LEONIDA WHISPERS
    CINEMATIC WEBSITE FUNCTIONS
    MASTER REPLACEMENT
-   GUIDES + CLASSIFIED PAGE SUPPORT
+   GUIDES + CLASSIFIED SUPPORT
+   AUTOMATIC ARTICLE IMAGE FALLBACK
 ========================================== */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -56,9 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function categoryFilter(category) {
 
-    const value = (category || "")
-      .toLowerCase()
-      .trim();
+    const value = (category || "").toLowerCase().trim();
 
     if (
       value.includes("tip") ||
@@ -70,12 +69,12 @@ document.addEventListener("DOMContentLoaded", () => {
       value.includes("beginner")
     ) return "guides";
 
+    // Classifieds is exclusively for genuine
+    // secrets and discoveries.
+    // Rumours and theories are excluded.
+
     if (
       value.includes("secret") ||
-      value.includes("rumour") ||
-      value.includes("rumor") ||
-      value.includes("mystery") ||
-      value.includes("classified") ||
       value.includes("discovery") ||
       value.includes("discoveries") ||
       value.includes("easter egg") ||
@@ -86,7 +85,63 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
-  // 05 — CINEMATIC FALLBACK ARTWORK
+  // 05 — IMAGE URL VALIDATION
+
+  function validImageURL(value) {
+
+    if (typeof value !== "string" || !value.trim()) {
+      return "";
+    }
+
+    try {
+      const url = new URL(value.trim());
+
+      if (
+        url.protocol !== "https:" &&
+        url.protocol !== "http:"
+      ) return "";
+
+      return url.href;
+
+    } catch {
+      return "";
+    }
+  }
+
+
+  // 06 — AUTOMATIC ARTICLE IMAGE DETECTION
+
+  function getArticleImage(article) {
+
+    // First choice: explicitly saved cover image.
+
+    const cover = validImageURL(article.cover_image_url);
+
+    if (cover) return cover;
+
+    // Second choice: first image in article Markdown.
+
+    const content =
+      typeof article.content_markdown === "string"
+        ? article.content_markdown
+        : "";
+
+    const markdownImage =
+      content.match(/!\[[^\]]*\]\((https?:\/\/[^\s)]+)\)/i);
+
+    if (markdownImage) {
+      const imageURL = validImageURL(markdownImage[1]);
+
+      if (imageURL) return imageURL;
+    }
+
+    // Third choice: no image found.
+
+    return "";
+  }
+
+
+  // 07 — CINEMATIC FALLBACK ARTWORK
 
   function createFallbackArtwork(category) {
 
@@ -162,7 +217,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
-  // 06 — CREATE ARTICLE CARDS
+  // 08 — CREATE ARTICLE CARDS
 
   function createArticleCard(article) {
 
@@ -197,16 +252,15 @@ document.addEventListener("DOMContentLoaded", () => {
     artwork.appendChild(fallback);
 
 
-    // COVER IMAGE
+    // AUTOMATIC COVER IMAGE
 
-    if (
-      article.cover_image_url &&
-      typeof article.cover_image_url === "string"
-    ) {
+    const imageURL = getArticleImage(article);
+
+    if (imageURL) {
 
       const image = document.createElement("img");
 
-      image.src = article.cover_image_url;
+      image.src = imageURL;
       image.alt = article.title || "Leonida Whispers article artwork";
       image.loading = "lazy";
       image.decoding = "async";
@@ -222,9 +276,13 @@ document.addEventListener("DOMContentLoaded", () => {
         transition:transform .6s ease,filter .4s ease;
       `;
 
-      image.addEventListener("error", () => image.remove());
+      image.addEventListener("error", () => {
+        image.remove();
+      });
 
-      image.addEventListener("load", () => fallback.remove());
+      image.addEventListener("load", () => {
+        fallback.remove();
+      });
 
       artwork.appendChild(image);
     }
@@ -329,7 +387,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
-  // 07 — FEATURED INTELLIGENCE BANNER
+  // 09 — FEATURED INTELLIGENCE BANNER
 
   function updateFeaturedArticle(articles) {
 
@@ -364,7 +422,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (featuredImage) {
 
-      if (featuredArticle.cover_image_url) {
+      const imageURL = getArticleImage(featuredArticle);
+
+      if (imageURL) {
 
         featuredImage.style.backgroundImage = `
           linear-gradient(
@@ -373,7 +433,7 @@ document.addEventListener("DOMContentLoaded", () => {
             rgba(9,7,19,.45) 70%,
             rgba(9,7,19,.15)
           ),
-          url("${featuredArticle.cover_image_url}")
+          url("${imageURL.replace(/["\\]/g, "")}")
         `;
 
       } else {
@@ -399,7 +459,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
-  // 08 — SEARCH AND FILTERS
+  // 10 — SEARCH AND FILTERS
 
   function updateArticles() {
 
@@ -438,7 +498,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
-  // 09 — LOAD PUBLISHED ARTICLES
+  // 11 — LOAD PUBLISHED ARTICLES
   // CLOUDFLARE API
 
   async function loadPublishedArticles() {
@@ -467,10 +527,14 @@ document.addEventListener("DOMContentLoaded", () => {
         article.slug && article.title
       );
 
+      // CLEAR PREVIOUS DYNAMIC CARDS
+
+      articleGrid
+        .querySelectorAll(".dynamic-article")
+        .forEach(card => card.remove());
+
 
       // GUIDES PAGE
-      // BEGINNER GUIDES, TIPS & TRICKS,
-      // SECRETS & DISCOVERIES
 
       if (isGuidesPage) {
 
@@ -501,13 +565,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
       // CLASSIFIED PAGE
-      // SECRETS, MYSTERIES AND DISCOVERIES
+      // SECRETS AND DISCOVERIES ONLY
 
       if (isClassifiedPage) {
 
-        const classifiedArticles = allArticles.filter(article =>
-          categoryFilter(article.category) === "secrets"
-        );
+        const classifiedArticles = allArticles.filter(article => {
+
+          const category = (article.category || "")
+            .toLowerCase()
+            .trim();
+
+          return (
+            category.includes("secret") ||
+            category.includes("discovery") ||
+            category.includes("discoveries") ||
+            category.includes("easter egg") ||
+            category.includes("hidden")
+          );
+        });
 
         classifiedArticles.forEach(article => {
           articleGrid.appendChild(createArticleCard(article));
@@ -527,13 +602,6 @@ document.addEventListener("DOMContentLoaded", () => {
       // HOMEPAGE FEATURED BANNER
 
       updateFeaturedArticle(allArticles);
-
-
-      // REMOVE OLD DYNAMIC CARDS
-
-      articleGrid
-        .querySelectorAll(".dynamic-article")
-        .forEach(card => card.remove());
 
 
       // ADD ALL PUBLISHED ARTICLES
@@ -565,7 +633,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
-  // 10 — HOMEPAGE FILTER BUTTONS
+  // 12 — HOMEPAGE FILTER BUTTONS
 
   filters.forEach(button => {
 
@@ -584,12 +652,12 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 
-  // 11 — SEARCH INPUT
+  // 13 — SEARCH INPUT
 
   searchInput?.addEventListener("input", updateArticles);
 
 
-  // 12 — COPYRIGHT YEAR
+  // 14 — COPYRIGHT YEAR
 
   const year = document.querySelector("#year");
 
@@ -598,7 +666,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
-  // 13 — INITIALISE WEBSITE
+  // 15 — INITIALISE WEBSITE
 
   updateArticles();
 
