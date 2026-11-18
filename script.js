@@ -2,14 +2,13 @@
 /* ==========================================
    LEONIDA WHISPERS
    CINEMATIC WEBSITE FUNCTIONS
-   MASTER REPLACEMENT — GUIDES PAGE UPDATE
+   MASTER REPLACEMENT
+   GUIDES + CLASSIFIED PAGE SUPPORT
 ========================================== */
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  // ==========================================
   // 01 — MOBILE NAVIGATION
-  // ==========================================
 
   const menuToggle = document.querySelector(".menu-toggle");
   const nav = document.querySelector(".main-nav");
@@ -35,17 +34,15 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 
-  // ==========================================
   // 02 — PAGE DETECTION
-  // ==========================================
 
-  const isGuidesPage =
-    document.body.dataset.page === "guides";
+  const page = document.body.dataset.page || "";
+
+  const isGuidesPage = page === "guides";
+  const isClassifiedPage = page === "classified";
 
 
-  // ==========================================
   // 03 — ARTICLE ELEMENTS
-  // ==========================================
 
   const articleGrid = document.querySelector("#articleGrid");
   const searchInput = document.querySelector("#searchInput");
@@ -55,34 +52,41 @@ document.addEventListener("DOMContentLoaded", () => {
   let activeFilter = "all";
 
 
-  // ==========================================
   // 04 — CATEGORY DETECTION
-  // ==========================================
 
   function categoryFilter(category) {
 
-    const value = (category || "").toLowerCase();
+    const value = (category || "")
+      .toLowerCase()
+      .trim();
 
     if (
       value.includes("tip") ||
       value.includes("trick")
     ) return "tips";
 
-    if (value.includes("guide")) return "guides";
+    if (
+      value.includes("guide") ||
+      value.includes("beginner")
+    ) return "guides";
 
     if (
       value.includes("secret") ||
       value.includes("rumour") ||
-      value.includes("mystery")
+      value.includes("rumor") ||
+      value.includes("mystery") ||
+      value.includes("classified") ||
+      value.includes("discovery") ||
+      value.includes("discoveries") ||
+      value.includes("easter egg") ||
+      value.includes("hidden")
     ) return "secrets";
 
     return "news";
   }
 
 
-  // ==========================================
   // 05 — CINEMATIC FALLBACK ARTWORK
-  // ==========================================
 
   function createFallbackArtwork(category) {
 
@@ -158,9 +162,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
-  // ==========================================
   // 06 — CREATE ARTICLE CARDS
-  // ==========================================
 
   function createArticleCard(article) {
 
@@ -327,9 +329,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
-  // ==========================================
   // 07 — FEATURED INTELLIGENCE BANNER
-  // ==========================================
 
   function updateFeaturedArticle(articles) {
 
@@ -399,9 +399,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
-  // ==========================================
   // 08 — SEARCH AND FILTERS
-  // ==========================================
 
   function updateArticles() {
 
@@ -440,10 +438,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
-  // ==========================================
   // 09 — LOAD PUBLISHED ARTICLES
   // CLOUDFLARE API
-  // ==========================================
 
   async function loadPublishedArticles() {
 
@@ -472,7 +468,9 @@ document.addEventListener("DOMContentLoaded", () => {
       );
 
 
-      // GUIDES PAGE: ONLY GUIDES AND TIPS
+      // GUIDES PAGE
+      // BEGINNER GUIDES, TIPS & TRICKS,
+      // SECRETS & DISCOVERIES
 
       if (isGuidesPage) {
 
@@ -480,7 +478,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
           const category = categoryFilter(article.category);
 
-          return category === "guides" || category === "tips";
+          return [
+            "guides",
+            "tips",
+            "secrets"
+          ].includes(category);
         });
 
         guideArticles.forEach(article => {
@@ -492,6 +494,30 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log(
           "Leonida Whispers: Guides loaded.",
           guideArticles.length
+        );
+
+        return;
+      }
+
+
+      // CLASSIFIED PAGE
+      // SECRETS, MYSTERIES AND DISCOVERIES
+
+      if (isClassifiedPage) {
+
+        const classifiedArticles = allArticles.filter(article =>
+          categoryFilter(article.category) === "secrets"
+        );
+
+        classifiedArticles.forEach(article => {
+          articleGrid.appendChild(createArticleCard(article));
+        });
+
+        updateArticles();
+
+        console.log(
+          "Leonida Whispers: Classified files loaded.",
+          classifiedArticles.length
         );
 
         return;
@@ -539,9 +565,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
-  // ==========================================
   // 10 — HOMEPAGE FILTER BUTTONS
-  // ==========================================
 
   filters.forEach(button => {
 
@@ -560,16 +584,12 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 
-  // ==========================================
   // 11 — SEARCH INPUT
-  // ==========================================
 
   searchInput?.addEventListener("input", updateArticles);
 
 
-  // ==========================================
   // 12 — COPYRIGHT YEAR
-  // ==========================================
 
   const year = document.querySelector("#year");
 
@@ -578,17 +598,13 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
-  // ==========================================
   // 13 — INITIALISE WEBSITE
-  // ==========================================
 
   updateArticles();
 
   loadPublishedArticles();
 
 
-  // ==========================================
   // END LEONIDA WHISPERS FUNCTIONS
-  // ==========================================
 
 });
